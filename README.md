@@ -46,14 +46,12 @@ composer install
 ### 伪静态配置
 #### nginx
 ```
-  location / {
-      index  index.htm index.html index.php;
-      #访问路径的文件不存在则重写URL转交给ThinkPHP处理
-      if (!-e $request_filename) {
-         rewrite  ^/(.*)$  /index.php?s=$1  last;
-         break;
-      }
-  }
+rewrite ^/player/css/player.css$ /css?id=$1;
+location / {
+	if (!-e $request_filename){
+		rewrite  ^(.*)$  /index.php?s=$1  last;   break;
+	}
+}
 ```
 #### apache
 项目自带apache静态化无需配置
