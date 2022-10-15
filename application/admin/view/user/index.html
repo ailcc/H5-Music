@@ -1,0 +1,164 @@
+{extend name="common/base" /}
+{block name="right"}
+<div class="layui-fluid">
+    <div class="layui-card">
+        <header class="larry-personal-tit" style="width: 95%;">
+            <span><i class="fa fa-list-ol"></i> 播放器列表</span>
+        </header>
+        <div class="layui-card-body">
+            <table class="layui-hide layui-form" id="playerList" lay-filter="playerList"></table>
+            <script type="text/html" id="player">
+                <a class="layui-btn layui-btn-xs" href="/admin/player/{{d.id}}" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
+        </div>
+    </div>
+    <div class="layui-card">
+        <header class="larry-personal-tit" style="width: 95%;">
+            <span><i class="fa fa-list-ol"></i> 歌单列表</span>
+        </header>
+        <div class="layui-card-body">
+            <table class="layui-hide layui-form" id="songsList" lay-filter="songsList"></table>
+            <script type="text/html" id="songSheet">
+                <a class="layui-btn layui-btn-xs" href="/admin/songSheet/{{d.id}}" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
+        </div>
+    </div>
+</div>
+{/block}{block name="script"}
+<script>
+layui.use(['layer', 'table', 'element', 'form'], function () {
+	    var layer = layui.layer
+    		, table = layui.table
+        	, form = layui.form;
+    	var loading = layer.msg('数据加载中', {
+			icon: 16
+			, shade: 0.01
+		});
+    form.on('switch(songsList)', function (obj) {
+        $.post("{:url('manage/user')}", {
+            action: 'songsList',
+            id: this.value,
+            category: this.name,
+            value:  obj.elem.checked
+        }, function (data) {
+            data.code === 1 ? layer.msg(data.msg, {icon: 6, time: 2000}) : layer.msg(data.msg, {icon: 5, time: 2000})
+        });
+    });
+    form.on('switch(playerList)', function (obj) {
+        $.post("{:url('manage/user')}", {
+            action: 'playerList',
+            id: this.value,
+            category: this.name,
+            value:  obj.elem.checked
+        }, function (data) {
+            data.code === 1 ? layer.msg(data.msg, {icon: 6, time: 2000}) : layer.msg('保存失败！', {icon: 5, time: 2000})
+        });
+    });
+   table.render({
+        elem: '#songsList'
+        , url: '/admin/User/{$userinfo.id}?type=SongSheets'
+        , cols: [[
+            {field: 'id', title: '标识', width: 300, unresize: true}
+            , {field: 'sheet_id', title: '歌单ID(网易云歌单必填)', edit: 'text', unresize: true}
+            , {field: 'name', title: '歌单名称', edit: 'text'}
+            , {field: 'author', title: '歌单作者'}
+            , {field: 'public', title: '是否公用',templet: '#public', unresize: true, width: 100}
+            , {field: 'type', title: '歌单类别',unresize: true, width: 100}
+            , {field: 'create_time', title: '创建时间', unresize: true}
+            , {fixed: 'right', title: '操作', align: 'center', toolbar: '#songSheet', width: 120}
+        ]]
+    });
+   table.render({
+        elem: '#playerList'
+        , url: '/admin/User/{$userinfo.id}?type=playerList'
+        , cols: [[
+            {field: 'id', title: '播放器ID', width: 300, unresize: true}
+            , {field: 'name', title: '播放器名', edit: 'text', unresize: true}
+            , {field: 'site_name', title: '播放器抬头', edit: 'text', unresize: true}
+            , {field: 'default_album', title: '专辑', edit: 'text', unresize: true, width: 80}
+            , {field: 'domain', title: '域名', edit: 'text', unresize: true, width: 180}
+            , {field: 'show_notes', title: '飘动音符',templet: '#show_notes', unresize: true, align: 'center', width: 100}
+            , {field: 'auto_player', title: '自动播放',templet: '#auto_player', unresize: true, align: 'center', width: 100}
+            , {field: 'random_player', title: '随机播放',templet: '#random_player',unresize: true, align: 'center', width: 100}
+            , {field: 'background', title: '模糊背景',templet: '#background', unresize: true, align: 'center', width: 100}
+            , {field: 'show_lrc', title: '显示歌词',templet: '#lrc', unresize: true, align: 'center', width: 100}
+            , {field: 'show_msg', title: '桌面通知',templet: '#show_msg', unresize: true, align: 'center', width: 100}
+            , {fixed: 'right', title: '操作', align: 'center', toolbar: '#player', width: 120}
+            
+        ]]
+        ,done: function(){
+        	layer.close(loading);
+        }
+    });
+    table.on('edit(songsList)', function(obj){
+        var data = obj.data;
+        // console.log(obj);
+        $.post("{:url('manage/user')}", {
+            action: 'songsList',
+            id: data.id,
+            category: obj.field,
+            value: obj.value
+        }, function (data) {
+            data.code === 1 ? layer.msg(data.msg, {icon: 6, time: 2000}) : layer.msg('保存失败！', {icon: 5, time: 2000})
+        });
+    });
+    table.on('edit(playerList)', function(obj){
+        var data = obj.data;
+        $.post("{:url('manage/user')}", {
+            action: 'playerList',
+            id: data.id,
+            category: obj.field,
+            value: obj.value
+        }, function (data) {
+            data.code === 1 ? layer.msg(data.msg, {icon: 6, time: 2000}) : layer.msg('保存失败！', {icon: 5, time: 2000})
+        });
+    });
+    table.on('tool()', function (obj) {
+        var data = obj.data
+            , layEvent = obj.event;
+        if (layEvent === 'del') {
+            layer.confirm('将删除数据', function (index) {
+                layer.close(index);
+                $.post("{:url('manage/user')}", {
+                    action: obj.tr.prevObject.prevObject[0].previousElementSibling.id,
+                    category: layEvent,
+                    id: data.id
+                }, function (data) {
+                    if(data.code == 1){
+                        obj.del();
+                        $(".count").html(parseInt($(".count").html()) - 1);
+                    }
+                    layer.msg(data.msg ? data.msg : '保存失败！');
+                });
+            });
+        }
+    });
+});
+</script>
+<script type="text/html" id="public">
+    <input type="checkbox" name="public" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="songsList" {{(d.public=='1')?'checked' : '' }}>
+</script>
+<script type="text/html" id="switchTp2">
+    <input type="checkbox" name="refresh" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="songsList" {{(d.refresh=='1')?'checked' : '' }}>
+</script>
+<script type="text/html" id="show_notes">
+    <input type="checkbox" name="show_notes" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="playerList" {{ (d.show_notes=='1')?'checked' : '' }}>
+</script>
+<script type="text/html" id="auto_player">
+    <input type="checkbox" name="auto_player" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="playerList" {{ (d.auto_player=='1')?'checked' : '' }}>
+</script>
+<script type="text/html" id="random_player">
+    <input type="checkbox" name="random_player" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="playerList" {{ (d.random_player=='1')?'checked' : '' }}>
+</script>
+<script type="text/html" id="background">
+    <input type="checkbox" name="background" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="playerList" {{ (d.background=='1')?'checked' : '' }}>
+</script>
+<script type="text/html" id="show_msg">
+    <input type="checkbox" name="show_msg" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="playerList" {{ (d.show_msg=='1')?'checked' : '' }}>
+</script>
+<script type="text/html" id="lrc">
+    <input type="checkbox" name="show_lrc" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="playerList" {{ (d.show_lrc=='1')?'checked' : '' }}>
+</script>
+{/block}

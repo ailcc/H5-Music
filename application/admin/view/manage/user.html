@@ -1,0 +1,115 @@
+{extend name="common/base" /}
+{block name="right"}
+	<div class="layui-larry-box col-7" style="width: 97%;">
+	    <form id="playerSongSheetForm">
+			<div class="larry-personal layui-collapse">
+			<div class="layui-colla-item">
+				<h2 class="layui-colla-title">用户列表 - 共[ <span class="count" style="color:#F00">{:count($userList)}</span> ]位</h2>
+				<div class="layui-colla-content layui-show" style="margin:-21px -15px -20px -16px">
+					<table class="layui-hide layui-form" id="userList" lay-filter="userList"></table>
+		            <script type="text/html" id="barDemo">
+		                <a class="layui-btn layui-btn-xs" href="/admin/User/{{d.id}}" lay-event="edit">编辑</a>
+		                {{#  if(d.permissions == '0'){ }}
+		                <a class="layui-btn layui-btn-xs layui-btn-disabled" disabled>删除</a>
+		                {{#  } else{ }}
+		                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		                {{#  } }}
+		            </script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{/block}{block name="script"}
+<script>
+layui.use(['table', 'form'], function () {
+    var table = layui.table
+        , form = layui.form;
+	var loading = layer.msg('数据加载中', {
+		  icon: 16
+		, shade: 0.01
+	});
+   table.render({
+        elem: '#userList'
+        , url: '{:url('manage/userList')}?type=all'
+        , totalRow: false
+        , limit: 20
+        , page: true
+        , cols: [[
+            {field: '头像', title: 'O', width: 50, templet: '#avatar', align: 'center'}
+            , {field: 'username', title: '账号', edit: 'text',width:150}
+            , {field: 'permissions', title: '权限',templet: '#permissions', width: 100, align: 'center'}
+            , {field: 'qq', title: 'QQ', edit: 'text', width: 120 }
+            , {field: 'quota', title: '配额', edit: 'text', width: 60, align: 'center'}
+            , {field: 'token', title: 'Token', width: 210, edit: 'text'}
+            , {field: 'status', title: '状态',templet: '#switc_status', width: 100, align: 'center'}
+            , {field: 'times_log', title: '账户有效期', edit: 'text', width: 150, align: 'center'}
+            , {field: 'create_ip', title: '注册IP', width:140}
+            , {field: 'last_login_site', title: '登录地址' }
+            , {field: 'last_login_time', title: '登录时间', width:180 }
+            , {fixed: 'right', title: '操作', align: 'center', toolbar: '#barDemo', width: 120}
+        ]]
+        ,done: function(){
+        	layer.close(loading);
+        }
+    });
+    table.on('edit(userList)', function(obj){
+        var data = obj.data;
+        $.post("{:url('manage/user')}", {
+            action: 'user',
+            id: data.id,
+            category: obj.field,
+            value: obj.value
+        }, function (data) {
+            layer.msg(data.msg);
+        });
+    });
+    
+    form.on('switch(switch)', function (obj) {
+        $.post("{:url('manage/user')}", {
+            action: 'user',
+            id: this.value,
+            category: this.name,
+            value:  obj.elem.checked
+        }, function (data) {
+            layer.msg(data.msg ? data.msg : '保存失败！');
+        });
+    });
+    
+    table.on('tool(userList)', function (obj) {
+        var data = obj.data
+            , id = data.id
+            , layEvent = obj.event;
+        if (layEvent === 'del') {
+            layer.confirm('该操作将清空账户下所有数据！</br>删除后数据不可恢复</br>请确认是否删除？', {icon: 2, title:'温馨提示：'}, function(index){
+                layer.close(index);
+                $.post("{:url('manage/user')}", {
+                    action: 'user',
+                    category: layEvent,
+                    id: data.id
+                }, function (data) {
+                    if(data.code == 1){
+                        obj.del();
+                        $(".count").html(parseInt($(".count").html()) - 1);
+                    }
+                    layer.msg(data.msg ? data.msg : '保存失败！');
+                });
+            });
+        }
+    });
+});
+</script>
+<script type="text/html" id="permissions">
+{{#  if(d.permissions == '0'){ }}
+<button class="layui-btn layui-btn-warm layui-btn-xs">管理员</button>
+{{#  } else{ }}
+<button class="layui-btn layui-btn-danger layui-btn-xs">普通用户</button>
+{{#  } }}
+</script>
+<script type="text/html" id="switc_status">
+    <input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="开启|禁用" lay-filter="switch" {{(d.status=='1')?'checked' : '' }}>
+</script>
+<script type="text/html" id="avatar">
+    <img style="width: 20px;height: 20px;border-radius: 100%;" src="https://q1.qlogo.cn/g?b=qq&nk={{d.qq ? d.qq : 100000}}&s=100">
+</script>
+{/block}

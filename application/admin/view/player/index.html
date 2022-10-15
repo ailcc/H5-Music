@@ -1,0 +1,485 @@
+{extend name="common/base" /}
+{block name="right"}
+<style>
+    .layui-elem-quote{
+        margin-top: 15px;
+        margin-bottom: 5px;
+        padding: 10px;
+    }
+    .ailcc_img {
+    width: 80px;
+    height: 35px;
+    float: left;
+    border: 1px solid #ccc;
+    padding: 4px;
+    margin-right: 10px;
+	}
+</style>
+	<div class="layui-larry-box col-6">
+	    <form id="playerSongSheetForm">
+		<div class="larry-personal layui-collapse">
+			<div class="layui-colla-item">
+			    <input type="hidden" id="ym" value="{:count($domain)}">
+				<h2 class="layui-colla-title">已授权[ <span style="color:#F00">{:count($domain)}</span> ]个域名</h2>
+				<div class="layui-colla-content layui-show larry-personal-body clearfix" style="padding: 0;">
+				    <div class="block__list_words">
+						<ul id="handle-domain">
+{volist name="domain" id="vo"}
+							<li>
+							    <i class="fa fa-link"></i> {$vo} <div style="float:right"><a class="layui-btn layui-btn-danger layui-btn-xs" onclick="delPlayerSongSheet(this,'ym')" href="javascript:"><i class="layui-icon layui-icon-delete"></i>删除</a></div>
+						    	<input type="hidden" name="dms[]" value="{$vo}">
+							</li>
+{/volist}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="larry-personal layui-collapse" style="margin-top: 10px;">
+            <div class="layui-colla-item">
+                <input type="hidden" id="jzgd" value="4">
+                <h2 class="layui-colla-title">已加载[ <span style="color:#F00">{:count($selectedSongSheetList)}</span> ]个歌单（拖拽歌单名排序）<i class="layui-icon layui-colla-icon"></i></h2>
+                <div class="layui-colla-content layui-show larry-personal-body clearfix" style="padding: 0;">
+                    <div class="block__list_words">
+                        <input type="hidden" name="playerId" value="{$entity.id}">
+                        <ul id="handle-1">
+                            {volist name="selectedSongSheetList" id="vo"}<li>
+                            	<span class="drag-handle"><img src="/static/images/type/{$vo.type}.png" title="{$vo.type|songsorts=###}" width="16px" height="16px"> {$vo.name}</span>
+                                <div style="float:right"><a class="layui-btn layui-btn-danger layui-btn-xs" onclick="delPlayerSongSheet(this,'{$vo.id}')" href="javascript:" ss-name="{$vo.type|songsorts=###}"><i class="layui-icon layui-icon-delete"></i>删除</a></div>
+                                <input type="hidden" name="ids[]" value="{$vo.id}">
+                            </li>
+                        	{/volist}</ul>
+                    </div>
+            	</div>
+            </div>
+        </div>
+		</form>
+		<div class="layui-tab layui-tab-card">
+			<ul class="layui-tab-title">
+    			<li class="layui-this">我的歌单[{:count($userSongSheet)}]</li>
+    			<li>公用歌单[{:count($openSongSheets)}]</li>
+			</ul>
+			<div class="layui-tab-content" style="padding:0;">
+				<div class="layui-tab-item layui-show">
+                    <div class="layui-form layui-form-pane">
+                        <table class="layui-table" style="margin:0;">
+                            <tbody>
+                                {volist name="userSongSheet" id="vo"}<tr>
+                                	<td width="2%"><img src="/static/images/type/{$vo.type}.png" title="{$vo.type|songsorts=###}" width="16px" height="16px"></td>
+                                	<td width="100%"><a href="/admin/songSheet/{$vo.id}" title="{$vo.type|songsorts=###}"> {$vo.name}</a></td>
+                                	<td width="2%"><a class="addSongSheet layui-btn layui-btn-primary layui-btn-xs" href="javascript:" ss-id="{$vo.id}" ss-name="{$vo.name}" ss-type="{$vo.type}"><i class="layui-icon layui-icon-add-1"></i>添加</a></td>
+                            	</tr>
+                            	{/volist}</tbody>
+                        </table>
+                    </div>
+                </div>
+    			<div class="layui-tab-item">
+    				 <div class="layui-form layui-form-pane">
+                        <table class="layui-table" style="margin:0;">
+                            <tbody>
+                                {volist name="openSongSheets" id="vo"}<tr>
+                                	<td width="2%"><img title="公用歌单" src="/static/images/type/{$vo.type}.png" width="16px" height="16px"></td>
+                                	<td width="100%"><a title="公用歌单"> {$vo.name}</a></td>
+                                	<td width="2%"><a class="addSongSheet layui-btn layui-btn-primary layui-btn-xs" href="javascript:" ss-id="{$vo.id}" ss-name="{$vo.name}" ss-type="{$vo.type}"><i class="layui-icon layui-icon-add-1"></i>添加</a></td>
+                            	</tr>
+                            	{/volist}</tbody>
+                        </table>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="layui-larry-box col-6">
+		<div class="larry-personal layui-collapse">
+        	<div class="layui-colla-item">
+            	<h2 class="layui-colla-title">添加域名授权<i class="layui-icon layui-colla-icon"></i></h2>
+            	<div class="layui-colla-content layui-show larry-personal-body clearfix" style="margin-top:-30px;">
+                	<div class="layui-form-item">
+                    	<div class="layui-form layui-form-pane">
+                        	<blockquote class="layui-elem-quote">域名授权不包含“http”和“//”等特殊符号，授权顶级域名则授权所有二级域名（泛域名）</br>如出现授权问题，可添加 * 号关闭授权</blockquote>
+                        	<label class="layui-form-label">新增域名</label>
+                        	<div class="layui-input-block">
+                            	<input type="text" id="domain" placeholder="请输入域名，不包含http://和结尾的/" autocomplete="off" class="layui-input">
+                        	</div>
+                    	</div>
+                	</div>
+                	<div class="layui-form-item">
+                    	<div class="layui-input-block save-button">
+                        	<button id="adddomain" class="layui-btn layui-btn-normal">新增域名</button>
+                    	</div>
+                	</div>
+            	</div>
+        	</div>
+    	</div>
+            <div class="larry-personal layui-collapse" style="margin-top: 10px;">
+                <form class="layui-form form-container" method="post">
+                    <input type="hidden" name="id" value="{$entity.id}">
+                    <div class="layui-tab layui-tab-card" style="margin: 0;border-width: 0;">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">基本设置</li>
+                            <li class="sdtj_option">添加播放器</li>
+                            <li class="sdtj_option">插件下载</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <div class="layui-form layui-form-pane">
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">手机加载</label>
+                                            <div class="layui-input-block">
+                                                <input type="checkbox" name="show_mobile" lay-filter="show_mobile" lay-skin="switch" value="1" {$entity.show_mobile== "1" ? "checked":""}>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">显示歌词</label>
+                                            <div class="layui-input-block">
+                                                <input type="checkbox" name="show_lrc" lay-skin="switch" value="1" {$entity.show_lrc== "1" ? "checked":""}>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">自动播放</label>
+                                            <div class="layui-input-block">
+                                                <input type="checkbox" name="auto_player" lay-skin="switch" value="1" {$entity.auto_player== "1" ? "checked":""}>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">模糊背景</label>
+                                            <div class="layui-input-block">
+                                                <input type="checkbox" name="background" lay-skin="switch" value="1" {$entity.background== "1" ? "checked":""}>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">飘动音符</label>
+                                            <div class="layui-input-block">
+                                                <input type="checkbox" name="show_notes" lay-skin="switch" value="1" {$entity.show_notes== "1" ? "checked":""}>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">显示欢迎语</label>
+                                            <div class="layui-input-block">
+                                                <input type="checkbox" name="show_greeting" lay-skin="switch" value="1" {$entity.show_greeting== "1" ? "checked":""}>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">桌面通知</label>
+                                            <div class="layui-input-block">
+                                                <input type="checkbox" name="show_msg"  lay-skin="switch" value="1" {$entity.show_msg== "1" ? "checked":""}>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">随机播放</label>
+                                            <div class="layui-input-block">
+                                                <input type="checkbox" name="random_player" lay-skin="switch" value="1" {$entity.random_player== "1" ? "checked":""}>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline" lay-tips="不显示播放列表中的失效歌曲<br>（自定义歌曲会正常显示）">
+                                            <label class="layui-form-label"><font color="red">不显示失效</font></label>
+                                            <div class="layui-input-block">
+                                                <input type="checkbox" name="error" id="error" lay-filter="error" lay-skin="switch" value="1" {$entity.error== "1" ? "checked":""}>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">欢迎语</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" lay-verify="required" name="greeting" value="{$entity.greeting}" placeholder="站点打开欢迎语" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">播放器名称</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" lay-verify="required" name="name" value="{$entity.name}" placeholder="请输入站点名称" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">列表抬头</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" lay-verify="required" name="site_name" value="{$entity.site_name}" placeholder="请输入站点名称" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">默认音量</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" lay-verify="required" name="default_volume" value="{$entity.default_volume}" placeholder="请输入默认音量" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline" lay-tips="单位'秒' -1表示不弹出">
+                                            <label class="layui-form-label">弹出时间</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" lay-verify="required" name="auto_popup_player" value="{$entity.auto_popup_player}" placeholder="几秒后弹出" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline" lay-tips="填写序号，第一个专辑就是1，第二个就是2，以此类推">
+                                            <label class="layui-form-label">默认专辑</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" lay-verify="required" name="default_album" value="{$entity.default_album}" placeholder="请输入默认专辑序号" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline" lay-tips="单位'px' -1表示使用默认播放器宽度，默认350px">
+                                            <label class="layui-form-label">播放器宽度</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" lay-verify="required" name="player_width" value="{$entity.player_width}" placeholder="播放器宽度" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline" lay-tips="单位'px' -1表示使用默认专辑图宽度，默认115px">
+                                            <label class="layui-form-label">专辑宽度</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" lay-verify="required" name="cover_width" value="{$entity.cover_width}" placeholder="专辑图宽度" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline" lay-tips="播放器默认色调">
+                                        	<label class="layui-form-label">默认色调</label>
+                                        	<div class="layui-input-inline" style="width: 180px;">
+                                        		<input type="text" lay-verify="required" name="player_color" value="{$entity.player_color}" placeholder="请选择颜色" class="layui-input" id="color-form-input">
+                                        	</div>
+                                        	<div id="color-form" class="layui-inline">
+                                        		<div class="layui-unselect layui-colorpicker">
+                                        			<span><span class="layui-colorpicker-trigger-span" lay-type="" style="background: {$entity.player_color}">
+                                        				<i class="layui-icon layui-colorpicker-trigger-i layui-icon-down"></i>
+                                        				</span>
+                                        			</span>
+                                        		</div>
+                                        	</div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">播放器ID</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" lay-verify="required" value="{$entity.id}" class="layui-input layui-disabled" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+								<div class="layui-form layui-form-pane">
+									<div class="layui-form-item">
+										<blockquote class="layui-elem-quote">免插件：将此段播放器代码插入到网页底部的&#60;/body&#62;标签之前</br>手机播放：请在“ kev="XXXX" 后面添加 m="1" ”</blockquote>
+										<textarea id="script_code" class="layui-textarea"></textarea>
+									</div>
+									<div class="layui-form-item">
+										<blockquote class="layui-elem-quote layui-quote-nm" style="margin: 10px 0;">（非必要）如果提示jQuery问题，将此段代码插入到网站的&#60;header&#62;，或播放器代码之前</blockquote>
+										<textarea id="script_code" class="layui-textarea">&#60;&#115;&#99;&#114;&#105;&#112;&#116;&#32;&#115;&#114;&#99;&#61;&#34;&#47;&#47;&#108;&#105;&#98;&#46;&#98;&#97;&#111;&#109;&#105;&#116;&#117;&#46;&#99;&#111;&#109;&#47;&#106;&#113;&#117;&#101;&#114;&#121;&#47;&#51;&#46;&#51;&#46;&#49;&#47;&#106;&#113;&#117;&#101;&#114;&#121;&#46;&#109;&#105;&#110;&#46;&#106;&#115;&#34;&#62;&#60;&#47;&#115;&#99;&#114;&#105;&#112;&#116;&#62;</textarea>
+									</div>  
+                                </div>
+							</div>
+                            <div class="layui-tab-item">
+								<div class="layui-form layui-form-pane">
+									<div class="layui-tab-item layui-show">
+										<blockquote class="layui-elem-quote layui-quote-nm" style="border-color:#1da9da">
+											<a href="https://music.ailcc.com/down/Emlog_H5Player.zip" lay-tips="Emlog插件,支持Emlog全版本" target="_blank">
+												<img class="ailcc_img" src="/images/emlog.png">
+											</a>
+											<a class="layui-btn layui-btn-xs" style="background-color:#1da9da" href="https://music.ailcc.com/down/Emlog_H5Player.zip" lay-tips="Emlog插件,支持Emlog全版本" target="_blank">[Emlog插件]</a>
+											<p>基本上支持Emlog大部分版本，如遇见问题，请联系站长！</p>
+										</blockquote>
+										<hr class="layui-bg-red">
+										<blockquote class="layui-elem-quote layui-quote-nm" style="margin: 10px 0;">目前仅做了Emlog的插件，其他的懒得弄了，各位使用链接吧，更方便，后面空了再弄其他的版本插件！</blockquote>
+									</div>
+                                </div>
+							</div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block save-button">
+                                    <button class="layui-btn" lay-submit lay-filter="save">保存</button>
+                                    <button class="layui-btn" lay-submit lay-filter="loadTest">测试</button>
+                                    <button class="layui-btn layui-btn-danger" onclick="delPlayer('{$entity.id}');return false;">删除</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+	</div>
+{/block}
+{block name="script"}
+<script>
+    layui.config({
+        base: 'js/'
+    }).use(['element', 'layer', 'form', 'colorpicker'], function () {
+    	var $ = layui.jquery,
+    	colorpicker = layui.colorpicker;
+    	
+        colorpicker.render({
+        	elem: '#color-form',
+        	color: '{$entity.player_color}',
+        	size: 'xs',
+        	predefine: true,
+        	done: function(color) {
+            	$('#color-form-input').val(color);
+        	}
+		});
+        function HTMLEncode(html) {
+            var temp = document.createElement("div");
+            (temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
+            var output = temp.innerHTML;
+            temp = null;
+            return output;
+        }
+        var element = layui.element,
+            $ = layui.jquery,
+            colorpicker = layui.colorpicker,
+            form = layui.form;
+        $('#script_code').val('<script id="ailcc" src="' + (document.location.protocol === "http:" ? "http" : "https") + '://' + document.location.host + '/player/js/player.js" key="{$entity.id}" m="1"><\/script>');
+        $('#clear_code').val((document.location.protocol === "http:" ? "http" : "https") + '://' + document.location.host + '/api/clear?id={$entity.id}');
+        //监听提交
+             form.on('switch(show_mobile)', function (data) {
+                 if (data.elem.checked === true) {
+                     $('#script_code').val('<script id="ailcc" src="' + (document.location.protocol === "http:" ? "http" : "https") + '://' + document.location.host + '/player/js/player.js" key="{$entity.id}" m="1"><\/script>');
+                     layer.alert('已打开手机端加载播放器，保存配置并更新播放器代码生效！（新代码有"m=1"参数）</br></br><b>' + HTMLEncode('<script id="ailcc" src="' + (document.location.protocol === "http:" ? "http" : "https") + '://' + document.location.host + '/player/js/player.js" key="{$entity.id}" m="1"><\/script>'));
+                     } else if (data.elem.checked === false) {
+                     $('#script_code').val('<script id="ailcc" src="' + (document.location.protocol === "http:" ? "http" : "https") + '://' + document.location.host + '/player/js/player.js" key="{$entity.id}"><\/script>');
+                     layer.alert('已关闭手机端加载播放器，保存配置并更新播放器代码生效！（新代码没有"m=1"参数）</br></br><b>' + HTMLEncode('<script id="ailcc" src="' + (document.location.protocol === "http:" ? "http" : "https") + '://' + document.location.host + '/player/js/player.js" key="{$entity.id}"><\/script>'));
+                     }
+
+                     return false;
+                      });
+					  
+        layer = layui.layer;
+      $("#type").val("1");
+      form.render('select'); //刷新select选择框渲染
+      form.on('submit(*)', function (data) {
+          var index = layer.load(3);
+          $.post("/admin/player/edit", data.field, function (data) {
+              layer.close(index);
+              if (data.code === 1) {
+                  layer.msg(data.msg);
+                  htmlStr = '<a lay-href="/admin/player/{$entity.id}"><i class="layui-icon layui-icon-headset"></i>' + $("#playername").val();
+                  +'</a>';
+                  top.$('#{$entity.id}').html(htmlStr);
+                  top.$('#LAY_app_tabsheader .layui-this span').html($("#playername").val());
+              } else {
+                  layer.alert(data.msg ? data.msg : '保存失败！');
+              }
+          });
+          return false;
+       });
+        form.on('submit(save)', function (data) {
+            $.post("/admin/player/edit", data.field, function (data) {
+                layer.msg(data.msg,{
+                	time:1000
+                  },function() {
+                location.replace(location.href);
+                });
+            });
+            return false;
+        });
+        form.on('submit(loadTest)', function (data) {
+            try{
+                ailccPlayerTestKey = data.field.id;
+                if(typeof window.ailccPlayerReload !== "undefined" ){
+                    window.ailccPlayerReload()
+                }
+                ailccPlayerInit(window);
+            }catch (e) {}
+            return false;
+        });
+
+        var tul = document.getElementById("handle-1");
+        Sortable.create(tul, {
+            handle: '.drag-handle',
+            animation: 150,
+            onEnd: function () {
+            save();
+            }
+        });
+
+        $('.addSongSheet').click(function () {
+            var gd = $(this).attr("ss-name");
+            var type = $(this).attr("ss-type");
+            var gdid = $(this).attr("ss-id");
+            layer.confirm('歌单：' + gd + '</br>确认添加到播放器吗？', {
+                icon: 3,
+                title: '新增歌单'
+            }, function () {
+                layer.close(layer.index);
+                htmlStr = '<li><span class="drag-handle"><img src="/static/images/type/' + type + '.png" width="16px" height="16px"> ' + gd + '</span><div style="float:right"><a class="layui-btn layui-btn-danger layui-btn-xs" onclick="delPlayerSongSheet(this)" href="#"><i class="layui-icon layui-icon-delete"></i>删除</a></div><input type="hidden" name="ids[]" value="' + gdid + '"></li>';
+                $('#handle-1').append(htmlStr);
+                save();
+            });
+        });
+        $('#savePlayerSongSheet').click(function () {
+            var index = layer.load(3);
+            $.post("/admin/player/editPlayerSongSheet", $('#playerSongSheetForm').serialize(), function (data) {
+                layer.close(index);
+                if (data.code === 1) {
+                      layer.open({
+                      content: data.msg,
+                      title: '保存列表',
+                      btn: ['确认'],
+                      yes: function (index, layero) {
+                         window.location.href = location.href;
+                      },
+                      cancel: function () {
+                         window.location.href = location.href;
+                      }
+                   });
+               } else {
+                  layer.alert(data.msg ? data.msg : '保存失败！');
+                }
+            });
+        });
+    });
+    function delPlayerSongSheet(entity,id) {
+        var gdsl = parseInt($("#"+id).val()) - 1;
+        var jzgd = parseInt($("#jzgd").val()) - 1;
+        //console.log(gdsl);
+        layui.use('jquery', function () {
+            $ = layui.jquery;
+            layer.confirm('确认从播放器删除吗？', {
+                icon: 3,
+                title: '删除歌单'
+            }, function () {
+                layer.close(layer.index);
+                $(entity).parent().parent().remove();
+                $("#"+id).val(gdsl);
+                $("."+id).html(gdsl);
+                if(id !== "ym"){
+                    $("#jzgd").val(jzgd);
+                    $(".jzgd").html(jzgd);
+                }
+                save();
+            });
+        });
+    }
+    function save() {
+        var index = layer.load(3);
+        $ = layui.jquery;
+        $.post("/admin/player/editPlayerSongSheet", $('#playerSongSheetForm').serialize(), function (data) {
+            layer.close(index);
+            if (data.code === 1) {
+                layer.msg(data.msg);
+                setTimeout(function () {
+                        window.location.href = location.href;
+                    },
+                    1000);
+            } else {
+                layer.alert('保存失败！页面重载中...');
+                setTimeout(function () {
+                        window.location.href = location.href;
+                    },
+                    500);
+            }
+        });
+    }
+    $('#adddomain').click(function () {
+        var ymsl = parseInt($("#ym").val()) + 1;
+        if ($("#domain").val() == '') {
+            layer.msg("请填写域名！");
+        } else {
+            var domain = $("#domain").val().replace(" ", "").replace("http://", "").replace("https://", "").replace("/", "")
+            layer.confirm('授权域名：' + domain + ' 使用播放器？</br>输入顶级域名授权所有二级域名（泛域名）', {
+                icon: 3,
+                title: '新增授权'
+            }, function () {
+                layer.close(layer.index);
+                htmlStr = '<li><i class="fa fa-link"></i> ' + domain + '<div style="float:right"><a class="layui-btn layui-btn-danger layui-btn-xs" onclick="delPlayerSongSheet(this,\'ym\')" href="javascript:"><i class="layui-icon layui-icon-delete"></i>删除</a></div><input type="hidden" name="dms[]" value="' + domain + '"></li>';
+                $('#handle-domain').append(htmlStr);
+                $("#ym").val(ymsl);
+                $(".ym").html(ymsl);
+                save();
+            });
+        }
+
+    });
+</script>
+{/block}

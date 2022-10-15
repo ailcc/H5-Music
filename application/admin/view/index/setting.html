@@ -1,0 +1,128 @@
+{extend name="common/base" /}
+{block name="right"}
+<div class="layui-fluid">
+    <div class="layui-tab layui-tab-card" lay-filter="component-tabs-brief" style="margin: 0;">
+        <ul class="layui-tab-title">
+            <li class="layui-this">授权设置</li>
+        </ul>
+        <div class="layui-tab-content" style="background-color: #fff;">
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form layui-form-pane" lay-filter="form-config">
+                <div class="layui-form-item">
+                   <label class="layui-form-label">公共播放器</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="default" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">列表标题</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="songSheetName" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">歌曲名称</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="songNames" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">专辑名称</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="albumNames" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">歌手名称</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="artistNames" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">专辑图片</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="albumCovers" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">音乐地址</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="locations" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">歌词地址</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="lyric" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">提示语</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="greeting" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">全局授权域名（多个用英文状态|号分割）</label>
+                    <div class="layui-input-block">
+                        <textarea name="overalldomain" style="min-height: 70px;" class="layui-textarea" placeholder="多个域名用英文状态|号分割"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">外链解析</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="empty" lay-text="关闭|打开" lay-skin="switch" lay-filter="empty">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn" lay-submit lay-filter="submit">提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary" lay-submit lay-filter="cancel">重置</button>
+                    </div>
+                </div>
+           </form>
+       </div>
+   </div>
+</div>
+<style>.layui-table-body,html{
+    overflow-x:hidden
+}
+    </style>
+{/block}
+{block name="script"}
+<script>
+layui.use(['form', 'layer','element'], function () {
+    var element = layui.element,
+    $ = layui.jquery,
+    form = layui.form;
+    var config = {$config|raw};
+    form.val("form-config", config);
+    form.on('submit(submit)', function (data) {
+        loading =layer.load(1, {shade: [0.1,'#fff']});
+        $.post("{:url('index/site')}",data.field,function(res){
+            layer.close(loading);
+            console.log(data.field);
+            if(res.code > 0){
+                layer.msg(res.msg,{icon: 1, time: 1000});
+            }else{
+                layer.msg(res.msg,{icon: 2, time: 1000});
+            }
+        });
+    });
+    form.on('switch()', function (data) {
+        loading =layer.load(1, {shade: [0.1,'#fff']});
+        var datas = {};
+        datas[data.elem.name] = data.elem.checked;
+        $.post("{:url('index/site')}",datas,function(res){
+            layer.close(loading);
+            console.log(datas);
+            if(res.code > 0){
+                layer.msg(res.msg,{icon: 1, time: 1000});
+            }else{
+                layer.msg(res.msg,{icon: 2, time: 1000});
+            }
+        });
+    });
+});
+</script>
+{/block}

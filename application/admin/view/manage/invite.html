@@ -1,0 +1,87 @@
+{extend name="common/base" /}
+{block name="right"}
+	<div class="layui-larry-box col-7" style="width: 97%;">
+      <div style="padding-bottom: 10px;">
+        <button class="layui-btn layuiadmin-btn-list" onclick="invite_log(this)" data-GetUrl="{:url('manage/invite_log')}">添加邀请码</button>
+      </div>
+	    <form id="playerSongSheetForm">
+			<div class="larry-personal layui-collapse">
+			<div class="layui-colla-item">
+				<h2 class="layui-colla-title">邀请码管理  </h2>
+				<div class="layui-colla-content layui-show" style="margin:-21px -15px -20px -16px">
+					<table class="layui-hide layui-form" id="userList" lay-filter="userList"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{/block}{block name="script"}
+<script>
+function invite_log(obj,data) {
+      var url = obj.getAttribute('data-GetUrl');
+      layer.confirm('确定要生成邀请码，一次仅能生成一个？', {
+            title:'提示：',
+            btn: ['确定', '取消'] //按钮
+        },function(){
+          $.get(url,function(info){
+              if(info.code === 1){
+                  setTimeout(function () {
+                    window.parent.location.reload();
+                  }, 1000);  //清除成功1秒后刷新页面，如果不需要刷新可以注释掉此行。
+              }else if(info.code === 0){
+                  layer.msg(info.msg);
+                  setTimeout(function () {
+                        window.location.href = location.href;
+                  },
+                  1000);
+              }
+          });
+      },
+      function(){});
+  };
+layui.use(['table', 'form'], function () {
+    var table = layui.table
+        , form = layui.form;
+	var loading = layer.msg('数据加载中', {
+		  icon: 16
+		, shade: 0.01
+	});
+    table.render({
+        elem: '#userList'
+        , url: '{:url('manage/invite')}?type=all'
+        , totalRow: false
+        , limit: 20
+        , page: true
+        , cols: [[
+            {field: 'id', title: 'id', width:50}
+            , {field: 'invite', title: '邀请码', width: 300, align: 'center'}
+            , {field: 'status', title: '是否使用', templet: '#permissions',edit: 'text', width: 100 }
+            , {field: 'name', title: '新建用户', edit: 'text', width: 160, align: 'center'}
+            , {field: 'title', title: '所属用户', width: 150, edit: 'text'}
+            , {field: 'articlenum', title: '查询次数', edit: 'text', width: 100, align: 'center'}
+            , {field: 'sort', title: '有效期',templet: '#sort_s',  width:180}
+            , {field: 'last_login_time', title: '创建时间', width:180 }
+        ]]
+        ,done: function(){
+        	layer.close(loading);
+        }
+    });
+});
+</script>
+<script type="text/html" id="permissions">
+{{#  if(d.status == '0'){ }}
+<button class="layui-btn layui-btn-warm layui-btn-xs">未使用</button>
+{{#  } else{ }}
+<button class="layui-btn layui-btn-danger layui-btn-xs">已使用</button>
+{{#  } }}
+</script>
+
+
+<script type="text/html" id="sort_s">
+{{#  if(d.sort == '0'){ }}
+<button class="layui-btn layui-btn-warm layui-btn-xs">长期有效</button>
+{{#  } else{ }}
+{{d.sort}}
+{{#  } }}
+</script>
+{/block}

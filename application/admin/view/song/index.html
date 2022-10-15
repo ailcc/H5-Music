@@ -1,0 +1,106 @@
+    <link rel="stylesheet" href="/static/layuiadmin/layui/css/layui.css" media="all"/>
+    <div class="layui-card-body">
+        <div class="layui-form layui-form-pane">
+            <form class="layui-form form-container" method="post">
+                <input type="hidden" name="id" value="{$song.id}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">歌曲类型</label>
+                    <div class="layui-input-inline">
+                        <select name="type" lay-filter="type" id="type">
+                            <option value="local">本地歌曲</option>
+                            <option value="wy">网易音乐</option>
+                            <option value="qq">QQ音乐</option>
+                            <option value="kg">酷狗音乐</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="zdyid" >
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">歌曲ID</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="song_id" required="" lay-verify="required" value="{$song.song_id}" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">歌曲名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="name" required="" lay-verify="required"  value="{$song.name}" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">歌手名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="artist_name" required="" lay-verify="required" value="{$song.artist_name}" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">专辑名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="album_name" value="{$song.album_name}" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">歌曲地址</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="location" placeholder="优先播放MP3地址" value="{if strpos($song.location,'http') !== false}{$song.location}{/if}" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">歌曲图片</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="album_cover" required="" lay-verify="required" value="{$song.album_cover}" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div id="zdy">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">歌词歌曲</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="lyric" placeholder="网络歌曲无地址" value="{$song.lyric}" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center;">
+                        <button class="layui-btn" id="edit" lay-submit lay-filter="edit">立即修改</button>
+                        <button class="layui-btn layui-btn-primary" id="cancel" lay-submit lay-filter="cancel">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+<script type="text/javascript" src="/static/layuiadmin/layui/layui.js"></script>
+<script>
+layui.use(['form','layer'], function(){
+    var form = layui.form,
+    $ = layui.jquery;
+    $("#type").val("{$song.type}");
+    form.render('select');
+    form.on('select(type)', function (data) {
+        if (data.value == "local") {
+            $("#zdy").show();
+            $("#zdyid").hide();
+        } else {
+            $("#zdy").hide();
+            $("#zdyid").show();
+        }
+    });
+    form.on('submit(edit)', function (data) {
+        var index = layer.load(3);
+        $.post("/admin/song/edit", data.field, function (data) {
+            layer.close(index);
+            if (data.code === 1) {
+                parent.layer.closeAll();
+                parent.layer.msg(data.msg,{icon:1, time: 1000, shade: [0.3, '#000']});
+				
+            } else {
+                parent.layer.msg(data.msg ? data.msg : '保存失败！', {icon: 2});
+                //window.parent.location.reload()
+            }
+        });
+        return false;
+    });
+    form.on('submit(cancel)', function (data) {
+        parent.layer.closeAll();
+        return false;
+    });
+})
+</script>

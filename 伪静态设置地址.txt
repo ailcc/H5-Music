@@ -1,0 +1,6 @@
+rewrite ^/player/css/player.css$ /css.php?id=$2&type=$1&from=$3;
+location / {
+	if (!-e $request_filename){
+		rewrite  ^(.*)$  /index.php?s=$1  last;   break;
+	}
+}

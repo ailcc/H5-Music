@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>沛霖音乐播放器 - 后台登陆</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="keywords" content="HTML浮窗音乐播放器"/>
+    <meta name="description" content="HTML浮窗音乐播放器"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="/static/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href="/static/css/custom/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/custom/stey.css">
+</head>
+  <body>
+    <div class="container">
+        <div class="card-wrap login">
+            <div class="card-body card border-0 shadow card--login">
+                <div class="card-body">
+                    <h2 class="card-title">沛霖音乐播放器</h2>
+                    <p id="loginCue">本站仅出售源码，一切注册用户有效期均为使用账户<br />试用账户最长使用期间为7天，7天后账户将会被冻结</p>
+                    <form action="/admin/user/login" name="loginform" accept-charset="utf-8" id="login_form" class="loginForm" method="post">
+                        <div class="form-group"><input class="form-control" type="text" id="u" name="username" placeholder="帐号" /></div>
+                        <div class="form-group"><input class="form-control" type="password" id="p" name="password" placeholder="密码" /></div>
+                        <div id="embed-captcha"></div>
+    					<p id="wait" class="show"></p>
+    					<p id="notice" class="hide"></p>
+                        <input type="button" id="login" class="btn btn-lg" value="登 录">
+                    </form>
+                </div>
+                <div class="ailcc">
+                	<a href="/admin/user/register/" class="home">注册账户</a>
+                	<a href="/" class="home">返回首页</a>
+                	<a onclick="yszc();return false;" href="javascript:" class="home">隐私协议</a>
+                </div>
+            </div>
+        </div>
+    </div>
+  	<script type="text/javascript" src="/static/js/jquery-3.1.1.min.js"></script>
+    <script type="application/javascript" src="/static/layui/layui.all.js"></script>
+    <script type="text/javascript" src="/static/js/gt.js"></script>
+    <script>;!function() {
+        var layer = layui.layer,
+            form = layui.form;
+        var str = location.href;
+        var num = str.indexOf("#");
+        pwdmin = 6;
+        reMethod = "GET", strs = str.substr(num + 1);
+        var reday = false;
+        var common = {
+            verification: {},
+            geetest_request: function(product, callback) {
+                var _this = this;
+                $.post("/admin/Users/startcaptcha", {
+                    action: 'login',
+                    t: (new Date()).getTime()
+                }, function(data) {
+                    data = JSON.parse(data);
+                    initGeetest({
+                        gt: data.gt,
+                        challenge: data.challenge,
+                        offline: !data.success,
+                        new_captcha: data.new_captcha,
+                        product: product,
+                        https: true,
+                        width: '100%'
+                    }, function(captchaObj) {
+                        captchaObj.onSuccess(function() {
+                            _this.verification = captchaObj.getValidate();
+                        });
+                        callback(captchaObj);
+                    })
+                })
+            }
+        };
+        var login = {
+            event: function() {
+                document.onkeydown = function(e) {
+                    var ev = document.all ? window.event : e;
+                    if (ev.keyCode == 13) {
+                        $("#login").click();
+                    }
+                };
+            common.geetest_request('bind', function(captchaObj) {
+                $('#login').unbind().click(function() {
+                    if ($("#u").val() === '' || $("#p").val() === '') {
+                        layer.msg("账号或密码不能为空！");
+                        captchaObj.reset();
+                        return false;
+                    };
+                    if (!reday) {
+                        layer.msg('验证加载中，请稍后...', {
+                            icon: 16,
+                            time: 1000,
+                            shade: [0.3, '#000']
+                        });
+                        setTimeout(function() {
+                            captchaObj.verify();
+                        }, 1000);
+                    } else {
+                        captchaObj.verify();
+                    }
+                });
+                captchaObj.onReady(function() {
+                    reday = true;
+                });
+                captchaObj.onSuccess(function() {
+                    login.login_request($('#login').attr('data-type') == 'popup', captchaObj);
+                });
+                captchaObj.onError(function() {
+                    console.log('出错啦，onError方法');
+                });
+            });
+        },
+        login_request: function(type, captchaObj) {
+            var user = $('#u').val(),
+                paw = $('#p').val(),
+                result = captchaObj.getValidate();
+            var loadT = layer.msg('正在登陆中，请稍后...', {
+                icon: 16,
+                time: 0,
+                shade: [0.3, '#000']
+            });
+            $.post('/admin/user/login', {
+                username: user,
+                password: paw,
+                geetest_challenge: result.geetest_challenge,
+                geetest_validate: result.geetest_validate,
+                geetest_seccode: result.geetest_seccode
+            }, function(data) {
+                layer.close(loadT);
+                if (data.code === 1) {
+                    layer.msg(data.msg, {
+                        icon: 6,
+                        time: 2000,
+                        shade: [0.3, '#000']
+                    });
+                    setTimeout(function() {
+                        if (self != top) {
+                            top.window.parent.location.reload();
+                        } else {
+                            location.href = "/admin/";
+                        }
+                    }, 1500);
+                } else {
+                    layer.msg(data.msg, {
+                        icon: 5,
+                        shade: [0.3, '#000']
+                    });
+                }
+            })
+        }
+    };
+        login.event();
+    }();
+    window.yszc = function(id,name){
+        layer.ready(function(){
+            layer.open({
+                title: '隐私政策',
+                type: 2,
+                area: ['95%', '80%'],
+                shadeClose: true,
+                shade: 0.3,
+                content: '/static/regagre.html',
+            });
+        }); 
+    };
+    </script>
+    </body>
+    </html>

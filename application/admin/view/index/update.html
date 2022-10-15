@@ -1,0 +1,173 @@
+{extend name="common/base" /}
+{block name="right"}
+<div class="layui-fluid">
+	<div class="layui-card">
+		<div class="layui-card-header">更新日志</div>
+    	<div class="admin-main">
+        	<ul class="layui-timeline">
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">特别感谢</h3>
+                        <p>特别感谢 Smusic 站长的帮助！https://music.yaode.xyz</p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2020-01-06</h3>
+                        <p>1.修改：搜索功能插件整合到本地。</p>
+                        <p>2.增加：腾讯/网易音乐解析API。</p>
+                        <p>3.地址：https://api.ailcc.com</p>
+                        
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2020-01-05</h3>
+                        <p>1.增加：网站设置，可以自定义网站地址、名称、简介、备案号等。</p>
+                        <p>2.增加：公用播放器功能，域名授权不做限制。</p>
+                        <p>3.增加：用户管理增加密码修改功能。</p>
+                        <p>4.开启：播放器缓存功能。</p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2020-01-04</h3>
+                        <p>1.增加：歌曲修改功能 目前并不完善。</p>
+                        <p>2.增加：清理缓存功能 目前仅管理员使用。</p>
+                        <p>3.增加：用户注册邀请码生成 用户消费 邀请者获取10%佣金 功能尚未启用。</p>
+                        <p>4.增加：播放器颜色自定义功能。</p>
+                        <p>5.调整：播放器授权，精减代码。</p>
+                        <p>6.去除：播放器默认专辑功能 后期。</p>
+                        <p>7.修复：后台提交空数据的错误。</p>
+                        <p>8.更新：5个小功能，就不一一列出了！</p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019-12-26</h3>
+                        <p>1.调整：播放器UI，去除歌词、播放模式按钮，修改为直接点击。</p>
+                        <p>2.修复：本地歌词导致的部分bug。</p>
+                        <p>2.优化：部分代码。</p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019-11-26</h3>
+                        <p>1.增加：前端搜索歌曲功能。</p>
+                        <p>2.增加：添加本地歌曲功能。</p>
+                        <p>3.修复：本地歌曲无歌词的问题。</p>
+                        <p>4.去除：桌面通知功能。</p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019-10-16</h3>
+                        <p>1.增加：歌曲解析检测</p>
+                        <p>2.增加：无法解析歌曲在播放器歌单列表中不显示</p>
+                        <p>3.修复：播放器单专辑时，点击暂停、播放按钮后，歌单提示跳至第一首歌曲的问题</p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019-10-12</h3>
+                        <p>1.修改LRC歌词样式</p>
+                        <p>2.增加：歌曲播放进度记忆</p>
+                        <p>3.修复：苹果手机浏览器歌曲解析问题</p>
+                        <p>4.修复：单曲循环模式下手动切歌无法切换下一首的问题</p>
+                        <p>4.修复：播放器弹出后再点击关闭，刷新网页后播放器不再弹出的问题</p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019-09-28</h3>
+                        <p>1.修复：QQ音乐vkey算法失效</p>
+                        <p>2.优化：更新歌单缓存刷新机制</p>
+                        <p>3.优化：桌面通知显示（自定义开启或关闭）</p>
+                        <p>4.优化：飘动音符显示（自定义开启或关闭）</p>
+                        <p>5.优化：模糊背景显示（自定义开启或关闭）</p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+					<div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">2019-09-01</h3>
+						<p>1.增加公用歌单功能</p>
+						<p>2.修改默认网站播放器授权问题</p>
+						<p>3.修改播放器不存在时500错误问题</p>
+					</div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2019-08-20</h3>
+                        <p>1.优化：精简播放器原有JS代码</p>
+						<p>2.新增：后台添加域名授权功能</p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">2019-08-13</h3>
+						<p>1.网站控制面板改版，采用Layui 样式</p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">2019-08-10</h3>
+						<p>1.优化当播放器只有一张专辑时，播放器直接显示歌曲列表!</p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+						<h3 class="layui-timeline-title">2019-07-18</h3>
+						<p>1.破解网易版权音乐限制NEW!</p>
+						<p>2.自定义播放器主色调</p>
+						<p>3.增加最近播放列表显示</p>
+						<p>4.增加播放记忆</p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <div class="layui-timeline-title">更多更新...</div>
+                    </div>
+                </li>
+        	</ul>
+        	<fieldset class="layui-elem-field layui-field-title">
+            	<legend>时间线：大事记</legend>
+        	</fieldset>
+        	<ul class="layui-timeline">
+            	<li class="layui-timeline-item">
+                	<i class="layui-icon layui-timeline-axis"></i>
+                	<div class="layui-timeline-content layui-text">
+                    	<div class="layui-timeline-title">2019年7月，在宅音乐基础上二开播放器，并改名为 沛霖音乐播放器</div>
+                	</div>
+            	</li>
+            	<li class="layui-timeline-item">
+                	<i class="layui-icon layui-timeline-axis"></i>
+                	<div class="layui-timeline-content layui-text">
+                    	<div class="layui-timeline-title">2019年6月，部署宅音乐 播放器</div>
+                	</div>
+        		</li>
+            	<li class="layui-timeline-item">
+                	<i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-timeline-axis"></i>
+                	<div class="layui-timeline-content layui-text">
+                    	<div class="layui-timeline-title">更久前...</div>
+                	</div>
+            	</li>
+        </ul>
+    	</div>
+	</div>
+</div>
+{/block}

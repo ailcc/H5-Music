@@ -1,0 +1,155 @@
+{extend name="common/base" /}
+{block name="right"}
+      <div class="layui-fluid">
+        <div class="layui-collapse">
+          <header class="larry-personal-tit" style="width:90%;"><span><i class="fa fa-user"></i> 个人信息</span></header>
+          <div class="larry-personal-body clearfix">
+          	<div class="layui-form layui-form-pane">
+          		<div class="layui-form-item">
+          			<label class="layui-form-label">用户账号</label>
+          			<div class="layui-input-block">
+          				<input type="text" id="username" value="{$userInfo.username}" disabled="disabled" autocomplete="off" class="layui-disabled layui-input">
+          			</div>
+          		</div>
+          		<div class="layui-form-item">
+          			<label class="layui-form-label">Token</label>
+          			<div class="layui-input-block">
+          				<input type="token" name="token" id="token" value="{$userInfo.token}" disabled="disabled" class="layui-disabled layui-input">
+          			</div>
+          		</div>
+          		<div class="layui-form-item">
+          			<label class="layui-form-label">绑定QQ号</label>
+          			<div class="layui-input-block">
+          				<input type="qq" id="qq" value="{$userInfo.qq}" autocomplete="off" disabled="disabled" class="layui-disabled layui-input">
+          			</div>
+          		</div>
+          		<div class="layui-form-item">
+          			<label class="layui-form-label">绑定邮箱</label>
+          			<div class="layui-input-block">
+          				<input type="email" name="email" id="email" value="{$userInfo.email}" disabled="disabled" class="layui-disabled layui-input">
+          			</div>
+          		</div>
+          		<div class="layui-form-item">
+          			<label class="layui-form-label">登录地址</label>
+          			<div class="layui-input-block">
+          				<input type="text" value="{$userInfo.last_login_site}" disabled="disabled" autocomplete="off" class="layui-disabled layui-input">
+          			</div>
+          		</div>
+          		<div class="layui-form-item">
+          			<label class="layui-form-label">登录时间</label>
+          			<div class="layui-input-block">
+          				<input type="text" value="{$userInfo.last_login_time}" disabled="disabled" autocomplete="off" class="layui-disabled layui-input">
+          			</div>
+          		</div>
+          		<div class="layui-form-item">
+          			<label class="layui-form-label">注册时间</label>
+          			<div class="layui-input-block">
+          				<input type="text" value="{$userInfo.create_time}" disabled="disabled" autocomplete="off" class="layui-disabled layui-input">
+          			</div>
+          		</div>
+          		<div class="layui-form-item">
+          			<label class="layui-form-label">注册IP</label>
+          			<div class="layui-input-block">
+          				<input type="text" value="{$userInfo.create_ip}" disabled="disabled" autocomplete="off" class="layui-disabled layui-input">
+          			</div>
+          		</div>
+          		<div class="layui-form-item">
+          			<label class="layui-form-label">歌单数量</label>
+          			<div class="layui-input-block">
+          				<input type="text" value="{:count($userSongSheets)}" disabled="disabled" autocomplete="off" class="layui-disabled layui-input">
+          			</div>
+          		</div>
+          	</div>
+          </div>
+             <div class="layui-colla-item">
+              <h2 class="layui-colla-title">修改密码</h2>
+                <div class="layui-colla-content">
+                   <div class="pass-form">
+                      <form class="layui-form form-container" method="post">
+                         <blockquote class="layui-elem-quote">密码最少6位数，建议大写+小写+数字以便保护你的账户安全</blockquote>
+                            <div class="layui-form-item">
+                               <label class="layui-form-label">旧密码</label>
+                                  <div class="layui-input-block">
+                                     <input type="password" id="beforePwd" required="" lay-verify="required" placeholder="请输入之前的密码" autocomplete="off" class="layui-input">
+                                  </div>
+                            </div>
+                            <div class="layui-form-item">
+                               <label class="layui-form-label">新密码</label>
+                                  <div class="layui-input-block">
+                                     <input type="password" id="newPwd" required="" lay-verify="required" placeholder="请输入新的密码" autocomplete="off" class="layui-input">
+                                  </div>
+                            </div>
+                            <div class="layui-form-item">
+                               <label class="layui-form-label">确认密码</label>
+                                  <div class="layui-input-block">
+                                     <input type="password" id="chkPwd" required="" lay-verify="required" placeholder="请在输入一次密码" autocomplete="off" class="layui-input">
+                                  </div>
+                            </div>
+                            <div class="layui-input-block">
+                               <div class="layui-input-block save-button" >
+                                  <button class="layui-btn" lay-submit lay-filter="updPwd">立即修改</button>
+                                  <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                               </div>
+                            </div>
+                      </form>
+                   </div>
+                </div>
+             </div>
+             <div class="layui-colla-item">
+              <h2 class="layui-colla-title">修改QQ</h2>
+                <div class="layui-colla-content">
+                   <div class="pass-form">
+                      <form class="layui-form form-container" method="post">
+                         <blockquote class="layui-elem-quote">QQ号主要用于授权查询，系统邮件通知和找回密码</blockquote>
+                            <div class="layui-form-item">
+                               <label class="layui-form-label">新QQ号</label>
+                                  <div class="layui-input-block">
+                                     <input id="newqq" required="" lay-verify="required" placeholder="请输入新的QQ" autocomplete="off" class="layui-input">
+                                  </div>
+                            </div>
+                            <div class="layui-form-item">
+                               <label class="layui-form-label">确认QQ号</label>
+                                  <div class="layui-input-block">
+                                     <input id="chkqq" required="" lay-verify="required" placeholder="请再输入一次QQ号" autocomplete="off" class="layui-input">
+                                  </div>
+                            </div>
+                            <div class="layui-input-block">
+                               <div class="layui-input-block save-button">
+                                  <button class="layui-btn" lay-submit lay-filter="updqq">立即修改</button>
+                                  <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                               </div>
+                            </div>
+                      </form>
+                   </div>
+                </div>
+             </div>
+             <div class="layui-colla-item">
+              <h2 class="layui-colla-title">修改邮箱</h2>
+                <div class="layui-colla-content">
+                   <div class="pass-form">
+                      <form class="layui-form form-container" method="post">
+                         <blockquote class="layui-elem-quote">邮箱主要用于授权查询，系统邮件通知和找回密码</blockquote>
+                            <div class="layui-form-item">
+                               <label class="layui-form-label">新邮箱</label>
+                                  <div class="layui-input-block">
+                                     <input id="newmail" required="" lay-verify="required" placeholder="请输入新的邮箱" autocomplete="off" class="layui-input">
+                                  </div>
+                            </div>
+                            <div class="layui-form-item">
+                               <label class="layui-form-label">确认邮箱</label>
+                                  <div class="layui-input-block">
+                                     <input id="chkmail" required="" lay-verify="required" placeholder="请再输入一次邮箱" autocomplete="off" class="layui-input">
+                                  </div>
+                            </div>
+                            <div class="layui-input-block">
+                               <div class="layui-input-block save-button">
+                                  <button class="layui-btn" lay-submit lay-filter="updmail">立即修改</button>
+                                  <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                               </div>
+                            </div>
+                      </form>
+                   </div>
+                </div>
+             </div>
+          </div>
+        </div>{/block}{block name="script"}{/block}

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta charset="utf-8">
+  <title>{$ailcc.ailcc_name} - 控制台</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="{$ailcc.ailcc_url}/static/layuiadmin/layui/css/layui.css?v=0801" media="all">
+  <link rel="stylesheet" href="{$ailcc.ailcc_url}/static/layuiadmin/css/admin.css?v=0801" media="all">
+  <link rel="stylesheet" href="{$ailcc.ailcc_url}/static/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{$ailcc.ailcc_url}/static/css/index.css">
+  <script type="text/javascript" src="{$ailcc.ailcc_url}/static/js/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="{$ailcc.ailcc_url}/static/js/jquery.qrcode.js"></script>
+</head>
+<body class="layui-layout-body">{block name="side"}{include file="common/side"}{/block}
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <!-- 头部区域 -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item layadmin-flexible" lay-unselect=""><a href="javascript:;" layadmin-event="flexible" title="侧边伸缩"><i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i></a></li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect=""><a href="/" target="_blank" title="首页"><i class="layui-icon layui-icon-website"></i></a></li>
+                <li class="layui-nav-item" lay-unselect><a href="javascript:;" layadmin-event="refresh" title="刷新"><i class="layui-icon layui-icon-refresh-3"></i></a></li>
+            </ul>
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">   
+          <li class="layui-nav-item" lay-unselect><a lay-href="/admin/index/update" layadmin-event="message" title="更新" lay-text="更新日志"><i class="layui-icon layui-icon-notice"></i><span class="layui-badge-dot"></span></a></li>
+          <li class="layui-nav-item layui-hide-xs" lay-unselect><a href="javascript:;" layadmin-event="theme" title="主题"><i class="layui-icon layui-icon-theme"></i></a></li>
+          <li class="layui-nav-item layui-hide-xs" lay-unselect><a href="javascript:;" layadmin-event="note" title="便签"><i class="layui-icon layui-icon-note"></i></a></li>
+          <li class="layui-nav-item" lay-unselect>
+            <a href="javascript:;"><cite><img src="https://q1.qlogo.cn/g?b=qq&nk={$Think.session.loginUser.qq ? $Think.session.loginUser.qq : 1 }&s=100" class="layui-nav-img"/>{$Think.session.loginUser.username}</cite></a>
+            <dl class="layui-nav-child">
+              <dd><a lay-href="/admin/user/resetPwd"><i class="layui-icon layui-icon-edit" aria-hidden="true"></i> 修改密码</a></dd>
+              <dd><a href="javascript:;" id="lock"><i class="layui-icon layui-icon-password" aria-hidden="true"></i> 锁定面板</a></dd><hr>
+              <dd><a href="/admin/user/logout"><i class="layui-icon layui-icon-refresh-3" aria-hidden="true"></i> 退出</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item layui-hide-xs" lay-unselect><a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a></li>
+          <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect><a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a></li>
+        </ul>
+      </div>
+      <!-- 侧边菜单 -->
+      <div class="layui-side layui-side-menu" id="layui-side-scroll">
+        <div class="layui-side-scroll">
+          <div class="layui-logo" lay-href="/admin/index/help"><span>{$ailcc.ailcc_name}</span></div>
+          <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+            <li data-name="home" class="layui-nav-item"><a href="/admin/" lay-direction="2"><i class="layui-icon layui-icon-home"></i><cite>后台首页</cite></a></li>
+            <li data-name="home" class="layui-nav-item layui-nav-itemed"><a href="javascript:;" lay-direction="2"><i class="layui-icon layui-icon-user"></i><cite>用户中心</cite></a>
+              <dl class="layui-nav-child">
+                <dd data-name="console"><a lay-href="/admin/index/help"><i class="layui-icon layui-icon-help"></i>使用帮助</a></dd>
+                <dd data-name="console"><a lay-href="/admin/user/userinfo"><i class="layui-icon layui-icon-username"></i>账户信息</a></dd>
+                <dd data-name="console"><a lay-href="/admin/index/update"><i class="layui-icon layui-icon-notice"></i>更新日志</a></dd>
+                <!--<dd data-name="console"><a href="javascript:;" onclick="qun('qq','1027&k=5bq24dB');return false;"><i class="layui-icon layui-icon-login-qq"></i> 售后QQ群</a></dd>-->
+                <!--<dd data-name="console"><a href="javascript:;" onclick="qun('wx','3683905');return false;"><i class="layui-icon layui-icon-login-wechat"></i> 微信交流群</a></dd>-->
+              </dl>
+            </li>
+            <li data-name="component" class="layui-nav-item"><a href="javascript:;" lay-direction="2"><i class="layui-icon layui-icon-app"></i><cite>播放器 [{:count($userPlayers)}]</cite></a>
+               <dl class="layui-nav-child">
+                  <dd><a href="javascript:;" id="addPlayer"><i class="layui-icon layui-icon-add-1"></i>添加播放器</a></dd>
+                  {volist name="userPlayers" id="vo"}<dd><a lay-href="/admin/player/{$vo.id}"><i class="layui-icon layui-icon-headset"></i>{$vo.name}<span onclick="delPlayer('{$vo.id}');return false;"></span></a></dd>
+            	  {/volist}</dl>
+            </li>
+            <li data-name="app" class="layui-nav-item"><a href="javascript:;" lay-direction="2"><i class="layui-icon layui-icon-list"></i><cite>歌单管理 [{:count($userSongSheets)}]</cite></a>
+              <dl class="layui-nav-child">
+                <dd><a href="javascript:;" id="addSongSheet"><i class="layui-icon layui-icon-add-1"></i>添加歌单</a></dd>
+                {volist name="userSongSheets" id="vo"}<dd><a lay-href="/admin/songSheet/{$vo.id}">{eq name="vo.type" value="sdtj"}<img class="typeico" src="{$ailcc.ailcc_url}/static/images/type/sdtj.png" width="16px" height="16px">{else}<img class="typeico" src="{$ailcc.ailcc_url}/static/images/type/wygd.png" width="16px" height="16px">{/eq}{$vo.name}<span onclick="delSongSheet('{$vo.id}');return false;"></span></a></dd>
+                {/volist}</dl>
+            </li>
+            {if ($userInfo['permissions'] == '0')}<li data-name="home" class="layui-nav-item layui-nav-itemed"><a href="javascript:;" lay-direction="2"><i class="layui-icon layui-icon-user"></i><cite>网站管理</cite></a>
+              <dl class="layui-nav-child">
+                <dd data-name="home"><a lay-href="/admin/index/setting/"><i class="layui-icon layui-icon-auz"></i>授权设置</a></dd>
+                <dd data-name="home"><a lay-href="/admin/manage/user/"><i class="layui-icon layui-icon-user"></i>用户列表</a></dd>
+                <dd data-name="home"><a lay-href="/admin/index/options/"><i class="layui-icon layui-icon-set"></i>网站设置</a></dd>
+                <dd data-name="home"><a lay-href="/admin/manage/invite/"><i class="layui-icon layui-icon-set"></i>邀请码管理</a></dd>
+                <dd data-name="console"><a href="javascript:;" onclick="qqhc(this)" data-GetUrl="{:url('qqhc')}"><i class="layui-icon layui-icon-fonts-clear"></i>清除缓存</a></dd>
+              </dl>
+            </li>
+          {/if}</ul>
+        </div>
+      </div>
+      <!-- 页面标签 -->
+      <div class="layadmin-pagetabs" id="LAY_app_tabs">
+        <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+        <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+        <!-- <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div> -->
+        <div class="layui-icon layadmin-tabs-control layui-icon-down">
+          <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+            <li class="layui-nav-item" lay-unselect>
+              <a href="javascript:;"></a>
+              <dl class="layui-nav-child layui-anim-fadein">
+                <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+                <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+                <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+              </dl>
+            </li>
+          </ul>
+        </div>
+        <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+          <ul class="layui-tab-title" id="LAY_app_tabsheader">
+            <li lay-id="/admin/indexconsole" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+          </ul>
+        </div>
+      </div> 
+      <!-- 主体内容 -->
+      <div class="layui-body" id="LAY_app_body">
+        <div class="layadmin-tabsbody-item layui-show">
+          <iframe src="/admin/index/info" frameborder="0" class="layadmin-iframe"></iframe>
+        </div>
+      </div>
+      <!-- 辅助元素，一般用于移动设备下遮罩 -->
+      <div class="layadmin-body-shade" layadmin-event="shade"></div>
+    </div>
+  </div>
+<!--锁屏模板 start-->
+<script type="text/template" id="lock-temp">
+    <div class="admin-header-lock" id="lock-box">
+        <div class="admin-header-lock-img">
+            <img src="https://q1.qlogo.cn/g?b=qq&nk={$Think.session.loginUser.qq ? $Think.session.loginUser.qq : 1 }&s=100"/>
+        </div>
+        <div class="admin-header-lock-name" id="lockUserName">{$Think.session.loginUser.username}</div>
+        <input class="admin-header-lock-input" value="输入密码解锁.." name="lockPwd" id="lockPwd" style="height: 38px;"/>
+        <button class="layui-btn layui-btn-small" id="unlock" style="margin-top: -2px;">解锁</button>
+    </div>
+</script>
+<!--锁屏模板 end -->{block name="footer"}{include file="common/footer"}{/block}  
+<script>
+  var ailccLock = localStorage.getItem("ailccLock");
+    ailccLock = typeof ailccLock === "undefined" ? false : ailccLock === "true";
+       //清除所有缓存
+  function qqhc(obj,data) {
+      var url = obj.getAttribute('data-GetUrl');
+      layer.confirm('确定要清除所有播放器缓存？', {
+            title:'提示：',
+            btn: ['确定', '取消'] //按钮
+        },function(){
+          $.get(url,function(info){
+              if(info.code === 1){
+                  setTimeout(function () {
+                    window.parent.location.reload();
+                  }, 1000);  //清除成功1秒后刷新页面，如果不需要刷新可以注释掉此行。
+              }
+              //layer.msg(info.msg,{icon:1});
+              layer.msg(info.msg);
+          });
+      },
+      function(){});
+  };
+    layui.config({
+        base: '/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'layer'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer;
+        //锁屏
+        $(document).on('keydown', function () {
+            var e = window.event;
+            if (e.keyCode === 76 && e.altKey) {
+                if (ailccLock) {
+                    layer.msg('不要闹！已经锁定了...', {icon: 2, time: 1000});
+                } else {
+                    //alert("你按下了alt+l");
+                    lock($, layer);
+                    localStorage.setItem("ailccLock", "true");
+                }
+            }
+        });
+        $('#lock').on('click', function () {
+            lock($, layer);
+            ailccLock = true;
+            localStorage.setItem("ailccLock", "true");
+        });
+        //手机设备的简单适配
+        var treeMobile = $('.site-tree-mobile'),
+            shadeMobile = $('.site-mobile-shade');
+        treeMobile.on('click', function () {
+            $('body').addClass('site-mobile');
+        });
+        shadeMobile.on('click', function () {
+            $('body').removeClass('site-mobile');
+        });
+        if (ailccLock) {
+            lock($, layer);
+        }
+    });
+
+    function lock($, layer) {
+        //自定页
+        layer.open({
+            title: false,
+            type: 1,
+            closeBtn: 0,
+            anim: 6,
+            content: $('#lock-temp').html(),
+            shade: [0.9, '#393D49'],
+            success: function (layero, lockIndex) {
+                //给显示用户名赋值
+                //layero.find('div#lockUserName').text('admin');
+                layero.find('input[name=lockPwd]').on('focus', function () {
+                    var $this = $(this);
+                    if ($this.val() === '输入密码解锁..') {
+                        $this.val('').attr('type', 'password');
+                    }
+                })
+                    .on('blur', function () {
+                        var $this = $(this);
+                        if ($this.val() === '' || $this.length === 0) {
+                            $this.attr('type', 'password').val('输入密码解锁..');
+                        }
+                    });
+                //在此处可以写一个请求到服务端删除相关身份认证，因为考虑到如果浏览器被强制刷新的时候，身份验证还存在的情况
+                //do something...
+                //e.g.
+                /*
+                 $.post(url,params,callback,'json');
+                 */
+                //绑定解锁按钮的点击事件
+                layero.find('button#unlock').on('click', function () {
+                    var $lockBox = $('div#lock-box');
+
+                    var userName = $lockBox.find('div#lockUserName').text();
+                    var pwd = $lockBox.find('input[name=lockPwd]').val();
+                    if (pwd === '输入密码解锁..' || pwd.length === 0) {
+                        layer.msg('请输入密码..', {
+                            icon: 2,
+                            time: 1000
+                        });
+                        return;
+                    }
+                    unlock(userName, pwd);
+                });
+                /**
+                 * 解锁操作方法
+                 * @param {String} 用户名
+                 * @param {String} 密码
+                 */
+                var unlock = function (un, pwd) {
+                    //这里可以使用ajax方法解锁
+                    $.post('/admin/user/login', {username: un, password: pwd}, function (data) {
+                        //验证成功
+                        if (data.code == 1) {
+                            localStorage.setItem("ailccLock", "false");
+                            //关闭锁屏层
+                            layer.close(lockIndex);
+                            layer.msg('解锁成功！', {icon: 1, time: 1000});
+                            ailccLock = false;
+                        } else {
+                            layer.msg('密码输入错误..', {icon: 2, time: 1000});
+                        }
+                    }, 'json');
+
+                    //演示：默认输入密码都算成功
+                    //关闭锁屏层
+                    //layer.close(lockIndex);
+                };
+            }
+        });
+    };
+</script>
+</body>
+</html>

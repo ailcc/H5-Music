@@ -1,0 +1,102 @@
+{extend name="common/base" /}
+{block name="right"}
+<div class="layui-fluid">
+    <div class="layui-tab layui-tab-card" lay-filter="component-tabs-brief" style="margin: 0;">
+        <ul class="layui-tab-title">
+            <li class="layui-this">网站设置</li>
+        </ul>
+        <div class="layui-tab-content" style="background-color: #fff;">
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form layui-form-pane" lay-filter="form-config">
+                <div class="layui-form-item">
+                   <label class="layui-form-label">网站名称</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="ailcc_name" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">网站关键词</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="ailcc_key" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">网站简介</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="ailcc_des" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">网站地址</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="ailcc_url" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">网站背景</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="ailcc_img" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">网站ICO</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="ailcc_ico" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">ICP备案</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="ailcc_icp" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">公安备案</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="ailcc_gaba" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                   <label class="layui-form-label">注册邀请码</label>
+                      <div class="layui-input-block">
+                         <input type="text" name="ailcc_yqm" class="layui-input">
+                      </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn" lay-submit lay-filter="submit">提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary" lay-submit lay-filter="cancel">重置</button>
+                    </div>
+                </div>
+           </form>
+        </div>
+   </div>
+</div>
+<style>.layui-table-body,html{
+    overflow-x:hidden
+}
+    </style>
+{/block}
+{block name="script"}
+<script>
+layui.use(['form', 'layer','element'], function () {
+    var element = layui.element,
+    $ = layui.jquery,
+    form = layui.form;
+    var options = {$options|raw};
+    form.val("form-config", options);
+    form.on('submit(submit)', function (data) {
+        loading =layer.load(1, {shade: [0.1,'#fff']});
+        $.post("{:url('index/ailcc')}",data.field,function(res){
+            layer.close(loading);
+            console.log(data.field);
+            if(res.code > 0){
+                layer.msg(res.msg,{icon: 1, time: 1000});
+            }else{
+                layer.msg(res.msg,{icon: 2, time: 1000});
+            }
+        });
+    });
+});
+</script>
+{/block}

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>{$ailcc.ailcc_name}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{$ailcc.ailcc_key}" />
+<meta name="description" content="{$ailcc.ailcc_des}" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link type="text/css" rel="stylesheet" media="all" href="{$ailcc.ailcc_url}/static/index/css/bootstrap.css">
+<link type="text/css" rel="stylesheet" media="all" href="{$ailcc.ailcc_url}/static/index/css/style.css"> 
+<link type="text/css" rel="stylesheet" media="all" href="{$ailcc.ailcc_url}/static/index/css/flexslider.css"/> 
+<link rel="stylesheet" href="{$ailcc.ailcc_url}/static/index/css/font-awesome.css"> 
+<link rel="stylesheet" type="text/css" media="all" href="{$ailcc.ailcc_url}/static/index/css/owl.carousel.css">
+<script src="{$ailcc.ailcc_url}/static/index/js/jquery-2.2.3.min.js"></script>  
+</head>
+<body> 
+	<!-- banner -->
+	<div class="banner" style="background:url({$ailcc.ailcc_img})no-repeat center bottom;">
+		<!-- header -->
+		<div class="header">
+			<div class="container">
+				<div class="header-w3lsrow"> 
+					<div class="menu"> 
+						<div class="toggle"></div> 
+						<ul class="w3nav">
+							<li><a href="{$ailcc.ailcc_url}" class="active"> 首页</a></li>
+							<li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">旗下网站<span class="caret"></span></a>
+								<ul class="dropdown-menu">		
+									<li><a href="https://ailcc.com" target="_blank">沛霖主页</a></li> 
+									<li><a href="https://img.ailcc.com" target="_blank">免费图床</a></li> 
+									<li><a href="https://plkf.ailcc.com" target="_blank">客服系统</a></li> 
+									<li><a href="https://api.ailcc.com" target="_blank">业余API</a></li>  
+								</ul>
+							</li> 
+							<li><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=66257875&amp;site=qq&amp;menu=yes" target="_blank">联系站长</a></li>
+							<li><a href="https://mi.aliyun.com/shop/36337" target="_blank">域名出售</a></li>
+							<li><a href="https://weibo.com/uc539496" target="_blank">站长微博</a></li>
+							<li><a href="{$ailcc.ailcc_url}/admin/user/login/" target="_blank">登陆/注册</a></li>
+						</ul>
+						<div class="clearfix"> </div>
+					</div> 
+					<!--<div class="logo">-->
+					<!--	<h1><a href="index.html">沛霖主页</a></h1>-->
+					<!--</div>  -->
+					<!--<div class="header-right">   -->
+					<!--	<ul>-->
+					<!--		<li><a href="signin.html">SignIn</a></li>-->
+					<!--		<li><a href="signup.html">SignUp</a></li> -->
+					<!--	</ul>-->
+					<!--	<div class="clearfix"> </div> -->
+					<!--</div>-->
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+		</div>
+		<!-- //header --> 
+		<!-- banner-text -->
+		<div class="banner-text"> 
+			<div class="container">
+				<div class="flexslider">
+					<ul class="slides">
+						<li>
+							<div class="banner-w3lstext">
+								<h2>Html5 播放器</h2>
+								<p>播放器自动生成短代码调用，并提供配套插件，后台任何修改实时更新，无需修改代码，无需安装插件，支持多个音乐平台解析，歌单调用，支持自定义歌曲播放。</p>
+							</div>
+						</li>
+						<li>
+							<div class="banner-w3lstext">
+								<h3>多列表专辑</h3>
+								<p>多个列表随心切换，想听哪个专辑听哪个，可添加无限个音乐专辑，无限首歌曲。播放器会根据专辑图片主色调，自动改变主体，歌词文字等色彩，并可自由开启模糊背景等功能。</p>
+							</div>
+						</li>
+						<li>
+							<div class="banner-w3lstext">
+								<h3>设备兼容</h3>
+								<p>采用响应式设计，无论电脑、手机、平板均可使用，都会自动适应您的设备。支持解析LRC格式的歌词,精确到微秒,一站分享多站用。</p>
+							</div>
+						</li>
+					</ul> 
+				</div> 	
+				<!-- FlexSlider --> 
+				<script defer src="{$ailcc.ailcc_url}/static/index/js/jquery.flexslider.js"></script>
+				<script type="text/javascript">
+					$(window).load(function(){
+					  $('.flexslider').flexslider({
+						animation: "slide",
+						start: function(slider){
+						  $('body').removeClass('loading');
+						}
+					  });
+					});
+				</script>
+				<!-- End-slider-script -->
+			</div>
+		</div>
+		<!-- //banner-text --> 
+	</div>
+	<!-- //trips -->
+	<!-- news -->
+	<div class="news"> 
+		<div class="container">
+			<h3 class="w3agileits-title">功能简介</h3>
+			<div class="new-agileinfo">
+				<div class="col-md-4 news-left">
+					<ul id="demo1_thumbs" class="list-inline"> 
+						<li><a href="{$ailcc.ailcc_url}/static/index/images/img1.png"><img src="{$ailcc.ailcc_url}/static/index/images/img1.png" style="width:102px;height:100px;" alt="" data-desoslide-caption="<h3>用户管理 简介</h3> <br>用户管理不仅仅只是删除、禁用账户，他必须要能编辑用户资料、用户账户下其他栏目，才算是一个完整的功能。">
+							<div class="news-w3text">
+								<h4>用户管理 - 管理权限</h4>
+								<h6><i class="fa fa-calendar" aria-hidden="true"></i> 09 / 10 / 2019</h6>	
+								<p>用户管理部仅仅只是删除、禁用账户，他必须是一个完整的功能。</p>
+							</div> 
+						</a></li>
+						<li><a href="{$ailcc.ailcc_url}/static/index/images/img2.png"><img src="{$ailcc.ailcc_url}/static/index/images/img2.png" style="width:102px;height:100px;" alt="" data-desoslide-caption="<h3>用户编辑 简介</h3> <br>用户编辑是用户管理下级功能，在用户管理的基础上增加的新功能。如上所述，一个完整的用户管理功能必须要能编辑用户账户下所有栏目。">
+							<div class="news-w3text">
+								<h4>用户编辑 - 管理权限</h4>
+								<h6><i class="fa fa-calendar" aria-hidden="true"></i> 09 / 10 / 2019</h6>	
+								<p>用户编辑是用户管理下级功能，在用户管理的基础上增加的新功能。</p>
+							</div>   
+						</a></li>
+						<li><a href="{$ailcc.ailcc_url}/static/index/images/img3.png"><img src="{$ailcc.ailcc_url}/static/index/images/img3.png" style="width:102px;height:100px;" alt="" data-desoslide-caption="<h3>整站授权 简介</h3> <br>整站授权不仅仅只是对盗链解析的限制，更加精彩是的他可以自定义授权域名。一键开启关闭解析功能，自定义添加默认无需授权域名网站，自定义未授权提示信息等。">
+							<div class="news-w3text">
+								<h4>整站授权 - 管理权限</h4>
+								<h6><i class="fa fa-calendar" aria-hidden="true"></i> 09 / 10 / 2019</h6>	
+								<p>整站授权不仅仅只是对盗链解析的限制，更加精彩是的他可以自定义授权域名。</p>
+							</div> 
+						</a></li>
+						<li><a href="{$ailcc.ailcc_url}/static/index/images/img4.png"><img src="{$ailcc.ailcc_url}/static/index/images/img4.png" style="width:102px;height:100px;" alt="" data-desoslide-caption="<h3>播放器界面</h3> <br>站长一直觉得，界面并不重要，但人类是视觉动物，所以界面也做了优化。页面保存自动刷新，拖拽排序，一键打开关闭指定功能，操作简单、易上手，后台控制面板大气，上档次。">
+							<div class="news-w3text">
+								<h4>播放器界面 - 用户</h4>
+								<h6><i class="fa fa-calendar" aria-hidden="true"></i> 09 / 10 / 2019</h6>	
+								<p>站长一直觉得，界面并不重要，但人类是视觉动物，所以界面也做了优化。</p>
+							</div> 
+						</a></li> 
+					</ul>
+				</div>
+				<div id="demo1_main_image" class="col-md-8  news-right"></div>
+			</div>    
+			<link rel="stylesheet" href="{$ailcc.ailcc_url}/static/index/css/jquery.desoslide.css">
+			<script src="{$ailcc.ailcc_url}/static/index/js/jquery.desoslide.js"></script> 
+			<script>
+			$('#demo1_thumbs').desoSlide({
+				main: {
+					container: '#demo1_main_image',
+					cssClass: 'img-responsive'
+				},
+				 effect: 'sideFade',
+				caption: true
+			});
+			</script> 
+		</div>
+	</div>
+	<!-- //news --> 
+	<!-- footer -->
+	<div class="footer">
+		<div class="container">
+			<div class="footer-copy">
+				<p>Copyright &copy; 2018-2019.Ailcc.com All rights reserved.</p>
+			</div>
+		</div>
+	</div>
+	<!-- //footer --> 
+	<!-- menu js -->
+	<div class="bg-image-pattern"></div>
+	<script>
+		$('.toggle').on('click', function() {
+			$('.menu').toggleClass('open');  
+			$('.w3nav').toggleClass('show-w3nav');  
+			$('.w3nav a').toggleClass('show-w3nav-link');  
+			$('.toggle').toggleClass('close');  
+		});
+	</script>
+	<!-- //menu js -->
+	<script src="{$ailcc.ailcc_url}/static/index/js/owl.carousel.js"></script>
+	<!-- start-smooth-scrolling -->
+	<script type="text/javascript" src="{$ailcc.ailcc_url}/static/index/js/move-top.js"></script>
+	<script type="text/javascript" src="{$ailcc.ailcc_url}/static/index/js/easing.js"></script>
+	<script type="text/javascript" src="{$ailcc.ailcc_url}/static/plugins/layer-v3.0.1/layer/layer.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$(".scroll").click(function(event){		
+				event.preventDefault();
+				$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+			});
+		});
+	if(!getCookie('ailcc_player_layer')){
+		layer.open({
+			type: 1
+			,title: false
+			,closeBtn: false
+			,area: '300px;'
+			,shade: 0.8
+			,resize: false
+			,btn: ['确定']
+			,btnAlign: 'c'
+			,moveType: 1 
+			,content: '<div style="padding: 10px; line-height: 22px; background-color: #fff; color: #000; font-weight: 300;"><center>站内通知</center></div><div style="padding: 10px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;"><p>注册前请先联系站长QQ，否则一律删除注册账户。</br>本站源码出售，有需要的请联系站长QQ:66257875 或者邮件:admin@ailcc.com</br>调整：播放器UI界面(去除歌词、播放模式按钮)，修改为直接点击模式</br>增加：歌曲修改功能</br>增加：播放器颜色自定义功能</br>调整：播放器授权功能，精减代码！</br>增加：公共播放器 调用地址登陆后台查看！</br></br>连续30天未登录账户会被自动停用，如需继续使用，请联系站长。</p></div>'
+			,success: function(layero){
+				setCookie("ailcc_player_layer","1",9999999);
+    			var btn = layero.find('.layui-layer-btn');
+    			btn.find('.layui-layer-btn0').attr({
+    				target: '_blank'
+    				,target: '_blank'
+    			});
+			}
+		});
+	}
+	function getCookie(name) {
+		var nameEQ = name + "=";
+		var ca = document.cookie.split(';');
+		for(var i=0;i < ca.length;i++) {
+			var c = ca[i];
+			while (c.charAt(0)==' ') {
+				c = c.substring(1,c.length);
+			}
+			if (c.indexOf(nameEQ) == 0) {
+				return unescape(c.substring(nameEQ.length,c.length));
+			}
+		}
+		return false;
+	}
+	function setCookie(name, value, seconds) {
+		seconds = seconds || 0;
+		var expires = "";
+		if (seconds != 0 ) {
+			var date = new Date();
+			date.setTime(date.getTime()+(seconds*1000));
+			expires = "; expires="+date.toGMTString();
+		}
+		document.cookie = name+"="+escape(value)+expires+"; path=/";
+	}
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$().UItoTop({ easingType: 'easeOutQuart' });
+		});	
+	</script>
+    <script src="{$ailcc.ailcc_url}/static/index/js/bootstrap.js"></script>
+    <script src="https://plkf.ailcc.com/static/customer/js/whisper-tool.js" charset="utf-8"></script>
+	<script>
+    $(function(){
+        var ws = new whisper();
+        $("#cs-pre-sales,#cs-after-sales").click(function(){
+            var group = $(this).attr('data-group');
+            var uid = localStorage.getItem('uid');
+            if(uid == null) {
+                uid = uid = Number(Math.random().toString().substr(3, 8) + Date.now()).toString(36);
+                localStorage.setItem('uid', uid);
+            }
+            ws.init({
+            obj: $(this),
+            id: uid,
+            whisper_domain: 'https://plkf.ailcc.com',
+            name: '访客' + uid,
+            avatar: '/',
+            group: group
+            });
+            $("#widget-trigger").show();
+            $('#cs-groups').hide();
+        });
+    });
+	</script>
+	<script src="https://api.ailcc.com/1225/snow.js" type="text/javascript"></script>
+	<script id="ailcc" src="https://music.ailcc.com/player/js/player.js" key="51e72c3fbed14c34ac9c1a63af944150" m="1"></script>
+</body>
+</html>

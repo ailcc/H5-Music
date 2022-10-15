@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1;" charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>沛霖音乐播放器</title>
+<!--<link rel="stylesheet" href="/static/css/fly.css">-->
+<script type="text/javascript" src="/static/js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<header>
+</header>
+<script type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/static/js/ribbon.js"></script>
+<section class="body" style="transform: translate3d(0px, 0%, 0px);">
+<section class="sec0 page count">
+<div class="warp view0">
+<div>
+<div class="gb"></div>
+<div class="login1">
+<a href="/admin/user/login" target="_blank">登陆/注册</a>
+</div>
+</div>
+</div>
+</section>
+</section>
+<script src="https://plkf.ailcc.com/static/customer/js/whisper-tool.js"></script>
+<script>
+    $(function(){
+        var ws = new whisper();
+        $("#cs-pre-sales,#cs-after-sales").click(function(){
+            var group = $(this).attr('data-group');
+            var uid = localStorage.getItem('uid');
+            if(uid == null) {
+                uid = uid = Number(Math.random().toString().substr(3, 8) + Date.now()).toString(36);
+                localStorage.setItem('uid', uid);
+            }
+            ws.init({
+            obj: $(this),
+            id: uid,
+            whisper_domain: 'https://plkf.ailcc.com',
+            name: '访客' + uid,
+            avatar: '/',
+            group: group
+            });
+            $("#widget-trigger").show();
+            $('#cs-groups').hide();
+        });
+    });
+</script>
+<script id="music" src="https://music.yaode.xyz/player/js/test.js" key="6"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+{extend name="common/base" /}
+{block name="right"}
+    <div class="site-content" style="width:98%">
+        <div class="layui-collapse" lay-accordion="">
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">简单介绍沛霖音乐播放器</h2>
+                <div class="layui-colla-content layui-show">
+                    沛霖音乐播放器源码来源一网络，是《明月浩空播放器》的破解版，由IT技术宅 破译</br>
+                    一款基于QQ音乐、酷狗音乐、网易云音乐等歌曲ID全自动解析的 Html5 音乐播放器</br>
+                    注册登录后，新建播放器，新建歌单，将添加歌曲后的歌单添加给播放器，将播放器代码插入到需要添加音乐播放器的网页底部代码的&#60;/body&#62;之前即可</br></br>
+                </div>
+            </div> 
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title"><font color="#FF0000"><b>播放器进度条以及按钮错位，如何解决。</b></font></h2>
+                <div class="layui-colla-content">
+                	<p><b><img src="https://music.ailcc.com/images/cuowei.png"></b></p>
+                    <p>如出现上图情况，请在网页顶部添加：<i><b>&lt;!DOCTYPE html&gt;</b></i></p>
+                    <p>如你站原来是 &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</p>
+                    <p>修改此段代码中的 "-//W3C//DTD HTML <font color="#FF0000">4.01</font> Transitional//EN" <font color="#FF0000">将4.01修改为5.0</font> 即可解决问题。</p>
+                </div>
+            </div>  
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title"><font color="#FF0000"><b>播放器随机模式下，进度条后模式按钮是专辑循环。</b></font></h2>
+                <div class="layui-colla-content">
+                    <p>如下图所示，标记1处是随机播放模式，标记2处是专辑循环模式。</p>
+                    <p>该状态是正常状态，标记1是当前播放器的播放模式。标记2是切换播放器模式的按钮。</p>
+                    <p>未设置标记2处按钮与播放器默认播放模式同步。仅在点击按钮切换时同步，刷新后恢复默认模式。</p>
+                	<p><b><img src="https://music.ailcc.com/images/zhuanji.png"></b></p>
+                </div>
+            </div>  
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">播放器带PJAX吗，我网站没有PJAX能用吗？</h2>
+                <div class="layui-colla-content">播放器不带pjax,网站没有pjax也能用，只是用起来很不舒服罢了。</br>
+                播放器添加了歌曲进度记忆功能，刷新页面后，会继续再原来的播放进度上继续播放，只是会卡顿。就像老式dvd播放时卡碟一样。
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">网站没有PJAX，我要如何添加pjax功能呢？</h2>
+                <div class="layui-colla-content">添加pjax功能也很简单，可以联系站长付费解决</br>
+                也可以按照后面链接中的教程自行添加，不懂的地方可以联系站长咨询。</br>
+                教程地址：<a href="https://limh.me/pjax_jiaocheng.html" target="_blank">https://limh.me/pjax_jiaocheng.html</a>
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">是付费吗？还是免费使用？</h2>
+                <div class="layui-colla-content">
+                    注册即可免费使用，由于是破解二次开发版本，为尊重原作者(明月大神)，本程序仅作测试之用，拒绝一切商用。</br>
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">怎么添加播放器？</h2>
+                <div class="layui-colla-content">
+                    每个播放器创建之后，都会有唯一的播放器ID和调用代码</br>
+                    当前版本不需要安装任何类型的插件，如有旧版本播放器插件，直接删除</br>
+                    添加播放器只需要把创建播放器后自动生成的播放器代码，添加到网页底部代码的&#60;/body&#62;之前</br>
+                    部分程序，比如Emlog可直接在设置 - 底部代码里添加播放器代码，或修改模板footer.php文件，将播放器代码添加到&#60;/body&#62;之前</br>
+                    其他程序可以此类推，如不理解，可视播放器代码为“网站统计代码”插入即可，或加入QQ群咨询
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">什么是歌曲ID？歌单ID？</h2>
+                <div class="layui-colla-content">
+                    网易音乐歌单选择：https://music.163.com/#/discover/playlist</br>
+                    网易音乐歌单ID演示：https://music.163.com/#/playlist?id=2819914042，则“2819914042”是网易音乐<b
+                        style="color:#f00">歌单</b>ID</br>
+                    网易音乐歌曲ID演示：https://music.163.com/#/song?id=1371568154，则“1371568154”是网易音乐<b style="color:#0c0">歌曲</b>ID</br></br>
+                    QQ音乐歌单选择：https://y.qq.com/portal/playlist.html</br>
+                    QQ音乐歌单ID演示：https://y.qq.com/n/yqq/playsquare/7039430895.html，则“7039430895”是QQ音乐<b
+                        style="color:#f00">歌单</b>ID</br>
+                    QQ音乐歌曲ID演示：https://y.qq.com/n/yqq/song/003Naz5p1bcB7h.html，则“003Naz5p1bcB7h”是QQ音乐<b
+                        style="color:#0c0">歌曲</b>ID</br></br>
+                    调用歌单直接输入歌单ID保存即可，添加单曲可复制完整地址或歌曲ID，自动识别添加，或搜索歌曲添加</br>
+                    一般情况下，无需使用：<b>导入歌单</b>功能</br>
+                    调用歌单的基础上可额外自定义添加歌曲
+                </div>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">代刷网：验证失败，请刷新页面重试</h2>
+                <div class="layui-colla-content">
+                    <p>代刷网使用播放器，需要在网站信息设置里面关闭：下单验证模块</p>
+                </div>
+            </div> 
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">是否需要清除缓存</h2>
+                <div class="layui-colla-content">
+                    <p>播放器数据未采用缓存机制，所以无需清除播放器缓存数据。</br>歌曲解析缓存每20分钟自动更新一次，歌词、颜色24小时更新一次。</p>
+                </div>
+            </div> 
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">移动端优化、适配问题</h2>
+                <div class="layui-colla-content">
+                	<p><b><img src="https://music.ailcc.com/images/cuowei.png"></b></p>
+                    <p>播放器将不再对移动端进行优化和适配上的设计修改等。</p>
+                    <p>如遇见歌曲不能正常播放(歌曲时间37秒)等问题，一律不作回复。</p>
+                </div>
+            </div>  
+        </div>
+    </div>
+{/block}

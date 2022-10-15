@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>沛霖音乐播放器 - 后台登陆</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="keywords" content="HTML浮窗音乐播放器"/>
+    <meta name="description" content="HTML浮窗音乐播放器"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="/static/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href="/static/css/custom/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/custom/stey.css">
+  	<script type="text/javascript" src="/static/js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="card-wrap login">
+            <div class="card-body card border-0 shadow card--register" id="register">
+                <div class="card-body">
+                    <h2 class="card-title">注册账户</h2>
+                    <p>密码必须包含大小写、数字或特殊字符。</br>试用账户最长使用期间为7天，7天后账户将会被冻结</p></br>
+                    <p>即日起 本站不再支持注册免费使用，仅出售网站源码，可联系站长申请试用邀请码</p>
+                    <p>出售价格请联系站长QQ商议 QQ 66257875</p>
+                    <form name="form2" id="regUser" accept-charset="utf-8" action="/admin/user/register" method="post">
+                        <div class="form-group"><input class="form-control" type="text"  id="mteam" name="mteam" maxlength="32" placeholder="邀请码"/></div>
+                        <div class="form-group"><input class="form-control" type="text"  id="user" name="username" maxlength="16" placeholder="用户名"/></div>
+                        <div class="form-group"><input class="form-control" type="password" id="passwd" name="password" maxlength="16" placeholder="密码"/></div>
+                        <div class="form-group"><input class="form-control" type="password" id="passwd2" maxlength="16" placeholder="确认密码"/></div>
+                        <div class="form-group"><input class="form-control" type="text" id="qq" name="qq" placeholder="QQ" /></div>
+                      	<input type="button" id="reg" class="btn btn-lg" value="注册"/>
+                    </form>
+                </div>
+                <div class="ailcc">
+                	<a href="/admin/user/login/" class="lcc">已有账户?</a>
+                	<a href="/" class="home">返回首页</a>
+                	<a onclick="yszc();return false;" href="javascript:" class="home">隐私协议</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="bg-image-pattern"></div>
+<script type="application/javascript" src="/static/plugins/layer-v3.0.1/layer/layer.js"></script>
+<script type="text/javascript" src="/static/js/custom/login.js"></script>
+<script type="text/javascript" src="/static/js/fly.js"></script>
+<script>
+    window.yszc = function(id,name){
+        layer.ready(function(){
+            layer.open({
+                title: '隐私政策',
+                type: 2,
+                area: ['95%', '80%'],
+                shadeClose: true,
+                shade: 0.3,
+                content: '/static/regagre.html',
+            });
+        }); 
+    };
+</script>
+</body>
+</html>

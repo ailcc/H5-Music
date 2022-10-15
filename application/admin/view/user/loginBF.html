@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>沛霖音乐播放器 - 后台登陆</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="keywords" content="HTML浮窗音乐播放器"/>
+    <meta name="description" content="HTML浮窗音乐播放器"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="/static/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href="/static/css/custom/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/custom/stey.css">
+  	<script type="text/javascript" src="/static/js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="card-wrap login">
+            <div class="card-body card border-0 shadow card--login" id="login">
+                <div class="card-body">
+                    <h2 class="card-title">沛霖音乐播放器</h2>
+                    <p id="loginCue">欢迎回来！</p>
+                    <form action="/admin/user/login" name="loginform" accept-charset="utf-8" id="login_form" class="loginForm" method="post">
+                        <div class="form-group"><input class="form-control" type="text" id="u" name="username" placeholder="帐号" /></div>
+                        <div class="form-group"><input class="form-control" type="password" id="p" name="password" placeholder="密码" /></div>
+                        <div id="embed-captcha"></div>
+    					<p id="wait" class="show"></p>
+    					<p id="notice" class="hide"></p>
+                        <input type="button" id="loginbutton" class="btn btn-lg" value="登 录">
+                    </form>
+                </div>
+                <div class="ailcc">
+                	<a href="/admin/user/register/" class="home">注册账户?</a>
+                	<a href="/" class="home">返回首页</a>
+                	<a onclick="yszc();return false;" href="javascript:" class="home">隐私政策</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="bg-image-pattern"></div>
+<script type="application/javascript" src="/static/plugins/layer-v3.0.1/layer/layer.js"></script>
+<script type="text/javascript" src="/static/js/custom/login.js"></script>
+<script type="text/javascript" src="/static/js/fly.js"></script>
+<script src="/static/js/gt.js"></script>
+<script>
+    var handlerEmbed = function (captchaObj) {
+        $("#loginbutton").click(function (e) {
+            var validate = captchaObj.getValidate();
+            if($("#u").val() === ''){
+        		layer.msg("用户名不能为空！", {icon: 6, time: 2000});
+            	return false;
+        	}
+        	if($("#p").val() === ''){
+        		layer.msg("密码不能为空！", {icon: 6, time: 2000});
+            	return false;
+        	}
+            if (!validate) {
+                layer.msg('请完成拖动验证！', {icon: 5, time: 2000});
+                e.preventDefault();
+                return false;
+            }
+    		$.post($('#login_form').attr('action'), $('#login_form').serialize(), function (data) {
+            	if (data.code === 1) {
+                	layer.msg(data.msg, {icon: 6, time: 2000});
+                	setTimeout(function(){
+                    	location.href = "/admin/";
+                	},500);
+            	} else {
+                	layer.msg(data.msg, {icon: 5, time: 2000});
+            	}
+    		});
+        });
+        
+        captchaObj.appendTo("#embed-captcha");
+        captchaObj.onReady(function () {
+            $("#wait")[0].className = "hide";
+        });
+        
+    };
+    // var rtime = (new Date()).getTime();
+    $.ajax({
+    	
+        url: "{:url('admin/Users/startcaptcha')}?t=" + (new Date()).getTime(), // 加随机数防止缓存
+        type: "get",
+        dataType: "json",
+        success: function (data) {
+            // console.log(data);
+            
+            initGeetest({
+                gt: data.gt,
+                challenge: data.challenge,
+                new_captcha: data.new_captcha,
+                product: "embed",
+                offline: !data.success
+                
+            }, handlerEmbed);
+        }
+    });
+    window.yszc = function(id,name){
+        layer.ready(function(){
+            layer.open({
+                title: '隐私政策',
+                type: 2,
+                area: ['95%', '80%'],
+                shadeClose: true,
+                shade: 0.3,
+                content: '/static/regagre.html',
+            });
+        }); 
+    };
+</script>
+</body>
+</html>

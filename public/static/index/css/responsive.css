@@ -1,0 +1,321 @@
+@media (max-width: 1366px){
+  .hero-area {
+    padding: 206px 0px 150px;
+}
+.hero-area::after {
+  border-radius: 0px 0px 550px 0px;
+}
+.index2 .hero-area {
+  padding: 156px 0px 350px;
+}
+
+
+}
+
+
+@media  (max-width: 1199px) {
+  .index2 .hero-area .left-content .text {
+    padding: 0px 80px;
+}
+.index2 .hero-area .left-content .subscribe-area {
+  padding: 0px 110px;
+}
+
+}
+
+
+
+@media  (max-width: 991px) {
+ 
+  .header .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link .mr-hover-effect{
+    display: none;
+  }
+  .header .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link {
+    padding: 8px 10px;
+  }
+  .header .mainmenu-area .navbar .navbar-brand {
+    padding-left: 0px;
+  }
+
+  .hero-area .hero-img{
+    position: relative;
+    max-width: 50%;
+    width: auto;
+    left: 50%;
+    top: 0px;
+    margin-top: 0px;
+    transform: translateX(-50%);
+  }
+  .mainmenu-area{
+    background: linear-gradient(50deg, #6e00ff 0, #bb00ff 100%);
+    padding: 10px 0px;
+    border-bottom: 0px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  .hero-area {
+    padding: 150px 0px 150px;
+}
+.video-play-btn {
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
+  font-size: 20px;
+}
+.video-play-btn:before {
+  width: 80px;
+  height: 80px;
+}
+.hero-area .left-content .content .title {
+  font-size: 40px;
+  line-height: 50px;
+}
+.hero-area .left-content .content .text {
+  font-size: 16px;
+  line-height: 26px;
+}
+.hero-area .left-content{
+  margin-top: 44px;
+  text-align: center;
+}
+.hero-area .left-content .content .subscribe-area{
+  padding: 0px 100px;
+}
+.hero-area::after{
+  border-radius: 0px;
+}
+.hero-area {
+  padding: 150px 0px 100px;
+}
+.single-feature {
+  margin-bottom: 30px;
+}
+.features .base-btn1 {
+  margin-top: 11px;
+}
+.important-features .image.pr-30{
+  padding-right: 0px;
+}
+.important-features .image.pl-30{
+  padding-left: 0px;
+}
+.features {
+  padding-bottom: 100px;
+}
+.important-features .content {
+  margin-top: 40px;
+}
+.important-features .mb-100 {
+  margin-bottom: 125px;
+}
+.single-how-it-work{
+  margin-bottom: 30px;
+}
+.how-it-work {
+  padding: 116px 0px 100px;
+}
+.single-counter {
+  margin-bottom: 23px;
+}
+.counter-area {
+  padding: 126px 0px 102px;
+}
+.ger-start-secrion .right-links{
+  text-align: left;
+  margin-top: 18px;
+}
+.footer-widget.info-link-widget.link-w-2{
+  margin-top: 20px;
+}
+.copy-bg{
+  text-align: center;
+}
+.footer .copy-bg .social-links{
+  text-align: center;
+  margin-top: 10px;
+}
+.section-heading .title {
+  font-size: 34px;
+  line-height: 44px;
+}
+.single-counter .icon {
+  font-size: 60px;
+  line-height: 60px;
+}
+.single-counter .counter-wrapper {
+  font-size: 34px;
+  line-height: 44px;
+}
+
+.mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link {
+ 
+    padding: 5px 15px;
+    display: inline-block;
+}
+div#main_menu ul{
+  padding: 15px 0px 5px;
+}
+.mainmenu-area .navbar .base-btn2{
+  margin-bottom: 8px;
+}
+
+.mainmenu-area .navbar #main_menu .navbar-nav .nav-item .dropdown-menu{
+  position: relative;
+  left: 0px;
+  width: 100%;
+}
+
+.index2 .hero-area .left-content {
+  margin-top: 0px;
+}
+.index2 .hero-area {
+  padding: 142px 0px 350px;
+}
+.breadcrumb-area {
+  padding: 143px 0px 97px;
+}
+.breadcrumb-area .title {
+  font-size: 30px;
+  line-height: 40px;
+}
+.categori-widget{
+  margin-top: 60px;
+}
+.single-feature .icon,
+.single-how-it-work .icon
+ {
+  font-size: 60px;
+  line-height: 60px;
+}
+
+}
+
+@media  (max-width: 767px) {
+ 
+  .hero-area .left-content .content .subscribe-area {
+    padding: 0px 0px;
+}
+.single-blog .content .title {
+  font-size: 20px;
+  line-height: 30px;
+}
+.hero-area .hero-img {
+  max-width: 70%;
+}
+.index2 .hero-area .left-content .text {
+  padding: 0px 0px;
+}
+
+
+
+}
+
+
+@media  (max-width: 575px) {
+  .footer-widget.info-link-widget {
+    margin-top: 33px;
+}
+.single-feature .title,
+.single-how-it-work .title,
+.comment-area .title,
+.write-comment .title,
+.categori-widget .title,
+.latest-post-widget .title,
+.newsletter-widget .title
+{
+  font-size: 20px;
+  line-height: 30px;
+}
+.ger-start-secrion .title {
+  font-size: 24px;
+  line-height: 34px;
+}
+.single-blog-details .content .title{
+  font-size: 24px;
+  line-height: 34px;
+}
+.section-heading .title {
+  font-size: 30px;
+  line-height: 40px;
+}
+
+}
+
+
+
+@media  (max-width: 414px) {
+  
+  .hero-area .hero-img {
+    max-width: 90%;
+}
+.hero-area .left-content .content .subscribe-area .subscribe-form .submit-btn {
+  padding: 0px 12px;
+}
+
+.hero-area .left-content .content .subscribe-area .subscribe-form input {
+  height: 45px;
+  padding: 0px 135px 0px 20px;
+  font-size: 14px;
+}
+
+.hero-area .left-content .content .subscribe-area .subscribe-form .submit-btn {
+  height: 41px;
+  line-height: 41px;
+  padding: 0px 12px;
+  font-size: 14px;
+}
+.hero-area .left-content .content .title {
+  font-size: 32px;
+  line-height: 42px;
+}
+.ger-start-secrion .title {
+  font-size: 26px;
+  line-height: 36px;
+}
+
+.ger-start-secrion .right-links a{
+  padding: 12px 25px;
+}
+.ger-start-secrion .right-links .base-btn2{
+  margin-left: 10px;
+}
+.index2 .video-area {
+  margin-top: -120px;
+}
+.index2 .hero-area {
+  padding: 142px 0px 220px;
+}
+.comment-area .comment-box-area li .comment-box.replay-comment {
+  margin-left: 30px;
+}
+
+.comment-area .comment-box-area li .comment-box .left{
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+.comment-area .comment-box-area li .comment-box .right{
+  margin-left: 0px;
+}
+
+
+
+}
+
+
+@media  (max-width: 360px) {
+  .section-heading .title {
+    font-size: 26px;
+    line-height: 36px;
+}
+.single-counter .counter-wrapper {
+  font-size: 30px;
+  line-height: 40px;
+}
+.hero-area .left-content .content .title {
+  font-size: 30px;
+  line-height: 40px;
+}
+}
+
+
+
