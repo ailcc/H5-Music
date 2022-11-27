@@ -146,7 +146,7 @@ class MusicApi
             ],
             'qq' => [
                 'method' => 'GET',
-                'url' => 'http://c.y.qq.com/soso/fcgi-bin/client_search_cp',
+                'url' => 'http://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp',
                 'referer' => 'http://m.y.qq.com',
                 'proxy' => false,
                 'body' => [
@@ -155,7 +155,7 @@ class MusicApi
                     'n' => 10,
                     'format' => 'json'
                 ],
-                'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/9.0 Mobile/15E148 Safari/601.1'
+                'user-agent' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
             ],
             'xiami' => [
                 'method' => 'GET',
@@ -550,16 +550,6 @@ class MusicApi
                     $radio_songid[] = str_replace('MUSIC_', '', $val['MUSICRID']);
                 }
                 break;
-            case 'netease':
-            default:
-                $radio_data = json_decode($radio_result, true);
-                if (empty($radio_data['result']) || empty($radio_data['result']['songs'])) {
-                    return;
-                }
-                foreach ($radio_data['result']['songs'] as $val) {
-                    $radio_songid[] = $val['id'];
-                }
-                break;
             case 'qq':
                 $radio_data = json_decode($radio_result, true);
                 if (empty($radio_data['data']) || empty($radio_data['data']['song']) || empty($radio_data['data']['song']['list'])) {
@@ -633,6 +623,16 @@ class MusicApi
                 }
                 foreach ($radio_data['data']['ugclist'] as $val) {
                     $radio_songid[] = $val['shareid'];
+                }
+                break;
+            case 'netease':
+            default:
+                $radio_data = json_decode($radio_result, true);
+                if (empty($radio_data['result']) || empty($radio_data['result']['songs'])) {
+                    return;
+                }
+                foreach ($radio_data['result']['songs'] as $val) {
+                    $radio_songid[] = $val['id'];
                 }
                 break;
         }
@@ -840,7 +840,7 @@ class MusicApi
                             }
                             $radio_album_id = $value['album']['mid'];
                             //修复QQ音乐获取失效问题//
-                            $api = new Musicqq('tencent');
+                            $api = new Meting('tencent');
                             $datas=$api->format(true)->song($radio_song_id);
                             $datas = json_decode($datas,true);
                             $data = $datas[0];
