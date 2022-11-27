@@ -141,7 +141,8 @@ class Player extends BackendBaseController
         Cache::rm('info'.$this->request->post('id'));
 
         $this->model->save([
-            'auto_player'=> $this->request->post('auto_player',0),
+            'auto_player'=> $this->request->post('auto_player',0), 
+            'show_down'=> $this->request->post('show_down',0),
             'random_player'=> $this->request->post('random_player',0),
             'name'=> $this->request->post('name',''),
             'site_name'=> $this->request->post('site_name',''),
