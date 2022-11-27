@@ -33,32 +33,13 @@ class Song extends Model {
         }
         if(empty($songs['url']) && $action == 'url'){
             unset($songs);
-            $song = json_decode($api->format(true)->song($songId),true)[0];
-            $songs = $this->radio_urls($song['name'],$song['artist'][0],['tencent','migu','kugou','netease']);
+            $song = $api->format(true)->song($songId)[0];
+            // die(json_encode($song));
+            $songs = radio_urls($song['name'],$song['artist_name'],$song['duration']);
             if(strpos($songs['url'],'http') !== false){
             }
         }
 		return $songs;
-	}
-	
-
-	public function radio_urls($name,$author,$type){
-		$mp3_url = false;
-		foreach ($type as $v) {
-			$api = new Meting($v);
-			$data = json_decode($api->format(true)->search($name.$author),true)[0];
-			if($data['artist'][0] == $author || strstr($data['artist'][0],$author) || strstr($author,$data['artist'][0])){
-				if($v=='migu'){
-					$mp3_url = str_replace('http://tyst.migu.cn/', 'https://mg.yaode.xyz/', $data['location']);
-				}else{
-					$mp3_url = $api->format(true)->url($data['id']);
-				}
-				if(isset($mp3_url)){
-					break;
-				}
-			}
-		}
-		return $mp3_url;
 	}
 }
 ?>
