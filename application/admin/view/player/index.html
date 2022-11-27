@@ -172,6 +172,18 @@
                                                 <input type="checkbox" name="random_player" lay-skin="switch" value="1" {$entity.random_player== "1" ? "checked":""}>
                                             </div>
                                         </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">允许下载</label>
+                                            <div class="layui-input-block">
+                                                <input type="checkbox" name="show_down"  lay-skin="switch" value="1" {$entity.show_down== "1" ? "checked":""}>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">随机播放</label>
+                                            <div class="layui-input-block">
+                                                <input type="checkbox" name="random_player" lay-skin="switch" value="1" {$entity.random_player== "1" ? "checked":""}>
+                                            </div>
+                                        </div>
                                         <div class="layui-inline" lay-tips="不显示播放列表中的失效歌曲<br>（自定义歌曲会正常显示）">
                                             <label class="layui-form-label"><font color="red">不显示失效</font></label>
                                             <div class="layui-input-block">
