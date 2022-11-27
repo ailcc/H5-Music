@@ -2,10 +2,10 @@
  * Html5 音乐播放器
  * 
  * webSite: https://ailcc.com
- * time: 2020/01/06 15:40
- * 编译完成于 2020/01/06 15:40
+ * time: 2019/12/26
+ * 编译完成于2019/12/26
  * 
- * 源码来源于 明月浩空 Limh.Me  本站功能由《沛霖主页》编辑提供 基于宅音乐基础修改！
+ * 源码来源于 明月浩空 Limh.Me  本站不提供任何服务  请前往明月浩空播放器官网注册使用
  */
 // 检查jQuery插件是否安装
 if(typeof jQuery === 'undefined'){
@@ -15,4 +15,1557 @@ if(typeof jQuery === 'undefined'){
 (function(a){if(typeof define==="function"&&define.amd){define(["jquery"],a)}else{if(typeof exports==="object"){module.exports=a}else{a(jQuery)}}}(function(c){var d=["wheel","mousewheel","DOMMouseScroll","MozMousePixelScroll"],k=("onwheel" in document||document.documentMode>=9)?["wheel"]:["mousewheel","DomMouseScroll","MozMousePixelScroll"],h=Array.prototype.slice,j,b;if(c.event.fixHooks){for(var e=d.length;e;){c.event.fixHooks[d[--e]]=c.event.mouseHooks}}var f=c.event.special.mousewheel={version:"3.1.9",setup:function(){if(this.addEventListener){for(var m=k.length;m;){this.addEventListener(k[--m],l,false)}}else{this.onmousewheel=l}c.data(this,"mousewheel-line-height",f.getLineHeight(this));c.data(this,"mousewheel-page-height",f.getPageHeight(this))},teardown:function(){if(this.removeEventListener){for(var m=k.length;m;){this.removeEventListener(k[--m],l,false)}}else{this.onmousewheel=null}},getLineHeight:function(i){return parseInt(c(i)["offsetParent" in c.fn?"offsetParent":"parent"]().css("fontSize"),10)},getPageHeight:function(i){return c(i).height()},settings:{adjustOldDeltas:true}};c.fn.extend({mousewheel:function(i){return i?this.bind("mousewheel",i):this.trigger("mousewheel")},unmousewheel:function(i){return this.unbind("mousewheel",i)}});function l(i){var n=i||window.event,r=h.call(arguments,1),t=0,p=0,o=0,q=0;i=c.event.fix(n);i.type="mousewheel";if("detail" in n){o=n.detail*-1}if("wheelDelta" in n){o=n.wheelDelta}if("wheelDeltaY" in n){o=n.wheelDeltaY}if("wheelDeltaX" in n){p=n.wheelDeltaX*-1}if("axis" in n&&n.axis===n.HORIZONTAL_AXIS){p=o*-1;o=0}t=o===0?p:o;if("deltaY" in n){o=n.deltaY*-1;t=o}if("deltaX" in n){p=n.deltaX;if(o===0){t=p*-1}}if(o===0&&p===0){return}if(n.deltaMode===1){var s=c.data(this,"mousewheel-line-height");t*=s;o*=s;p*=s}else{if(n.deltaMode===2){var m=c.data(this,"mousewheel-page-height");t*=m;o*=m;p*=m}}q=Math.max(Math.abs(o),Math.abs(p));if(!b||q<b){b=q;if(a(n,q)){b/=40}}if(a(n,q)){t/=40;p/=40;o/=40}t=Math[t>=1?"floor":"ceil"](t/b);p=Math[p>=1?"floor":"ceil"](p/b);o=Math[o>=1?"floor":"ceil"](o/b);i.deltaX=p;i.deltaY=o;i.deltaFactor=b;i.deltaMode=0;r.unshift(i,t,p,o);if(j){clearTimeout(j)}j=setTimeout(g,200);return(c.event.dispatch||c.event.handle).apply(this,r)}function g(){b=null}function a(m,i){return f.settings.adjustOldDeltas&&m.type==="mousewheel"&&i%120===0}}));
 /*scrollbar plugin*/
 (function(c){var b={init:function(e){var f={set_width:false,set_height:false,horizontalScroll:false,scrollInertia:950,mouseWheel:true,mouseWheelPixels:"auto",autoDraggerLength:true,autoHideScrollbar:false,alwaysShowScrollbar:false,snapAmount:null,snapOffset:0,scrollButtons:{enable:false,scrollType:"continuous",scrollSpeed:"auto",scrollAmount:40},advanced:{updateOnBrowserResize:true,updateOnContentResize:false,autoExpandHorizontalScroll:false,autoScrollOnFocus:true,normalizeMouseWheelDelta:false},contentTouchScroll:true,callbacks:{onScrollStart:function(){},onScroll:function(){},onTotalScroll:function(){},onTotalScrollBack:function(){},onTotalScrollOffset:0,onTotalScrollBackOffset:0,whileScrolling:function(){}},theme:"light"},e=c.extend(true,f,e);return this.each(function(){var m=c(this);if(e.set_width){m.css("width",e.set_width)}if(e.set_height){m.css("height",e.set_height)}if(!c(document).data("mCustomScrollbar-index")){c(document).data("mCustomScrollbar-index","1")}else{var t=parseInt(c(document).data("mCustomScrollbar-index"));c(document).data("mCustomScrollbar-index",t+1)}m.wrapInner("<div class='mCustomScrollBox mCS-"+e.theme+"' id='mCSB_"+c(document).data("mCustomScrollbar-index")+"' style='position:relative; height:100%; overflow:hidden; max-width:100%;' />").addClass("mCustomScrollbar _mCS_"+c(document).data("mCustomScrollbar-index"));var g=m.children(".mCustomScrollBox");if(e.horizontalScroll){g.addClass("mCSB_horizontal").wrapInner("<div class='mCSB_h_wrapper' style='position:relative; left:0; width:999999px;' />");var k=g.children(".mCSB_h_wrapper");k.wrapInner("<div class='mCSB_container' style='position:absolute; left:0;' />").children(".mCSB_container").css({width:k.children().outerWidth(),position:"relative"}).unwrap()}else{g.wrapInner("<div class='mCSB_container' style='position:relative; top:0;' />")}var o=g.children(".mCSB_container");if(c.support.touch){o.addClass("mCS_touch")}o.after("<div class='mCSB_scrollTools' style='position:absolute;'><div class='mCSB_draggerContainer'><div class='mCSB_dragger' style='position:absolute;' oncontextmenu='return false;'><div class='mCSB_dragger_bar' style='position:relative;'></div></div><div class='mCSB_draggerRail'></div></div></div>");var l=g.children(".mCSB_scrollTools"),h=l.children(".mCSB_draggerContainer"),q=h.children(".mCSB_dragger");if(e.horizontalScroll){q.data("minDraggerWidth",q.width())}else{q.data("minDraggerHeight",q.height())}if(e.scrollButtons.enable){if(e.horizontalScroll){l.prepend("<a class='mCSB_buttonLeft' oncontextmenu='return false;'></a>").append("<a class='mCSB_buttonRight' oncontextmenu='return false;'></a>")}else{l.prepend("<a class='mCSB_buttonUp' oncontextmenu='return false;'></a>").append("<a class='mCSB_buttonDown' oncontextmenu='return false;'></a>")}}g.bind("scroll",function(){if(!m.is(".mCS_disabled")){g.scrollTop(0).scrollLeft(0)}});m.data({mCS_Init:true,mCustomScrollbarIndex:c(document).data("mCustomScrollbar-index"),horizontalScroll:e.horizontalScroll,scrollInertia:e.scrollInertia,scrollEasing:"mcsEaseOut",mouseWheel:e.mouseWheel,mouseWheelPixels:e.mouseWheelPixels,autoDraggerLength:e.autoDraggerLength,autoHideScrollbar:e.autoHideScrollbar,alwaysShowScrollbar:e.alwaysShowScrollbar,snapAmount:e.snapAmount,snapOffset:e.snapOffset,scrollButtons_enable:e.scrollButtons.enable,scrollButtons_scrollType:e.scrollButtons.scrollType,scrollButtons_scrollSpeed:e.scrollButtons.scrollSpeed,scrollButtons_scrollAmount:e.scrollButtons.scrollAmount,autoExpandHorizontalScroll:e.advanced.autoExpandHorizontalScroll,autoScrollOnFocus:e.advanced.autoScrollOnFocus,normalizeMouseWheelDelta:e.advanced.normalizeMouseWheelDelta,contentTouchScroll:e.contentTouchScroll,onScrollStart_Callback:e.callbacks.onScrollStart,onScroll_Callback:e.callbacks.onScroll,onTotalScroll_Callback:e.callbacks.onTotalScroll,onTotalScrollBack_Callback:e.callbacks.onTotalScrollBack,onTotalScroll_Offset:e.callbacks.onTotalScrollOffset,onTotalScrollBack_Offset:e.callbacks.onTotalScrollBackOffset,whileScrolling_Callback:e.callbacks.whileScrolling,bindEvent_scrollbar_drag:false,bindEvent_content_touch:false,bindEvent_scrollbar_click:false,bindEvent_mousewheel:false,bindEvent_buttonsContinuous_y:false,bindEvent_buttonsContinuous_x:false,bindEvent_buttonsPixels_y:false,bindEvent_buttonsPixels_x:false,bindEvent_focusin:false,bindEvent_autoHideScrollbar:false,mCSB_buttonScrollRight:false,mCSB_buttonScrollLeft:false,mCSB_buttonScrollDown:false,mCSB_buttonScrollUp:false});if(e.horizontalScroll){if(m.css("max-width")!=="none"){if(!e.advanced.updateOnContentResize){e.advanced.updateOnContentResize=true}}}else{if(m.css("max-height")!=="none"){var s=false,r=parseInt(m.css("max-height"));if(m.css("max-height").indexOf("%")>=0){s=r,r=m.parent().height()*s/100}m.css("overflow","hidden");g.css("max-height",r)}}m.mCustomScrollbar("update");if(e.advanced.updateOnBrowserResize){var i,j=c(window).width(),u=c(window).height();c(window).bind("resize."+m.data("mCustomScrollbarIndex"),function(){if(i){clearTimeout(i)}i=setTimeout(function(){if(!m.is(".mCS_disabled")&&!m.is(".mCS_destroyed")){var w=c(window).width(),v=c(window).height();if(j!==w||u!==v){if(m.css("max-height")!=="none"&&s){g.css("max-height",m.parent().height()*s/100)}m.mCustomScrollbar("update");j=w;u=v}}},150)})}if(e.advanced.updateOnContentResize){var p;if(e.horizontalScroll){var n=o.outerWidth()}else{var n=o.outerHeight()}p=setInterval(function(){if(e.horizontalScroll){if(e.advanced.autoExpandHorizontalScroll){o.css({position:"absolute",width:"auto"}).wrap("<div class='mCSB_h_wrapper' style='position:relative; left:0; width:999999px;' />").css({width:o.outerWidth(),position:"relative"}).unwrap()}var v=o.outerWidth()}else{var v=o.outerHeight()}if(v!=n){m.mCustomScrollbar("update");n=v}},300)}})},update:function(){var n=c(this),k=n.children(".mCustomScrollBox"),q=k.children(".mCSB_container");q.removeClass("mCS_no_scrollbar");n.removeClass("mCS_disabled mCS_destroyed");k.scrollTop(0).scrollLeft(0);var y=k.children(".mCSB_scrollTools"),o=y.children(".mCSB_draggerContainer"),m=o.children(".mCSB_dragger");if(n.data("horizontalScroll")){var A=y.children(".mCSB_buttonLeft"),t=y.children(".mCSB_buttonRight"),f=k.width();if(n.data("autoExpandHorizontalScroll")){q.css({position:"absolute",width:"auto"}).wrap("<div class='mCSB_h_wrapper' style='position:relative; left:0; width:999999px;' />").css({width:q.outerWidth(),position:"relative"}).unwrap()}var z=q.outerWidth()}else{var w=y.children(".mCSB_buttonUp"),g=y.children(".mCSB_buttonDown"),r=k.height(),i=q.outerHeight()}if(i>r&&!n.data("horizontalScroll")){y.css("display","block");var s=o.height();if(n.data("autoDraggerLength")){var u=Math.round(r/i*s),l=m.data("minDraggerHeight");if(u<=l){m.css({height:l})}else{if(u>=s-10){var p=s-10;m.css({height:p})}else{m.css({height:u})}}m.children(".mCSB_dragger_bar").css({"line-height":m.height()+"px"})}var B=m.height(),x=(i-r)/(s-B);n.data("scrollAmount",x).mCustomScrollbar("scrolling",k,q,o,m,w,g,A,t);var D=Math.abs(q.position().top);n.mCustomScrollbar("scrollTo",D,{scrollInertia:0,trigger:"internal"})}else{if(z>f&&n.data("horizontalScroll")){y.css("display","block");var h=o.width();if(n.data("autoDraggerLength")){var j=Math.round(f/z*h),C=m.data("minDraggerWidth");if(j<=C){m.css({width:C})}else{if(j>=h-10){var e=h-10;m.css({width:e})}else{m.css({width:j})}}}var v=m.width(),x=(z-f)/(h-v);n.data("scrollAmount",x).mCustomScrollbar("scrolling",k,q,o,m,w,g,A,t);var D=Math.abs(q.position().left);n.mCustomScrollbar("scrollTo",D,{scrollInertia:0,trigger:"internal"})}else{k.unbind("mousewheel focusin");if(n.data("horizontalScroll")){m.add(q).css("left",0)}else{m.add(q).css("top",0)}if(n.data("alwaysShowScrollbar")){if(!n.data("horizontalScroll")){m.css({height:o.height()})}else{if(n.data("horizontalScroll")){m.css({width:o.width()})}}}else{y.css("display","none");q.addClass("mCS_no_scrollbar")}n.data({bindEvent_mousewheel:false,bindEvent_focusin:false})}}},scrolling:function(i,q,n,k,A,f,D,w){var l=c(this);if(!l.data("bindEvent_scrollbar_drag")){var o,p,C,z,e;if(c.support.pointer){C="pointerdown";z="pointermove";e="pointerup"}else{if(c.support.msPointer){C="MSPointerDown";z="MSPointerMove";e="MSPointerUp"}}if(c.support.pointer||c.support.msPointer){k.bind(C,function(K){K.preventDefault();l.data({on_drag:true});k.addClass("mCSB_dragger_onDrag");var J=c(this),M=J.offset(),I=K.originalEvent.pageX-M.left,L=K.originalEvent.pageY-M.top;if(I<J.width()&&I>0&&L<J.height()&&L>0){o=L;p=I}});c(document).bind(z+"."+l.data("mCustomScrollbarIndex"),function(K){K.preventDefault();if(l.data("on_drag")){var J=k,M=J.offset(),I=K.originalEvent.pageX-M.left,L=K.originalEvent.pageY-M.top;G(o,p,L,I)}}).bind(e+"."+l.data("mCustomScrollbarIndex"),function(x){l.data({on_drag:false});k.removeClass("mCSB_dragger_onDrag")})}else{k.bind("mousedown touchstart",function(K){K.preventDefault();K.stopImmediatePropagation();var J=c(this),N=J.offset(),I,M;if(K.type==="touchstart"){var L=K.originalEvent.touches[0]||K.originalEvent.changedTouches[0];I=L.pageX-N.left;M=L.pageY-N.top}else{l.data({on_drag:true});k.addClass("mCSB_dragger_onDrag");I=K.pageX-N.left;M=K.pageY-N.top}if(I<J.width()&&I>0&&M<J.height()&&M>0){o=M;p=I}}).bind("touchmove",function(K){K.preventDefault();K.stopImmediatePropagation();var N=K.originalEvent.touches[0]||K.originalEvent.changedTouches[0],J=c(this),M=J.offset(),I=N.pageX-M.left,L=N.pageY-M.top;G(o,p,L,I)});c(document).bind("mousemove."+l.data("mCustomScrollbarIndex"),function(K){if(l.data("on_drag")){var J=k,M=J.offset(),I=K.pageX-M.left,L=K.pageY-M.top;G(o,p,L,I)}}).bind("mouseup."+l.data("mCustomScrollbarIndex"),function(x){l.data({on_drag:false});k.removeClass("mCSB_dragger_onDrag")})}l.data({bindEvent_scrollbar_drag:true})}function G(J,K,L,I){if(l.data("horizontalScroll")){l.mCustomScrollbar("scrollTo",(k.position().left-(K))+I,{moveDragger:true,trigger:"internal"})}else{l.mCustomScrollbar("scrollTo",(k.position().top-(J))+L,{moveDragger:true,trigger:"internal"})}}if(c.support.touch&&l.data("contentTouchScroll")){if(!l.data("bindEvent_content_touch")){var m,E,s,t,v,F,H;q.bind("touchstart",function(x){x.stopImmediatePropagation();m=x.originalEvent.touches[0]||x.originalEvent.changedTouches[0];E=c(this);s=E.offset();v=m.pageX-s.left;t=m.pageY-s.top;F=t;H=v});q.bind("touchmove",function(x){x.preventDefault();x.stopImmediatePropagation();m=x.originalEvent.touches[0]||x.originalEvent.changedTouches[0];E=c(this).parent();s=E.offset();v=m.pageX-s.left;t=m.pageY-s.top;if(l.data("horizontalScroll")){l.mCustomScrollbar("scrollTo",H-v,{trigger:"internal"})}else{l.mCustomScrollbar("scrollTo",F-t,{trigger:"internal"})}})}}if(!l.data("bindEvent_scrollbar_click")){n.bind("click",function(I){var x=(I.pageY-n.offset().top)*l.data("scrollAmount"),y=c(I.target);if(l.data("horizontalScroll")){x=(I.pageX-n.offset().left)*l.data("scrollAmount")}if(y.hasClass("mCSB_draggerContainer")||y.hasClass("mCSB_draggerRail")){l.mCustomScrollbar("scrollTo",x,{trigger:"internal",scrollEasing:"draggerRailEase"})}});l.data({bindEvent_scrollbar_click:true})}if(l.data("mouseWheel")){if(!l.data("bindEvent_mousewheel")){i.bind("mousewheel",function(K,M){var J,I=l.data("mouseWheelPixels"),x=Math.abs(q.position().top),L=k.position().top,y=n.height()-k.height();if(l.data("normalizeMouseWheelDelta")){if(M<0){M=-1}else{M=1}}if(I==="auto"){I=100+Math.round(l.data("scrollAmount")/2)}if(l.data("horizontalScroll")){L=k.position().left;y=n.width()-k.width();x=Math.abs(q.position().left)}if((M>0&&L!==0)||(M<0&&L!==y)){K.preventDefault();K.stopImmediatePropagation()}J=x-(M*I);l.mCustomScrollbar("scrollTo",J,{trigger:"internal"})});l.data({bindEvent_mousewheel:true})}}if(l.data("scrollButtons_enable")){if(l.data("scrollButtons_scrollType")==="pixels"){if(l.data("horizontalScroll")){w.add(D).unbind("mousedown touchstart MSPointerDown pointerdown mouseup MSPointerUp pointerup mouseout MSPointerOut pointerout touchend",j,h);l.data({bindEvent_buttonsContinuous_x:false});if(!l.data("bindEvent_buttonsPixels_x")){w.bind("click",function(x){x.preventDefault();r(Math.abs(q.position().left)+l.data("scrollButtons_scrollAmount"))});D.bind("click",function(x){x.preventDefault();r(Math.abs(q.position().left)-l.data("scrollButtons_scrollAmount"))});l.data({bindEvent_buttonsPixels_x:true})}}else{f.add(A).unbind("mousedown touchstart MSPointerDown pointerdown mouseup MSPointerUp pointerup mouseout MSPointerOut pointerout touchend",j,h);l.data({bindEvent_buttonsContinuous_y:false});if(!l.data("bindEvent_buttonsPixels_y")){f.bind("click",function(x){x.preventDefault();r(Math.abs(q.position().top)+l.data("scrollButtons_scrollAmount"))});A.bind("click",function(x){x.preventDefault();r(Math.abs(q.position().top)-l.data("scrollButtons_scrollAmount"))});l.data({bindEvent_buttonsPixels_y:true})}}function r(x){if(!k.data("preventAction")){k.data("preventAction",true);l.mCustomScrollbar("scrollTo",x,{trigger:"internal"})}}}else{if(l.data("horizontalScroll")){w.add(D).unbind("click");l.data({bindEvent_buttonsPixels_x:false});if(!l.data("bindEvent_buttonsContinuous_x")){w.bind("mousedown touchstart MSPointerDown pointerdown",function(y){y.preventDefault();var x=B();l.data({mCSB_buttonScrollRight:setInterval(function(){l.mCustomScrollbar("scrollTo",Math.abs(q.position().left)+x,{trigger:"internal",scrollEasing:"easeOutCirc"})},17)})});var j=function(x){x.preventDefault();clearInterval(l.data("mCSB_buttonScrollRight"))};w.bind("mouseup touchend MSPointerUp pointerup mouseout MSPointerOut pointerout",j);D.bind("mousedown touchstart MSPointerDown pointerdown",function(y){y.preventDefault();var x=B();l.data({mCSB_buttonScrollLeft:setInterval(function(){l.mCustomScrollbar("scrollTo",Math.abs(q.position().left)-x,{trigger:"internal",scrollEasing:"easeOutCirc"})},17)})});var h=function(x){x.preventDefault();clearInterval(l.data("mCSB_buttonScrollLeft"))};D.bind("mouseup touchend MSPointerUp pointerup mouseout MSPointerOut pointerout",h);l.data({bindEvent_buttonsContinuous_x:true})}}else{f.add(A).unbind("click");l.data({bindEvent_buttonsPixels_y:false});if(!l.data("bindEvent_buttonsContinuous_y")){f.bind("mousedown touchstart MSPointerDown pointerdown",function(y){y.preventDefault();var x=B();l.data({mCSB_buttonScrollDown:setInterval(function(){l.mCustomScrollbar("scrollTo",Math.abs(q.position().top)+x,{trigger:"internal",scrollEasing:"easeOutCirc"})},17)})});var u=function(x){x.preventDefault();clearInterval(l.data("mCSB_buttonScrollDown"))};f.bind("mouseup touchend MSPointerUp pointerup mouseout MSPointerOut pointerout",u);A.bind("mousedown touchstart MSPointerDown pointerdown",function(y){y.preventDefault();var x=B();l.data({mCSB_buttonScrollUp:setInterval(function(){l.mCustomScrollbar("scrollTo",Math.abs(q.position().top)-x,{trigger:"internal",scrollEasing:"easeOutCirc"})},17)})});var g=function(x){x.preventDefault();clearInterval(l.data("mCSB_buttonScrollUp"))};A.bind("mouseup touchend MSPointerUp pointerup mouseout MSPointerOut pointerout",g);l.data({bindEvent_buttonsContinuous_y:true})}}function B(){var x=l.data("scrollButtons_scrollSpeed");if(l.data("scrollButtons_scrollSpeed")==="auto"){x=Math.round((l.data("scrollInertia")+100)/40)}return x}}}if(l.data("autoScrollOnFocus")){if(!l.data("bindEvent_focusin")){i.bind("focusin",function(){i.scrollTop(0).scrollLeft(0);var x=c(document.activeElement);if(x.is("input,textarea,select,button,a[tabindex],area,object")){var J=q.position().top,y=x.position().top,I=i.height()-x.outerHeight();if(l.data("horizontalScroll")){J=q.position().left;y=x.position().left;I=i.width()-x.outerWidth()}if(J+y<0||J+y>I){l.mCustomScrollbar("scrollTo",y,{trigger:"internal"})}}});l.data({bindEvent_focusin:true})}}if(l.data("autoHideScrollbar")&&!l.data("alwaysShowScrollbar")){if(!l.data("bindEvent_autoHideScrollbar")){i.bind("mouseenter",function(x){i.addClass("mCS-mouse-over");d.showScrollbar.call(i.children(".mCSB_scrollTools"))}).bind("mouseleave touchend",function(x){i.removeClass("mCS-mouse-over");if(x.type==="mouseleave"){d.hideScrollbar.call(i.children(".mCSB_scrollTools"))}});l.data({bindEvent_autoHideScrollbar:true})}}},scrollTo:function(e,f){var i=c(this),o={moveDragger:false,trigger:"external",callbacks:true,scrollInertia:i.data("scrollInertia"),scrollEasing:i.data("scrollEasing")},f=c.extend(o,f),p,g=i.children(".mCustomScrollBox"),k=g.children(".mCSB_container"),r=g.children(".mCSB_scrollTools"),j=r.children(".mCSB_draggerContainer"),h=j.children(".mCSB_dragger"),t=draggerSpeed=f.scrollInertia,q,s,m,l;if(!k.hasClass("mCS_no_scrollbar")){i.data({mCS_trigger:f.trigger});if(i.data("mCS_Init")){f.callbacks=false}if(e||e===0){if(typeof(e)==="number"){if(f.moveDragger){p=e;if(i.data("horizontalScroll")){e=h.position().left*i.data("scrollAmount")}else{e=h.position().top*i.data("scrollAmount")}draggerSpeed=0}else{p=e/i.data("scrollAmount")}}else{if(typeof(e)==="string"){var v;if(e==="top"){v=0}else{if(e==="bottom"&&!i.data("horizontalScroll")){v=k.outerHeight()-g.height()}else{if(e==="left"){v=0}else{if(e==="right"&&i.data("horizontalScroll")){v=k.outerWidth()-g.width()}else{if(e==="first"){v=i.find(".mCSB_container").find(":first")}else{if(e==="last"){v=i.find(".mCSB_container").find(":last")}else{v=i.find(e)}}}}}}if(v.length===1){if(i.data("horizontalScroll")){e=v.position().left}else{e=v.position().top}p=e/i.data("scrollAmount")}else{p=e=v}}}if(i.data("horizontalScroll")){if(i.data("onTotalScrollBack_Offset")){s=-i.data("onTotalScrollBack_Offset")}if(i.data("onTotalScroll_Offset")){l=g.width()-k.outerWidth()+i.data("onTotalScroll_Offset")}if(p<0){p=e=0;clearInterval(i.data("mCSB_buttonScrollLeft"));if(!s){q=true}}else{if(p>=j.width()-h.width()){p=j.width()-h.width();e=g.width()-k.outerWidth();clearInterval(i.data("mCSB_buttonScrollRight"));if(!l){m=true}}else{e=-e}}var n=i.data("snapAmount");if(n){e=Math.round(e/n)*n-i.data("snapOffset")}d.mTweenAxis.call(this,h[0],"left",Math.round(p),draggerSpeed,f.scrollEasing);d.mTweenAxis.call(this,k[0],"left",Math.round(e),t,f.scrollEasing,{onStart:function(){if(f.callbacks&&!i.data("mCS_tweenRunning")){u("onScrollStart")}if(i.data("autoHideScrollbar")&&!i.data("alwaysShowScrollbar")){d.showScrollbar.call(r)}},onUpdate:function(){if(f.callbacks){u("whileScrolling")}},onComplete:function(){if(f.callbacks){u("onScroll");if(q||(s&&k.position().left>=s)){u("onTotalScrollBack")}if(m||(l&&k.position().left<=l)){u("onTotalScroll")}}h.data("preventAction",false);i.data("mCS_tweenRunning",false);if(i.data("autoHideScrollbar")&&!i.data("alwaysShowScrollbar")){if(!g.hasClass("mCS-mouse-over")){d.hideScrollbar.call(r)}}}})}else{if(i.data("onTotalScrollBack_Offset")){s=-i.data("onTotalScrollBack_Offset")}if(i.data("onTotalScroll_Offset")){l=g.height()-k.outerHeight()+i.data("onTotalScroll_Offset")}if(p<0){p=e=0;clearInterval(i.data("mCSB_buttonScrollUp"));if(!s){q=true}}else{if(p>=j.height()-h.height()){p=j.height()-h.height();e=g.height()-k.outerHeight();clearInterval(i.data("mCSB_buttonScrollDown"));if(!l){m=true}}else{e=-e}}var n=i.data("snapAmount");if(n){e=Math.round(e/n)*n-i.data("snapOffset")}d.mTweenAxis.call(this,h[0],"top",Math.round(p),draggerSpeed,f.scrollEasing);d.mTweenAxis.call(this,k[0],"top",Math.round(e),t,f.scrollEasing,{onStart:function(){if(f.callbacks&&!i.data("mCS_tweenRunning")){u("onScrollStart")}if(i.data("autoHideScrollbar")&&!i.data("alwaysShowScrollbar")){d.showScrollbar.call(r)}},onUpdate:function(){if(f.callbacks){u("whileScrolling")}},onComplete:function(){if(f.callbacks){u("onScroll");if(q||(s&&k.position().top>=s)){u("onTotalScrollBack")}if(m||(l&&k.position().top<=l)){u("onTotalScroll")}}h.data("preventAction",false);i.data("mCS_tweenRunning",false);if(i.data("autoHideScrollbar")&&!i.data("alwaysShowScrollbar")){if(!g.hasClass("mCS-mouse-over")){d.hideScrollbar.call(r)}}}})}if(i.data("mCS_Init")){i.data({mCS_Init:false})}}}function u(w){if(i.data("mCustomScrollbarIndex")){this.mcs={top:k.position().top,left:k.position().left,draggerTop:h.position().top,draggerLeft:h.position().left,topPct:Math.round((100*Math.abs(k.position().top))/Math.abs(k.outerHeight()-g.height())),leftPct:Math.round((100*Math.abs(k.position().left))/Math.abs(k.outerWidth()-g.width()))};switch(w){case"onScrollStart":i.data("mCS_tweenRunning",true).data("onScrollStart_Callback").call(i,this.mcs);break;case"whileScrolling":i.data("whileScrolling_Callback").call(i,this.mcs);break;case"onScroll":i.data("onScroll_Callback").call(i,this.mcs);break;case"onTotalScrollBack":i.data("onTotalScrollBack_Callback").call(i,this.mcs);break;case"onTotalScroll":i.data("onTotalScroll_Callback").call(i,this.mcs);break}}}},stop:function(){var g=c(this),e=g.children().children(".mCSB_container"),f=g.children().children().children().children(".mCSB_dragger");d.mTweenAxisStop.call(this,e[0]);d.mTweenAxisStop.call(this,f[0])},disable:function(e){var j=c(this),f=j.children(".mCustomScrollBox"),h=f.children(".mCSB_container"),g=f.children(".mCSB_scrollTools"),i=g.children().children(".mCSB_dragger");f.unbind("mousewheel focusin mouseenter mouseleave touchend");h.unbind("touchstart touchmove");if(e){if(j.data("horizontalScroll")){i.add(h).css("left",0)}else{i.add(h).css("top",0)}}g.css("display","none");h.addClass("mCS_no_scrollbar");j.data({bindEvent_mousewheel:false,bindEvent_focusin:false,bindEvent_content_touch:false,bindEvent_autoHideScrollbar:false}).addClass("mCS_disabled")},destroy:function(){var e=c(this);e.removeClass("mCustomScrollbar _mCS_"+e.data("mCustomScrollbarIndex")).addClass("mCS_destroyed").children().children(".mCSB_container").unwrap().children().unwrap().siblings(".mCSB_scrollTools").remove();c(document).unbind("mousemove."+e.data("mCustomScrollbarIndex")+" mouseup."+e.data("mCustomScrollbarIndex")+" MSPointerMove."+e.data("mCustomScrollbarIndex")+" MSPointerUp."+e.data("mCustomScrollbarIndex"));c(window).unbind("resize."+e.data("mCustomScrollbarIndex"))}},d={showScrollbar:function(){this.stop().animate({opacity:1},"fast")},hideScrollbar:function(){this.stop().animate({opacity:0},"fast")},mTweenAxis:function(g,i,h,f,o,y){var y=y||{},v=y.onStart||function(){},p=y.onUpdate||function(){},w=y.onComplete||function(){};var n=t(),l,j=0,r=g.offsetTop,s=g.style;if(i==="left"){r=g.offsetLeft}var m=h-r;q();e();function t(){if(window.performance&&window.performance.now){return window.performance.now()}else{if(window.performance&&window.performance.webkitNow){return window.performance.webkitNow()}else{if(Date.now){return Date.now()}else{return new Date().getTime()}}}}function x(){if(!j){v.call()}j=t()-n;u();if(j>=g._time){g._time=(j>g._time)?j+l-(j-g._time):j+l-1;if(g._time<j+1){g._time=j+1}}if(g._time<f){g._id=_request(x)}else{w.call()}}function u(){if(f>0){g.currVal=k(g._time,r,m,f,o);s[i]=Math.round(g.currVal)+"px"}else{s[i]=h+"px"}p.call()}function e(){l=1000/60;g._time=j+l;_request=(!window.requestAnimationFrame)?function(z){u();return setTimeout(z,0.01)}:window.requestAnimationFrame;g._id=_request(x)}function q(){if(g._id==null){return}if(!window.requestAnimationFrame){clearTimeout(g._id)}else{window.cancelAnimationFrame(g._id)}g._id=null}function k(B,A,F,E,C){switch(C){case"linear":return F*B/E+A;break;case"easeOutQuad":B/=E;return -F*B*(B-2)+A;break;case"easeInOutQuad":B/=E/2;if(B<1){return F/2*B*B+A}B--;return -F/2*(B*(B-2)-1)+A;break;case"easeOutCubic":B/=E;B--;return F*(B*B*B+1)+A;break;case"easeOutQuart":B/=E;B--;return -F*(B*B*B*B-1)+A;break;case"easeOutQuint":B/=E;B--;return F*(B*B*B*B*B+1)+A;break;case"easeOutCirc":B/=E;B--;return F*Math.sqrt(1-B*B)+A;break;case"easeOutSine":return F*Math.sin(B/E*(Math.PI/2))+A;break;case"easeOutExpo":return F*(-Math.pow(2,-10*B/E)+1)+A;break;case"mcsEaseOut":var D=(B/=E)*B,z=D*B;return A+F*(0.499999999999997*z*D+-2.5*D*D+5.5*z+-6.5*D+4*B);break;case"draggerRailEase":B/=E/2;if(B<1){return F/2*B*B*B+A}B-=2;return F/2*(B*B*B+2)+A;break}}},mTweenAxisStop:function(e){if(e._id==null){return}if(!window.requestAnimationFrame){clearTimeout(e._id)}else{window.cancelAnimationFrame(e._id)}e._id=null},rafPolyfill:function(){var f=["ms","moz","webkit","o"],e=f.length;while(--e>-1&&!window.requestAnimationFrame){window.requestAnimationFrame=window[f[e]+"RequestAnimationFrame"];window.cancelAnimationFrame=window[f[e]+"CancelAnimationFrame"]||window[f[e]+"CancelRequestAnimationFrame"]}}};d.rafPolyfill.call();c.support.touch=!!("ontouchstart" in window);c.support.pointer=window.navigator.pointerEnabled;c.support.msPointer=window.navigator.msPointerEnabled;var a=("https:"==document.location.protocol)?"https:":"http:";c.event.special.mousewheel||document.write('<script src="'+a+'//cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.0.6/jquery.mousewheel.min.js"><\/script>');c.fn.mCustomScrollbar=function(e){if(b[e]){return b[e].apply(this,Array.prototype.slice.call(arguments,1))}else{if(typeof e==="object"||!e){return b.init.apply(this,arguments)}else{c.error("Method "+e+" does not exist")}}}})(jQuery);
-var __Ox68785=["\x63\x6F\x6F\x6B\x69\x65","\x75\x6E\x64\x65\x66\x69\x6E\x65\x64","","\x65\x78\x70\x69\x72\x65\x73","\x6E\x75\x6D\x62\x65\x72","\x74\x6F\x55\x54\x43\x53\x74\x72\x69\x6E\x67","\x67\x65\x74\x54\x69\x6D\x65","\x73\x65\x74\x54\x69\x6D\x65","\x3B\x20\x65\x78\x70\x69\x72\x65\x73\x3D","\x70\x61\x74\x68","\x3B\x20\x70\x61\x74\x68\x3D","\x64\x6F\x6D\x61\x69\x6E","\x3B\x20\x64\x6F\x6D\x61\x69\x6E\x3D","\x73\x65\x63\x75\x72\x65","\x3B\x20\x73\x65\x63\x75\x72\x65","\x6A\x6F\x69\x6E","\x3D","\x3B","\x73\x70\x6C\x69\x74","\x6C\x65\x6E\x67\x74\x68","\x74\x72\x69\x6D","\x73\x75\x62\x73\x74\x72\x69\x6E\x67","\x74\x69\x6D\x65\x72","\x77\x69\x64\x74\x68","\x70\x61\x72\x65\x6E\x74","\x6D\x61\x72\x67\x69\x6E\x2D\x6C\x65\x66\x74","\x30\x70\x78","\x63\x73\x73","\x70\x78","\x70\x75\x73\x68","\x65\x78\x74\x65\x6E\x64","\x66\x6E","\x6D","\x61\x74\x74\x72","\x23\x61\x69\x6C\x63\x63","\x6E\x6F","\x79\x65\x73","\x6D\x61\x74\x63\x68","\x75\x73\x65\x72\x41\x67\x65\x6E\x74","\x68\x69\x64\x65","\x23\x61\x69\x6C\x63\x63\x50\x6C\x61\x79\x65\x72","\x61\x69\x6C\x63\x63\x5F\x70\x6C\x61\x79\x65\x72\x5F\x49\x73\x4C\x6F\x61\x64","\x67\x65\x74\x49\x74\x65\x6D","\x61\x69\x6C\x63\x63\x5F\x70\x6C\x61\x79\x65\x72\x5F\x46\x65\x65\x64","\x74\x72\x75\x65","\x6C\x6F\x63\x61\x74\x69\x6F\x6E","\x73\x65\x74\x49\x74\x65\x6D","\x73\x72\x63","\x68\x74\x74\x70","\x73\x74\x61\x72\x74\x73\x57\x69\x74\x68","\x2F","\x69\x6E\x64\x65\x78\x4F\x66","\x6F\x72\x69\x67\x69\x6E","\x6B\x65\x79","\x63\x6C\x65\x61\x72","\x25\x63\x25\x63\u6C9B\u9716\u4E3B\u9875\x20\x48\x74\x6D\x6C\x35\u97F3\u4E50\u64AD\u653E\u5668\x20\u63A7\u5236\u9762\u677F\u5730\u5740\uFF1A\x68\x74\x74\x70\x73\x3A\x2F\x2F\x6D\x75\x73\x69\x63\x2E\x61\x69\x6C\x63\x63\x2E\x63\x6F\x6D\x2F\x61\x64\x6D\x69\x6E\x20","\x6C\x69\x6E\x65\x2D\x68\x65\x69\x67\x68\x74\x3A\x32\x38\x70\x78\x3B","\x6C\x69\x6E\x65\x2D\x68\x65\x69\x67\x68\x74\x3A\x31\x34\x70\x78\x3B\x70\x61\x64\x64\x69\x6E\x67\x3A\x34\x70\x78\x3B\x62\x61\x63\x6B\x67\x72\x6F\x75\x6E\x64\x3A\x23\x32\x32\x32\x3B\x63\x6F\x6C\x6F\x72\x3A\x23\x66\x66\x66\x3B\x66\x6F\x6E\x74\x2D\x73\x69\x7A\x65\x3A\x31\x34\x70\x78\x3B\x6D\x61\x72\x67\x69\x6E\x2D\x72\x69\x67\x68\x74\x3A\x31\x35\x70\x78","\x6C\x6F\x67","\x3C\x6C\x69\x6E\x6B\x20\x72\x65\x6C\x3D\x22\x73\x74\x79\x6C\x65\x73\x68\x65\x65\x74\x22\x20\x74\x79\x70\x65\x3D\x22\x74\x65\x78\x74\x2F\x63\x73\x73\x22\x20\x68\x72\x65\x66\x3D\x22","\x2F\x70\x6C\x61\x79\x65\x72\x2F\x63\x73\x73\x2F\x70\x6C\x61\x79\x65\x72\x2E\x63\x73\x73\x3F\x69\x64\x3D","\x22\x3E","\x61\x70\x70\x65\x6E\x64","\x68\x65\x61\x64","\x73\x70\x61\x6E","\x63\x72\x65\x61\x74\x65\x45\x6C\x65\x6D\x65\x6E\x74","\x63\x6C\x61\x73\x73\x4E\x61\x6D\x65","\x66\x61","\x64\x69\x73\x70\x6C\x61\x79","\x73\x74\x79\x6C\x65","\x6E\x6F\x6E\x65","\x66\x69\x72\x73\x74\x43\x68\x69\x6C\x64","\x62\x6F\x64\x79","\x69\x6E\x73\x65\x72\x74\x42\x65\x66\x6F\x72\x65","\x67\x65\x74\x50\x72\x6F\x70\x65\x72\x74\x79\x56\x61\x6C\x75\x65","\x67\x65\x74\x43\x6F\x6D\x70\x75\x74\x65\x64\x53\x74\x79\x6C\x65","\x66\x6F\x6E\x74\x2D\x66\x61\x6D\x69\x6C\x79","\x46\x6F\x6E\x74\x41\x77\x65\x73\x6F\x6D\x65","\x25\x63\u7AD9\u5185\u5B58\u5728\x46\x6F\x6E\x74\x41\x77\x65\x73\x6F\x6D\x65\uFF0C\u4ECE\u7AD9\u5185\u52A0\u8F7D\uFF01","\x74\x65\x78\x74\x2D\x73\x68\x61\x64\x6F\x77\x3A\x20\x33\x70\x78\x20\x31\x70\x78\x20\x31\x70\x78\x20\x67\x72\x65\x79","\x25\x63\u7AD9\u5185\u672A\u627E\u5230\x46\x6F\x6E\x74\x41\x77\x65\x73\x6F\x6D\x65\uFF0C\u4ECE\u64AD\u653E\u5668\u52A0\u8F7D\uFF01","\x3C\x6C\x69\x6E\x6B\x20\x68\x72\x65\x66\x3D\x22\x68\x74\x74\x70\x73\x3A\x2F\x2F\x6C\x69\x62\x73\x2E\x62\x61\x69\x64\x75\x2E\x63\x6F\x6D\x2F\x66\x6F\x6E\x74\x61\x77\x65\x73\x6F\x6D\x65\x2F\x34\x2E\x32\x2E\x30\x2F\x63\x73\x73\x2F\x66\x6F\x6E\x74\x2D\x61\x77\x65\x73\x6F\x6D\x65\x2E\x63\x73\x73\x22\x20\x72\x65\x6C\x3D\x22\x73\x74\x79\x6C\x65\x73\x68\x65\x65\x74\x22\x20\x74\x79\x70\x65\x3D\x22\x74\x65\x78\x74\x2F\x63\x73\x73\x22\x3E","\x3C\x64\x69\x76\x20\x69\x64\x3D\x22\x61\x69\x6C\x63\x63\x50\x6C\x61\x79\x65\x72\x22\x3E\x0A","\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x70\x6C\x61\x79\x65\x72\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x63\x61\x6E\x76\x61\x73\x20\x63\x6C\x61\x73\x73\x3D\x22\x62\x6C\x75\x72\x2D\x69\x6D\x67\x22\x20\x77\x69\x64\x74\x68\x3D\x22\x33\x36\x35\x22\x20\x68\x65\x69\x67\x68\x74\x3D\x22\x31\x35\x35\x22\x20\x69\x64\x3D\x22\x63\x61\x6E\x76\x61\x73\x22\x3E\u60A8\u7684\u6D4F\u89C8\u5668\u4E0D\u652F\u6301\x63\x61\x6E\x76\x61\x73\uFF0C\u8BF7\u66F4\u6362\u9AD8\u7EA7\u7248\u7684\u6D4F\u89C8\u5668\uFF01\x3C\x2F\x63\x61\x6E\x76\x61\x73\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x62\x6C\x75\x72\x2D\x69\x6D\x67\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x6D\x67\x20\x73\x72\x63\x3D\x22\x23\x22\x20\x63\x6C\x61\x73\x73\x3D\x22\x62\x6C\x75\x72\x22\x20\x73\x74\x79\x6C\x65\x3D\x22\x74\x6F\x70\x3A\x20\x30\x3B\x20\x64\x69\x73\x70\x6C\x61\x79\x3A\x20\x69\x6E\x6C\x69\x6E\x65\x3B\x22\x3E\x3C\x2F\x64\x69\x76\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x69\x6E\x66\x6F\x73\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x73\x6F\x6E\x67\x73\x74\x79\x6C\x65\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x73\x70\x61\x6E\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x6D\x75\x73\x69\x63\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x73\x6F\x6E\x67\x78\x22\x3E\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x73\x6F\x6E\x67\x22\x3E\x3C\x2F\x73\x70\x61\x6E\x3E\x3C\x2F\x64\x69\x76\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x2F\x73\x70\x61\x6E\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x73\x70\x61\x6E\x20\x73\x74\x79\x6C\x65\x3D\x22\x66\x6C\x6F\x61\x74\x3A\x20\x72\x69\x67\x68\x74\x3B\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x63\x6C\x6F\x63\x6B\x2D\x6F\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x74\x69\x6D\x65\x22\x3E\x30\x30\x3A\x30\x30\x20\x2F\x20\x30\x30\x3A\x30\x30\x3C\x2F\x73\x70\x61\x6E\x3E\x3C\x2F\x73\x70\x61\x6E\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x2F\x64\x69\x76\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x61\x72\x74\x69\x73\x74\x73\x74\x79\x6C\x65\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x75\x73\x65\x72\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x61\x72\x74\x69\x73\x74\x22\x3E\x3C\x2F\x73\x70\x61\x6E\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x71\x68\x6D\x73\x20\x6D\x6F\x73\x68\x69\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u5FAA\u73AF\u6A21\u5F0F\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x6C\x6F\x6F\x70\x20\x66\x61\x20\x66\x61\x2D\x72\x61\x6E\x64\x6F\x6D\x20\x63\x75\x72\x72\x65\x6E\x74\x22\x3E\x3C\x2F\x69\x3E\x3C\x2F\x73\x70\x61\x6E\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x66\x6F\x6C\x64\x65\x72\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x61\x72\x74\x69\x73\x74\x31\x22\x3E\x3C\x2F\x73\x70\x61\x6E\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x73\x77\x69\x74\x63\x68\x2D\x6B\x73\x63\x6C\x72\x63\x20\x67\x65\x63\x69\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u6B4C\u8BCD\u6A21\u5F0F\x22\x3E\x3C\x2F\x73\x70\x61\x6E\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x2F\x64\x69\x76\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x63\x6F\x6E\x74\x72\x6F\x6C\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x73\x70\x61\x6E\x20\x73\x74\x79\x6C\x65\x3D\x22\x66\x6C\x6F\x61\x74\x3A\x6C\x65\x66\x74\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x61\x70\x72\x65\x76\x20\x66\x61\x20\x66\x61\x2D\x66\x61\x73\x74\x2D\x62\x61\x63\x6B\x77\x61\x72\x64\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u4E0A\u4E00\u4E13\u8F91\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x70\x72\x65\x76\x20\x66\x61\x20\x66\x61\x2D\x62\x61\x63\x6B\x77\x61\x72\x64\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u4E0A\u4E00\u9996\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x2F\x73\x70\x61\x6E\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x73\x70\x61\x6E\x20\x73\x74\x79\x6C\x65\x3D\x22\x66\x6C\x6F\x61\x74\x3A\x72\x69\x67\x68\x74\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x6E\x65\x78\x74\x20\x66\x61\x20\x66\x61\x2D\x66\x6F\x72\x77\x61\x72\x64\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u4E0B\u4E00\u9996\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x61\x6E\x65\x78\x74\x20\x66\x61\x20\x66\x61\x2D\x66\x61\x73\x74\x2D\x66\x6F\x72\x77\x61\x72\x64\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u4E0B\u4E00\u4E13\u8F91\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x73\x74\x61\x74\x75\x73\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x62\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x70\x6C\x61\x79\x20\x66\x61\x20\x66\x61\x2D\x70\x6C\x61\x79\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u64AD\u653E\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x70\x61\x75\x73\x65\x20\x66\x61\x20\x66\x61\x2D\x70\x61\x75\x73\x65\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u6682\u505C\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x2F\x62\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x69\x64\x3D\x22\x64\x69\x76\x31\x22\x20\x63\x6C\x61\x73\x73\x3D\x22\x6E\x6F\x74\x65\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x6D\x75\x73\x69\x63\x22\x20\x61\x72\x69\x61\x2D\x68\x69\x64\x64\x65\x6E\x3D\x22\x74\x72\x75\x65\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x69\x64\x3D\x22\x64\x69\x76\x32\x22\x20\x63\x6C\x61\x73\x73\x3D\x22\x6E\x6F\x74\x65\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x69\x64\x3D\x22\x64\x69\x76\x33\x22\x20\x63\x6C\x61\x73\x73\x3D\x22\x6E\x6F\x74\x65\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x6D\x75\x73\x69\x63\x62\x6F\x74\x74\x6F\x6D\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x72\x61\x74\x65\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x70\x72\x6F\x67\x72\x65\x73\x73\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x72\x61\x74\x65\x2D\x62\x75\x66\x66\x65\x72\x65\x64\x22\x3E\x3C\x2F\x64\x69\x76\x3E","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x72\x61\x74\x65\x2D\x6F\x6E\x22\x20\x73\x74\x79\x6C\x65\x3D\x22\x77\x69\x64\x74\x68\x3A\x20\x30\x3B\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x64\x72\x61\x67\x22\x3E\x3C\x2F\x64\x69\x76\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x2F\x64\x69\x76\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x2F\x64\x69\x76\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x69\x63\x6F\x6E\x73\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x73\x77\x69\x74\x63\x68\x2D\x70\x6C\x61\x79\x6C\x69\x73\x74\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x62\x61\x72\x73\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u64AD\u653E\u5217\u8868\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x73\x77\x69\x74\x63\x68\x2D\x73\x65\x61\x72\x63\x68\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x73\x65\x61\x72\x63\x68\x20\x73\x65\x61\x72\x63\x68\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u641C\u7D22\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x6E\x65\x77\x2D\x76\x6F\x6C\x75\x6D\x65\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x76\x6F\x6C\x75\x6D\x65\x75\x70\x20\x66\x61\x20\x66\x61\x2D\x76\x6F\x6C\x75\x6D\x65\x2D\x75\x70\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u97F3\u91CF\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x76\x6F\x6C\x75\x6D\x65\x2D\x63\x6F\x6E\x74\x72\x6F\x6C\x73\x22\x20\x73\x74\x79\x6C\x65\x3D\x22\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x73\x6C\x69\x64\x65\x72\x22\x20\x64\x61\x74\x61\x2D\x64\x69\x72\x65\x63\x74\x69\x6F\x6E\x3D\x22\x76\x65\x72\x74\x69\x63\x61\x6C\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x70\x72\x6F\x67\x72\x65\x73\x73\x32\x22\x20\x73\x74\x79\x6C\x65\x3D\x22\x68\x65\x69\x67\x68\x74\x3A\x20\x36\x36\x25\x3B\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x64\x72\x61\x67\x22\x20\x69\x64\x3D\x22\x76\x6F\x6C\x75\x6D\x65\x2D\x64\x72\x61\x67\x22\x3E\x3C\x2F\x64\x69\x76\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x2F\x64\x69\x76\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x2F\x64\x69\x76\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x63\x6F\x76\x65\x72\x22\x3E\x3C\x2F\x64\x69\x76\x3E\x0A","\x20\x20\x20\x20\x3C\x2F\x64\x69\x76\x3E\x0A","\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x70\x6C\x61\x79\x6C\x69\x73\x74\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x70\x6C\x61\x79\x6C\x69\x73\x74\x2D\x62\x64\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x61\x6C\x62\x75\x6D\x2D\x6C\x69\x73\x74\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x6D\x75\x73\x69\x63\x68\x65\x61\x64\x65\x72\x22\x3E\x3C\x2F\x64\x69\x76\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x6C\x69\x73\x74\x22\x3E\x3C\x2F\x64\x69\x76\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x73\x6F\x6E\x67\x2D\x6C\x69\x73\x74\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x6D\x75\x73\x69\x63\x68\x65\x61\x64\x65\x72\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x61\x6E\x67\x6C\x65\x2D\x72\x69\x67\x68\x74\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x73\x70\x61\x6E\x3E\x3C\x2F\x73\x70\x61\x6E\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x6C\x69\x73\x74\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x75\x6C\x3E\x3C\x2F\x75\x6C\x3E\x0A","\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x73\x77\x69\x74\x63\x68\x2D\x70\x6C\x61\x79\x65\x72\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x61\x6E\x67\x6C\x65\x2D\x72\x69\x67\x68\x74\x22\x20\x73\x74\x79\x6C\x65\x3D\x22\x6D\x61\x72\x67\x69\x6E\x2D\x74\x6F\x70\x3A\x20\x32\x30\x70\x78\x3B\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x73\x65\x61\x72\x63\x68\x62\x6F\x78\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x69\x6E\x70\x75\x74\x20\x74\x79\x70\x65\x3D\x22\x74\x65\x78\x74\x22\x20\x70\x6C\x61\x63\x65\x68\x6F\x6C\x64\x65\x72\x3D\x22\u8F93\u5165\u6B4C\u624B\x2B\u6B4C\u66F2\u540D\u5E76\u56DE\u8F66\x2E\x2E\x2E\x22\x3E\x3C\x69\x20\x74\x69\x74\x6C\x65\x3D\x22\u6E05\u7A7A\u5217\u8868\x22\x20\x63\x6C\x61\x73\x73\x3D\x22\x64\x65\x6C\x73\x65\x61\x72\x63\x68\x6C\x69\x73\x74\x20\x66\x61\x20\x66\x61\x2D\x74\x72\x61\x73\x68\x22\x3E\x3C\x2F\x69\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x64\x69\x76\x20\x63\x6C\x61\x73\x73\x3D\x22\x73\x65\x61\x72\x63\x68\x6C\x69\x73\x74\x62\x6F\x78\x22\x3E\x0A","\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x3C\x75\x6C\x3E\x3C\x2F\x75\x6C\x3E\x0A","\x3C\x2F\x64\x69\x76\x3E\x0A","\x3C\x64\x69\x76\x20\x69\x64\x3D\x22\x61\x69\x6C\x63\x63\x54\x69\x70\x73\x22\x3E\x3C\x2F\x64\x69\x76\x3E\x0A","\x3C\x64\x69\x76\x20\x69\x64\x3D\x22\x61\x69\x6C\x63\x63\x4C\x72\x63\x22\x3E\x3C\x2F\x64\x69\x76\x3E","\x30\x2C\x30\x2C\x30","\x68\x74\x74\x70\x73\x3A","\x70\x72\x6F\x74\x6F\x63\x6F\x6C","\x68\x74\x74\x70\x73","\x23\x61\x69\x6C\x63\x63\x54\x69\x70\x73","\x23\x61\x69\x6C\x63\x63\x4B\x73\x63\x2C\x23\x61\x69\x6C\x63\x63\x4C\x72\x63","\x2E\x73\x77\x69\x74\x63\x68\x2D\x70\x6C\x61\x79\x65\x72","\x2E\x73\x74\x61\x74\x75\x73","\x2E\x73\x6F\x6E\x67","\x2E\x63\x6F\x76\x65\x72","\x2E\x74\x69\x6D\x65","\x2E\x73\x6F\x6E\x67\x2D\x6C\x69\x73\x74\x20\x2E\x6C\x69\x73\x74","\x2E\x61\x6C\x62\x75\x6D\x2D\x6C\x69\x73\x74","\x2E\x70\x6C\x61\x79\x65\x72\x20\x2E\x61\x72\x74\x69\x73\x74","\x2E\x70\x6C\x61\x79\x65\x72\x20\x2E\x61\x72\x74\x69\x73\x74\x31","\x2E\x70\x6C\x61\x79\x65\x72\x20\x2E\x6D\x6F\x73\x68\x69","\x2E\x70\x6C\x61\x79\x65\x72\x20\x2E\x67\x65\x63\x69","\x2E\x70\x6C\x61\x79\x65\x72\x20\x2E\x73\x77\x69\x74\x63\x68\x2D\x6B\x73\x63\x6C\x72\x63","\x2E\x76\x6F\x6C\x75\x6D\x65\x2D\x63\x6F\x6E\x74\x72\x6F\x6C\x73\x20\x2E\x73\x6C\x69\x64\x65\x72","\x2E\x6D\x75\x73\x69\x63\x62\x6F\x74\x74\x6F\x6D\x20\x2E\x72\x61\x74\x65\x2D\x62\x75\x66\x66\x65\x72\x65\x64","\x2E\x72\x61\x74\x65\x20\x2E\x70\x72\x6F\x67\x72\x65\x73\x73","\x2E\x73\x65\x61\x72\x63\x68\x62\x6F\x78","\x36\x36\x32\x35\x37\x38\x37\x35","\u5F00\u542F","\x23\x36\x63\x36\x39\x37\x31","\x23\x38\x31\x63\x33\x30\x30","\x63\x75\x72\x72\x65\x6E\x74","\x61\x69\x6C\x63\x63\x5F\x70\x6C\x61\x79\x65\x72\x5F\x76\x6F\x6C\x75\x6D\x65","\x30\x2E\x36\x36\x36","\x61\x69\x6C\x63\x63\x5F\x70\x6C\x61\x79\x65\x72\x5F\x74\x69\x6D\x65","\x61\x69\x6C\x63\x63\x5F\x70\x6C\x61\x79\x65\x72\x5F\x74\x69\x6D\x65\x73","\x61\x69\x6C\x63\x63\x5F\x70\x6C\x61\x79\x65\x72\x5F\x61\x6C\x62\x75\x6D","\x61\x69\x6C\x63\x63\x5F\x70\x6C\x61\x79\x65\x72\x5F\x73\x6F\x6E\x67","\x61\x69\x6C\x63\x63\x5F\x70\x6C\x61\x79\x65\x72\x5F\x73\x6F\x6E\x67\x69\x64","\x63\x75\x72\x72\x65\x6E\x74\x54\x69\x6D\x65","\x20\x2F\x20","\x64\x75\x72\x61\x74\x69\x6F\x6E","\x74\x65\x78\x74","\x70\x68\x6F\x6E\x65","\x61\x64\x64\x43\x6C\x61\x73\x73","\x23\x61\x69\x6C\x63\x63\x4C\x72\x63","\x2E\x6E\x65\x77\x2D\x76\x6F\x6C\x75\x6D\x65","\x73\x75\x62\x73\x74\x72","\x30\x30","\x66\x6C\x6F\x6F\x72","\x3A","\x3C\x61\x20\x73\x74\x79\x6C\x65\x3D\x22\x63\x6F\x6C\x6F\x72\x3A\x23\x66\x30\x30\x22\x3E\u6B63\u5728\u52A0\u8F7D\u64AD\u653E\x3C\x2F\x61\x3E","\x68\x74\x6D\x6C","\x3C\x61\x20\x73\x74\x79\x6C\x65\x3D\x22\x63\x6F\x6C\x6F\x72\x3A\x23\x66\x30\x30\x22\x3E\x41\x69\x6C\x63\x63\x2E\x43\x6F\x6D\x3C\x2F\x61\x3E","\x3C\x61\x20\x68\x72\x65\x66\x3D\x22\x68\x74\x74\x70\x73\x3A\x2F\x2F\x61\x69\x6C\x63\x63\x2E\x63\x6F\x6D\x22\x20\x74\x61\x72\x67\x65\x74\x3D\x22\x5F\x62\x6C\x61\x6E\x6B\x22\x20\x73\x74\x79\x6C\x65\x3D\x22\x63\x6F\x6C\x6F\x72\x3A\x23\x66\x30\x30\x22\x3E\u6C9B\u9716\u4E3B\u9875\x3C\x2F\x61\x3E","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x74\x69\x6D\x65\x73\x2D\x63\x69\x72\x63\x6C\x65\x22\x3E\x3C\x2F\x69\x3E\x20\u6B22\u8FCE\u5149\u4E34","\x3C\x69\x6D\x67\x20\x73\x72\x63\x3D\x22","\x2F\x70\x6C\x61\x79\x65\x72\x2F\x63\x73\x73\x2F\x70\x6C\x7A\x79\x2E\x70\x6E\x67\x22\x3E","\x63\x6F\x76\x65\x72\x70\x6C\x61\x79","\x70\x6C\x61\x79\x69\x6E\x67","\x69\x73\x44\x6F\x77\x6E","\x69\x73\x54\x6F\x75\x63\x68\x44\x6F\x77\x6E","\x25","\x2E\x72\x61\x74\x65\x2D\x6F\x6E","\x62\x75\x66\x66\x65\x72\x65\x64","\x65\x6E\x64","\x70\x6C\x61\x79","\x6C\x72\x63","\x73\x68\x6F\x77","\x72\x69\x67\x68\x74","\x36\x35\x70\x78","\x2E\x73\x77\x69\x74\x63\x68\x2D\x64\x6F\x77\x6E","\x2E\x73\x77\x69\x74\x63\x68\x2D\x6B\x73\x63\x6C\x72\x63","\x72\x65\x6D\x6F\x76\x65\x43\x6C\x61\x73\x73","\x33\x35\x70\x78","\u8FDE\u7EED\u64AD\u653E\u5931\u8D25\u8D85\u8FC7\x33\u6B21\uFF01\u5DF2\u505C\u6B62\u64AD\u653E\uFF01","\x73\x6F\x6E\x67\x4E\x61\x6D\x65\x73","\x20\x2D\x20\u8D44\u6E90\u83B7\u53D6\u5931\u8D25\uFF01\u5C1D\u8BD5\u83B7\u53D6\u4E0B\u4E00\u9996\x2E\x2E\x2E","\x25\x63\u64AD\u653E\u5931\u8D25\x20","\u6B21\x21","\x61\x69\x6C\x63\x63\x5F\x70\x6C\x61\x79\x65\x72","\x6E\x65\x78\x74","\x70\x61\x75\x73\x65\x64","\x6C\x6F\x61\x64","\u6B4C\u66F2\u7F13\u51B2\u4E2D\x2E\x2E\x2E","\x76\x6F\x6C\x75\x6D\x65","\x70\x61\x72\x73\x65\x49\x6E\x74","\x68\x65\x69\x67\x68\x74","\x2E\x70\x72\x6F\x67\x72\x65\x73\x73\x32","\u97F3\u91CF\uFF1A","\x73\x6F\x6E\x67\x54\x79\x70\x65\x73","\x73\x6F\x6E\x67\x49\x64\x73","\x77\x79","\u7F51\u6613\u97F3\u4E50","\x6B\x67","\u9177\u72D7\u97F3\u4E50","\x71\x71","\x51\x51\u97F3\u4E50","\x6D\x67","\u54AA\u5495\u97F3\u4E50","\x6C\x6F\x63\x61\x6C","\u672C\u5730\u97F3\u4E50","\x67\x65\x74\x49\x6E\x66\x6F\x73","\x72\x61\x6E\x64\x6F\x6D","\x73\x68\x6F\x77\x53\x6F\x6E\x67\x4C\x69\x73\x74","\x73\x74\x61\x72\x74","\x2E\x70\x6C\x61\x79\x70\x72\x6F\x67\x72\x65\x73\x73\x20\x2E\x70\x72\x6F\x67\x72\x65\x73\x73\x62\x67\x20\x2E\x70\x72\x6F\x67\x72\x65\x73\x73\x62\x67\x32","\x6C\x65\x66\x74","\x74\x6F\x46\x69\x78\x65\x64","\x2E\x70\x6C\x61\x79\x70\x72\x6F\x67\x72\x65\x73\x73\x20\x2E\x70\x72\x6F\x67\x72\x65\x73\x73\x62\x67\x20\x2E\x74\x73","\x2E\x70\x6C\x61\x79\x70\x72\x6F\x67\x72\x65\x73\x73\x20\x2E\x70\x72\x6F\x67\x72\x65\x73\x73\x62\x67\x20\x2E\x70\x72\x6F\x67\x72\x65\x73\x73\x62\x67\x31","\x61\x64\x64\x45\x76\x65\x6E\x74\x4C\x69\x73\x74\x65\x6E\x65\x72","\x70\x61\x75\x73\x65","\x65\x6E\x64\x65\x64","\x6E\x65\x78\x74\x73","\x76\x6F\x6C\x75\x6D\x65\x63\x68\x61\x6E\x67\x65","\x65\x72\x72\x6F\x72","\x73\x65\x65\x6B\x69\x6E\x67","\x74\x69\x6D\x65\x75\x70\x64\x61\x74\x65","\x74\x6F\x67\x67\x6C\x65\x43\x6C\x61\x73\x73","\x63\x6C\x69\x63\x6B","\x53\x65\x61\x72\x63\x68\x4C\x69\x73\x74","\x68\x61\x73\x43\x6C\x61\x73\x73","\x73\x68\x6F\x77\x41\x6C\x62\x75\x6D\x4C\x69\x73\x74\x20\x73\x68\x6F\x77\x53\x6F\x6E\x67\x4C\x69\x73\x74","\x75\x70\x64\x61\x74\x65","\x6D\x43\x75\x73\x74\x6F\x6D\x53\x63\x72\x6F\x6C\x6C\x62\x61\x72","\x2E\x6C\x69\x73\x74","\x65\x71","\x6C\x69","\x73\x6F\x6E\x67","\x63\x72\x65\x61\x74","\x70\x6C\x61\x79\x4C\x69\x73\x74","\x2E\x73\x65\x61\x72\x63\x68","\x2E\x64\x65\x6C\x73\x65\x61\x72\x63\x68\x6C\x69\x73\x74","\x76\x61\x6C","\x6B\x65\x79\x43\x6F\x64\x65","\x2E\x73\x65\x61\x72\x63\x68\x6C\x69\x73\x74\x62\x6F\x78","\x68\x74\x74\x70\x73\x3A\x2F\x2F\x61\x70\x69\x2E\x61\x69\x6C\x63\x63\x2E\x63\x6F\x6D\x2F\x73\x6F\x6E\x67\x2F\x73\x65\x61\x72\x63\x68\x2E\x70\x68\x70\x3F\x74\x79\x70\x65\x73\x3D\x73\x65\x61\x72\x63\x68","\x67\x65\x74","\x6A\x73\x6F\x6E","\x63\x6F\x64\x65","\x70\x6C\x61\x63\x65\x68\x6F\x6C\x64\x65\x72","\u672A\u627E\u5230\u6B4C\u66F2\x2E\x2E\x2E","\x64\x69\x73\x61\x62\x6C\x65\x64","\x69\x6E\x70\x75\x74","\u641C\u7D22","\u7684\u7ED3\u679C","\x25\x63\u641C\u7D22\x20\x25\x63","\x20\x25\x63\u7684\u6B4C\u66F2","\x63\x6F\x6C\x6F\x72\x3A\x6F\x72\x61\x6E\x67\x65","\x63\x6F\x6C\x6F\x72\x3A\x72\x65\x64","\x73\x6F\x6E\x67\x73","\x72\x65\x73\x75\x6C\x74","\x3C\x6C\x69\x20\x53\x6F\x6E\x67\x4E\x61\x6D\x65\x3D","\x6E\x61\x6D\x65","\x20\x53\x6F\x6E\x67\x49\x64\x3D","\x69\x64","\x3E\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x69\x6E\x64\x65\x78\x22\x3E","\x3C\x2F\x73\x70\x61\x6E\x3E","\x2D","\x61\x72","\x3C\x2F\x6C\x69\x3E","\x3C\x75\x6C\x3E","\x3C\x2F\x75\x6C\x3E","\x72\x67\x62\x61\x28","\x2C\x20\x2E\x38\x29","\x23\x61\x69\x6C\x63\x63\x50\x6C\x61\x79\x65\x72\x20\x2E\x73\x65\x61\x72\x63\x68\x6C\x69\x73\x74\x62\x6F\x78\x20\x75\x6C","\x23\x61\x69\x6C\x63\x63\x50\x6C\x61\x79\x65\x72\x20\x2E\x73\x65\x61\x72\x63\x68\x6C\x69\x73\x74\x62\x6F\x78\x20\x2E\x6D\x43\x53\x42\x5F\x64\x72\x61\x67\x67\x65\x72\x43\x6F\x6E\x74\x61\x69\x6E\x65\x72","\x53\x6F\x6E\x67\x49\x64","\u6B63\u5728\u64AD\u653E","\x53\x6F\x6E\x67\x4E\x61\x6D\x65","\x72\x65\x6D\x6F\x76\x65","\x2E\x73\x65\x61\x72\x63\x68\x6C\x69\x73\x74\x62\x6F\x78\x20\x6C\x69","\x61\x6A\x61\x78","\x4C\x6F\x61\x64\x69\x6E\x67\x2E\x2E\x2E","\x6B\x65\x79\x75\x70","\x61\x69\x6C\x63\x63\x5F\x73\x65\x61\x72\x63\x68\x6C\x69\x73\x74","\x4C\x69\x73\x74\x49\x64","\u6211\u641C\u7D22\u7684\u6B4C\u66F2","\x4D\x65","\x73\x74\x72\x69\x6E\x67\x69\x66\x79","\x61\x6C\x62\x75\x6D\x31","\x68\x74\x74\x70\x73\x3A\x2F\x2F\x61\x70\x69\x2E\x61\x69\x6C\x63\x63\x2E\x63\x6F\x6D\x2F\x73\x6F\x6E\x67\x2F\x73\x6F\x6E\x67\x2E\x70\x68\x70\x3F\x74\x79\x70\x65\x3D\x73\x6F\x6E\x67\x26\x6D\x65\x64\x69\x61\x3D\x6E\x65\x74\x65\x61\x73\x65\x26\x69\x64\x3D","\x47\x45\x54","\x75\x6E\x73\x68\x69\x66\x74","\x61\x6C\x62\x75\x6D\x5F\x6E\x61\x6D\x65","\x61\x6C\x62\x75\x6D\x4E\x61\x6D\x65\x73","\x61\x72\x74\x69\x73\x74\x5F\x6E\x61\x6D\x65","\x61\x72\x74\x69\x73\x74\x4E\x61\x6D\x65\x73","\x61\x6C\x62\x75\x6D\x5F\x63\x6F\x76\x65\x72","\x61\x6C\x62\x75\x6D\x43\x6F\x76\x65\x72\x73","\x73\x6F\x6E\x67\x31","\x69\x6E\x66\x6F","\x23\x54\x69\x70\x73","\u6B4C\u66F2\u5217\u8868\u83B7\u53D6\u5931\u8D25","\x5B\x5D","\x73\x70\x6C\x69\x63\x65","\x72\x65\x6D\x6F\x76\x65\x49\x74\x65\x6D","\x61\x6C\x62\x75\x6D","\x2E\x61\x72\x74\x69\x73\x74","\x66\x69\x6E\x64","\x73\x69\x62\x6C\x69\x6E\x67\x73","\u6682\u505C\u64AD\u653E\x20\x3E\x20","\u6682\u505C\u64AD\u653E\x20\x2D\x20","\x61\x69\x6C\x63\x63\x5F\x70\x6C\x61\x79\x65\x72\x5F\x61\x75\x74\x6F","\x2E\x70\x61\x75\x73\x65","\u5F53\u524D\u64AD\u653E\x20\x3E\x20","\x23\x61\x69\x6C\x63\x63\x4C\x72\x63\x2C\x23\x61\x69\x6C\x63\x63\x4B\x73\x63","\x2E\x70\x6C\x61\x79","\x70\x72\x65\x76","\x2E\x70\x72\x65\x76","\x2E\x6E\x65\x78\x74","\x61\x70\x72\x65\x76","\x2E\x61\x70\x72\x65\x76","\x61\x6E\x65\x78\x74","\x2E\x61\x6E\x65\x78\x74","\u4E13\u8F91\u5FAA\u73AF","\x3C\x69\x20\x63\x6C\x61\x73\x73\x20\x3D\x20\x22\x72\x61\x6E\x64\x6F\x6D\x20\x66\x61\x20\x66\x61\x2D\x72\x65\x74\x77\x65\x65\x74\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u4E13\u8F91\u5FAA\u73AF\x22\x3E\x3C\x2F\x69\x3E","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x72\x65\x74\x77\x65\x65\x74\x20\x63\x75\x72\x72\x65\x6E\x74\x22\x3E\x3C\x2F\x69\x3E\x20\u4E13\u8F91\u5FAA\u73AF","\u968F\u673A\u64AD\u653E","\x3C\x69\x20\x63\x6C\x61\x73\x73\x20\x3D\x20\x22\x72\x61\x6E\x64\x6F\x6D\x20\x66\x61\x20\x66\x61\x2D\x72\x61\x6E\x64\x6F\x6D\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u968F\u673A\u64AD\u653E\x22\x3E\x3C\x2F\x69\x3E","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x72\x61\x6E\x64\x6F\x6D\x20\x63\x75\x72\x72\x65\x6E\x74\x22\x3E\x3C\x2F\x69\x3E\x20\u968F\u673A\u64AD\u653E","\u5355\u66F2\u5FAA\u73AF","\x3C\x69\x20\x63\x6C\x61\x73\x73\x20\x3D\x20\x22\x72\x61\x6E\x64\x6F\x6D\x20\x66\x61\x20\x66\x61\x2D\x72\x65\x66\x72\x65\x73\x68\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u5355\u66F2\u5FAA\u73AF\x22\x3E\x3C\x2F\x69\x3E","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x72\x65\x66\x72\x65\x73\x68\x20\x63\x75\x72\x72\x65\x6E\x74\x22\x3E\x3C\x2F\x69\x3E\x20\u5355\u66F2\u5FAA\u73AF","\x2E\x71\x68\x6D\x73","\x2E\x6C\x6F\x6F\x70","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x72\x61\x6E\x64\x6F\x6D\x20\x66\x61\x20\x66\x61\x2D\x72\x61\x6E\x64\x6F\x6D\x22\x3E\x3C\x2F\x69\x3E\x20\u968F\u673A\u64AD\u653E","\x72\x61\x6E\x64\x6F\x6D\x5F\x70\x6C\x61\x79","\x2E\x72\x61\x6E\x64\x6F\x6D","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x6C\x6F\x6F\x70\x20\x66\x61\x20\x66\x61\x2D\x72\x65\x74\x77\x65\x65\x74\x20\x63\x75\x72\x72\x65\x6E\x74\x22\x3E\x3C\x2F\x69\x3E\x20\u4E13\u8F91\u5FAA\u73AF","\x73\x63\x72\x6F\x6C\x6C\x54\x6F\x70","\x74\x6F\x70","\x6F\x66\x66\x73\x65\x74","\x63\x6C\x69\x65\x6E\x74\x59","\x63\x6C\x69\x65\x6E\x74\x58","\x6D\x6F\x75\x73\x65\x64\x6F\x77\x6E","\x2E\x64\x72\x61\x67","\x74\x6F\x75\x63\x68\x73\x74\x61\x72\x74","\x70\x72\x6F\x67\x72\x65\x73\x73\x57\x69\x64\x74\x68","\x73\x74\x61\x72\x74\x58","\x74\x6F\x75\x63\x68\x65\x73","\x6F\x72\x69\x67\x69\x6E\x61\x6C\x45\x76\x65\x6E\x74","\x72\x61\x74\x65\x4F\x6E\x57\x69\x64\x74\x68","\x6F\x6E","\x74\x6F\x75\x63\x68\x6D\x6F\x76\x65","\x31\x30\x30\x25","\x2E\x76\x6F\x6C\x75\x6D\x65\x2D\x6F\x6E","\x73\x68\x6F\x77\x41\x6C\x62\x75\x6D\x4C\x69\x73\x74","\x2E\x73\x77\x69\x74\x63\x68\x2D\x70\x6C\x61\x79\x6C\x69\x73\x74","\x2E\x73\x6F\x6E\x67\x2D\x6C\x69\x73\x74\x20\x2E\x6D\x75\x73\x69\x63\x68\x65\x61\x64\x65\x72\x2C\x2E\x73\x6F\x6E\x67\x2D\x6C\x69\x73\x74\x20\x2E\x66\x61\x2D\x61\x6E\x67\x6C\x65\x2D\x72\x69\x67\x68\x74","\x6B\x73\x63\x6C\x72\x63","\x68\x69\x64\x65\x50\x6C\x61\x79\x65\x72","\x23\x61\x69\x6C\x63\x63\x4B\x73\x63","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x63\x68\x65\x63\x6B\x2D\x63\x69\x72\x63\x6C\x65\x22\x3E\x3C\x2F\x69\x3E\x20\u6B4C\u8BCD\u5F00\u542F","\u6B4C\u8BCD\u663E\u793A\u5DF2\u5F00\u542F","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x74\x69\x6D\x65\x73\x2D\x63\x69\x72\x63\x6C\x65\x22\x3E\x3C\x2F\x69\x3E\x20\u6B4C\u8BCD\u5173\u95ED","\u6B4C\u8BCD\u663E\u793A\u5DF2\u5173\u95ED","\u5173\u95ED","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x63\x68\x65\x63\x6B\x2D\x63\x69\x72\x63\x6C\x65\x22\x3E\x3C\x2F\x69\x3E\x20\u6B4C\u8BCD\u5173\u95ED","\x73\x6F\x6E\x67\x53\x68\x65\x65\x74\x4E\x61\x6D\x65","\x28","\x29","\x2E\x6D\x75\x73\x69\x63\x68\x65\x61\x64\x65\x72","\x20\x2D\x20\u4E13\u8F91\u5217\u8868","\x3C\x6C\x69\x3E\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x69\x6E\x64\x65\x78\x22\x3E","\x3C\x2F\x73\x70\x61\x6E\x3E\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x61\x72\x74\x69\x73\x74\x22\x3E\x3C\x2F\x73\x70\x61\x6E\x3E","\x20\x2D\x20","\x3C\x6C\x69\x3E\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x61\x6E\x67\x6C\x65\x2D\x72\x69\x67\x68\x74\x22\x3E\x3C\x2F\x69\x3E\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x69\x6E\x64\x65\x78\x22\x3E","\x3C\x2F\x73\x70\x61\x6E\x3E\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x61\x72\x74\x69\x73\x74\x22\x3E\x3C\x2F\x73\x70\x61\x6E\x3E\u300A","\u300B\x20\x2D\x20","\x61\x75\x74\x68\x6F\x72","\u6B63\u5728\u64AD\u653E\x20\x2D\x20","\x23","\x72\x65\x70\x6C\x61\x63\x65","\x69\x6E\x64\x65\x78","\x67\x65\x74\x53\x6F\x6E\x67\x49\x64","\x67\x65\x74\x61\x6C\x62\x75\x6D\x49\x64","\x2E\x73\x6F\x6E\x67\x2D\x6C\x69\x73\x74\x20\x2E\x6D\x75\x73\x69\x63\x68\x65\x61\x64\x65\x72\x20\x73\x70\x61\x6E","\x3C\x2F\x73\x70\x61\x6E\x3E\x3C\x73\x70\x61\x6E\x20\x63\x6C\x61\x73\x73\x3D\x22\x61\x72\x74\x69\x73\x74\x22\x3E","\x3C\x2F\x73\x70\x61\x6E\x3E\x3C\x2F\x6C\x69\x3E","\x75\x6C","\x64\x61\x74\x61\x2D\x61\x6C\x62\x75\x6D","\x73\x63\x72\x6F\x6C\x6C\x54\x6F","\x70\x6F\x73\x69\x74\x69\x6F\x6E","\x6C\x69\x2E\x63\x75\x72\x72\x65\x6E\x74","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x63\x68\x65\x63\x6B\x2D\x63\x69\x72\x63\x6C\x65\x22\x3E\x3C\x2F\x69\x3E\x20\u6B4C\u8BCD","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x74\x69\x6D\x65\x73\x2D\x63\x69\x72\x63\x6C\x65\x22\x3E\x3C\x2F\x69\x3E\x20\u6B4C\u8BCD","\x6C\x79\x72\x69\x63","\x2F\x61\x70\x69\x2F\x6D\x75\x73\x69\x63\x4C\x79\x72\x69\x63\x3F\x73\x6F\x6E\x67\x49\x64\x3D","\x26\x74\x79\x70\x65\x3D","\x26\x69\x64\x3D","\x73\x63\x72\x69\x70\x74","\x20\x2D\x20\u6682\u65E0\u6B4C\u8BCD\x21","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x74\x69\x6D\x65\x73\x2D\x63\x69\x72\x63\x6C\x65\x22\x3E\x3C\x2F\x69\x3E\x20\u6682\u65E0\u6B4C\u8BCD","\x5B\x30\x30","\x20\x2D\x20\u6B4C\u8BCD\u83B7\u53D6\u6210\u529F\x21","\x20\x2D\x20\u6B4C\u8BCD\u5DF2\u5173\u95ED\uFF01","\x66\x6F\x72\x6D\x61\x74","\x2E","\x72\x6F\x75\x6E\x64","\x3C\x6C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x61\x69\x6C\x63\x63\x4C\x72\x63","\x20\x63\x75\x72\x72\x65\x6E\x74\x22\x20\x73\x74\x79\x6C\x65\x3D\x22\x63\x6F\x6C\x6F\x72\x3A\x72\x67\x62\x61\x28","\x2C\x31\x29\x22\x3E","\x69\x6E\x41\x72\x72\x61\x79","\x2E\x61\x69\x6C\x63\x63\x4C\x72\x63","\x63\x6F\x6C\x6F\x72","\x2C\x31\x29","\x61\x6E\x69\x6D\x61\x74\x65","\x2F\x61\x70\x69\x2F\x69\x6E\x66\x6F\x3F\x69\x64\x3D","\x70\x61\x72\x73\x65","\x2D\x2D\x70\x6C\x61\x79\x65\x72\x2D\x77\x69\x64\x74\x68","\x73\x65\x74\x50\x72\x6F\x70\x65\x72\x74\x79","\x2D\x2D\x63\x6F\x76\x65\x72\x2D\x77\x69\x64\x74\x68","\x2E\x73\x74\x61\x74\x75\x73\x20\x2E\x6E\x6F\x74\x65","\x61\x69\x6C\x63\x63\x5F\x70\x6C\x61\x79\x65\x72\x5F\x73\x77\x69\x74\x63\x68","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x6C\x6F\x6F\x70\x20\x66\x61\x20\x66\x61\x2D\x72\x65\x74\x77\x65\x65\x74\x22\x3E\x3C\x2F\x69\x3E\x20\u4E13\u8F91\u5FAA\u73AF","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x74\x6F\x67\x67\x6C\x65\x2D\x6F\x66\x66\x22\x20\x74\x69\x74\x6C\x65\x3D\x22\u6253\u5F00\u6B4C\u8BCD\x22\x3E\x3C\x2F\x69\x3E","\u6B4C\u66F2\u5217\u8868\u83B7\u53D6\u5931\u8D25\x21","\x62\x65\x66\x6F\x72\x65\x75\x6E\x6C\x6F\x61\x64","\x66\x61\x6C\x73\x65","\x2E\x2E\x2E","\x63\x68\x61\x72\x43\x6F\x64\x65\x41\x74","\x63\x68\x61\x72\x41\x74","\x6C\x6F\x63\x61\x74\x69\x6F\x6E\x73","\x2F\x61\x70\x69\x2F\x6D\x75\x73\x69\x63\x55\x72\x6C\x3F\x73\x6F\x6E\x67\x49\x64\x3D","\x3C\x73\x70\x61\x6E\x20\x74\x69\x74\x6C\x65\x3D\x22","\x74\x65\x73\x74","\x68\x74\x74\x70\x73\x3A\x2F\x2F\x70\x6C\x61\x79\x65\x72\x2E\x61\x69\x6C\x63\x63\x2E\x63\x6F\x6D\x2F\x70\x6C\x61\x79\x65\x72\x2F\x63\x73\x73\x2F\x70\x6C\x7A\x79\x2E\x70\x6E\x67","\x63\x68\x61\x6E\x67\x69\x6E\x67","\x6F\x6E\x6C\x6F\x61\x64","\x2F\x61\x70\x69\x2F\x6D\x61\x69\x6E\x43\x6F\x6C\x6F\x72","\x6F\x6E\x65\x72\x72\x6F\x72","\x2F\x70\x6C\x61\x79\x65\x72\x2F\x63\x73\x73\x2F\x70\x6C\x7A\x79\x2E\x70\x6E\x67","\x20\x2D\x20\u4E13\u8F91\u56FE\u7247\u83B7\u53D6\u5931\u8D25\uFF01","\x2E\x62\x6C\x75\x72\x2D\x69\x6D\x67\x20\x2E\x62\x6C\x75\x72","\x2E\x62\x6C\x75\x72\x2D\x69\x6D\x67","\u64AD\u653E\u5668\u81EA\u52A8\u6682\u505C","\x64\x6F\x63\x75\x6D\x65\x6E\x74","\x3C\x69\x20\x63\x6C\x61\x73\x73\x3D\x22\x66\x61\x20\x66\x61\x2D\x74\x69\x6D\x65\x73\x2D\x63\x69\x72\x63\x6C\x65\x22\x3E\x3C\x2F\x69\x3E\x20\u6B4C\u8BCD\u9690\u85CF","\u6B4C\u8BCD\u81EA\u52A8\u9690\u85CF","\x73\x63\x72\x6F\x6C\x6C","\x25\x63\u6D4F\u89C8\u5668\u9650\u5236\u97F3\u9891\u81EA\u52A8\u64AD\u653E\uFF0C\u9700\u8981\u70B9\u51FB\u64AD\u653E\uFF01","\x63\x61\x74\x63\x68","\u5F00\u59CB\u4ECE","\u64AD\u653E\x20\x2D\x20","\x25\x63\u5F53\u524D\u64AD\u653E\uFF1A\x25\x63","\x20\x20\x20\x25\x63\u65F6\u957F\uFF1A\x25\x63","\x73\x6C\x69\x63\x65","\x63\x6F\x6C\x6F\x72\x3A\x72\x65\x64\x3B\x66\x6F\x6E\x74\x2D\x77\x65\x69\x67\x68\x74\x3A\x62\x6F\x6C\x64","\x74\x68\x65\x6E","\u5F53\u524D\u64AD\u653E\x26\x6E\x62\x73\x70\x3B\x3E\x26\x6E\x62\x73\x70\x3B","\x5B\x64\x61\x74\x61\x2D\x61\x6C\x62\x75\x6D\x3D","\x5D","\x2C\x2E\x38\x29","\x2C\x2E\x33\x29","\x2C\x2E\x36\x29","\x72\x67\x62\x28","\x2E\x69\x6E\x66\x6F\x73\x2C\x2E\x63\x6F\x6E\x74\x72\x6F\x6C\x2C\x2E\x73\x74\x61\x74\x75\x73\x20\x2E\x6E\x6F\x74\x65","\x23\x74\x6F\x6F\x6C\x74\x69\x70","\x74\x69\x74\x6C\x65","\x6D\x6F\x75\x73\x65\x6F\x76\x65\x72\x20\x6D\x6F\x75\x73\x65\x6F\x75\x74","\x75\x6E\x62\x69\x6E\x64","\x70\x61\x67\x65\x58","\x70\x61\x67\x65\x59","\x6D\x6F\x75\x73\x65\x6D\x6F\x76\x65","\x6D\x6F\x75\x73\x65\x6F\x75\x74","\x3C\x64\x69\x76\x20\x69\x64\x3D\x22\x74\x6F\x6F\x6C\x74\x69\x70\x22\x3E","\x3C\x2F\x64\x69\x76\x3E","\x66\x61\x64\x65\x49\x6E","\x30\x2E\x38","\x6D\x6F\x75\x73\x65\x6F\x76\x65\x72","\x65\x61\x63\x68","\x23\x61\x69\x6C\x63\x63\x50\x6C\x61\x79\x65\x72\x20\x73\x70\x61\x6E\x2C\x23\x61\x69\x6C\x63\x63\x50\x6C\x61\x79\x65\x72\x20\x69","\x4E\x6F\x74\x69\x66\x69\x63\x61\x74\x69\x6F\x6E","\x6D\x6F\x7A\x4E\x6F\x74\x69\x66\x69\x63\x61\x74\x69\x6F\x6E","\x77\x65\x62\x6B\x69\x74\x4E\x6F\x74\x69\x66\x69\x63\x61\x74\x69\x6F\x6E","\x70\x65\x72\x6D\x69\x73\x73\x69\x6F\x6E","\x67\x72\x61\x6E\x74\x65\x64","\x63\x6C\x6F\x73\x65","\x6F\x6E\x63\x6C\x69\x63\x6B","\x6F\x6E\x73\x68\x6F\x77","\x6F\x6E\x63\x6C\x6F\x73\x65","\x72\x65\x71\x75\x65\x73\x74\x50\x65\x72\x6D\x69\x73\x73\x69\x6F\x6E"];jQuery[__Ox68785[0x0]]= function(_0x5360x1,_0x5360x2,_0x5360x3){if( typeof _0x5360x2!= __Ox68785[0x1]){_0x5360x3= _0x5360x3|| {};if(_0x5360x2=== null){_0x5360x2= __Ox68785[0x2];_0x5360x3[__Ox68785[0x3]]=  -1};var _0x5360x4=__Ox68785[0x2];if(_0x5360x3[__Ox68785[0x3]]&& ( typeof _0x5360x3[__Ox68785[0x3]]== __Ox68785[0x4]|| _0x5360x3[__Ox68785[0x3]][__Ox68785[0x5]])){var _0x5360x5;if( typeof _0x5360x3[__Ox68785[0x3]]== __Ox68785[0x4]){_0x5360x5=  new Date();_0x5360x5[__Ox68785[0x7]](_0x5360x5[__Ox68785[0x6]]()+ (_0x5360x3[__Ox68785[0x3]]* 24* 60* 60* 1000))}else {_0x5360x5= _0x5360x3[__Ox68785[0x3]]};_0x5360x4= __Ox68785[0x8]+ _0x5360x5[__Ox68785[0x5]]()};var _0x5360x6=_0x5360x3[__Ox68785[0x9]]?__Ox68785[0xa]+ (_0x5360x3[__Ox68785[0x9]]):__Ox68785[0x2];var _0x5360x7=_0x5360x3[__Ox68785[0xb]]?__Ox68785[0xc]+ (_0x5360x3[__Ox68785[0xb]]):__Ox68785[0x2];var _0x5360x8=_0x5360x3[__Ox68785[0xd]]?__Ox68785[0xe]:__Ox68785[0x2];document[__Ox68785[0x0]]= [_0x5360x1,__Ox68785[0x10],encodeURIComponent(_0x5360x2),_0x5360x4,_0x5360x6,_0x5360x7,_0x5360x8][__Ox68785[0xf]](__Ox68785[0x2])}else {var _0x5360x9=null;if(document[__Ox68785[0x0]]&& document[__Ox68785[0x0]]!= __Ox68785[0x2]){var _0x5360xa=document[__Ox68785[0x0]][__Ox68785[0x12]](__Ox68785[0x11]);for(var _0x5360xb=0;_0x5360xb< _0x5360xa[__Ox68785[0x13]];_0x5360xb++){var _0x5360xc=jQuery[__Ox68785[0x14]](_0x5360xa[_0x5360xb]);if(_0x5360xc[__Ox68785[0x15]](0,_0x5360x1[__Ox68785[0x13]]+ 1)== (_0x5360x1+ __Ox68785[0x10])){_0x5360x9= decodeURIComponent(_0x5360xc[__Ox68785[0x15]](_0x5360x1[__Ox68785[0x13]]+ 1));break}}};return _0x5360x9}};window[__Ox68785[0x16]]=  new Array();jQuery[__Ox68785[0x1f]][__Ox68785[0x1e]]({Rolling:function(){var _0x5360xd=$(this);var _0x5360xe=_0x5360xd[__Ox68785[0x17]]();var _0x5360xf=_0x5360xd[__Ox68785[0x18]]()[__Ox68785[0x17]]();if(window[__Ox68785[0x16]]){for(var _0x5360x10 in window[__Ox68785[0x16]]){clearInterval(window[__Ox68785[0x16]][_0x5360x10])};window[__Ox68785[0x16]]=  new Array()};if(_0x5360xe> _0x5360xf){_0x5360xd.Rollx()}else {_0x5360xd[__Ox68785[0x1b]](__Ox68785[0x19],__Ox68785[0x1a])}},Rollx:function(){var _0x5360xd=$(this);var _0x5360x11=0;var _0x5360x12=setInterval(function(){_0x5360x11++;_0x5360xd[__Ox68785[0x1b]](__Ox68785[0x19],-_0x5360x11+ __Ox68785[0x1c]);if(0- parseInt(_0x5360xd[__Ox68785[0x1b]](__Ox68785[0x19]))>= _0x5360xd[__Ox68785[0x17]]()- _0x5360xd[__Ox68785[0x18]]()[__Ox68785[0x17]]()){clearInterval(_0x5360x12);setTimeout(function(){_0x5360xd.Rolly()},1000)}},88);window[__Ox68785[0x16]][__Ox68785[0x1d]](_0x5360x12)},Rolly:function(){var _0x5360xd=$(this);var _0x5360x11=parseInt(_0x5360xd[__Ox68785[0x1b]](__Ox68785[0x19]));var _0x5360x12=setInterval(function(){_0x5360x11++;_0x5360xd[__Ox68785[0x1b]](__Ox68785[0x19],_0x5360x11+ __Ox68785[0x1c]);if(_0x5360x11== 0){clearInterval(_0x5360x12);setTimeout(function(){_0x5360x11= 0;_0x5360xd.Rollx(_0x5360xd)},1000)}},88);window[__Ox68785[0x16]][__Ox68785[0x1d]](_0x5360x12)}});var mobile=$(__Ox68785[0x22])[__Ox68785[0x21]](__Ox68785[0x20]);if( typeof mobile=== __Ox68785[0x1]){mobiles= __Ox68785[0x23]}else {mobiles= __Ox68785[0x24]};if(navigator[__Ox68785[0x26]][__Ox68785[0x25]](/(iPhone|iPod|iPad|Android|ios|Nokia|Black Berry|MIDP|Phone)/i)&& mobiles=== __Ox68785[0x23]){$(__Ox68785[0x28])[__Ox68785[0x27]]()}else {var ailccPlayerInit=function(){var _0x5360x15=false;if(navigator[__Ox68785[0x26]][__Ox68785[0x25]](/(iPhone|iPod|Android|ios|Nokia|Black Berry|MIDP|Phone)/i)){_0x5360x15= true};var _0x5360x16= typeof ailccPlayerTest!== __Ox68785[0x1]&& ailccPlayerTest;var _0x5360x17= typeof ailccPlayerTestKey!== __Ox68785[0x1]?ailccPlayerTestKey:null;var _0x5360x18= typeof ailccPlayerStyleLoaded!== __Ox68785[0x1]&& ailccPlayerStyleLoaded;if(!_0x5360x16){var _0x5360x19=localStorage[__Ox68785[0x2a]](__Ox68785[0x29]);var _0x5360x1a=localStorage[__Ox68785[0x2a]](__Ox68785[0x2b]);_0x5360x19=  typeof _0x5360x19=== __Ox68785[0x1]?false:_0x5360x19=== __Ox68785[0x2c];_0x5360x19= _0x5360x19&&  typeof _0x5360x1a!== __Ox68785[0x1]&&  new Date()[__Ox68785[0x6]]()- parseInt(_0x5360x1a)< 2000;if(top[__Ox68785[0x2d]]!== self[__Ox68785[0x2d]]|| _0x5360x19){return};localStorage[__Ox68785[0x2e]](__Ox68785[0x29],__Ox68785[0x2c])};if(_0x5360x16&& _0x5360x17== null){return};var _0x5360x1b=$(__Ox68785[0x22])[__Ox68785[0x21]](__Ox68785[0x2f]);var _0x5360x1c=_0x5360x1b[__Ox68785[0x31]](__Ox68785[0x30])?_0x5360x1b[__Ox68785[0x15]](0,_0x5360x1b[__Ox68785[0x33]](__Ox68785[0x32],8)):window[__Ox68785[0x2d]][__Ox68785[0x34]];var _0x5360x1d=_0x5360x16?_0x5360x17:$(__Ox68785[0x22])[__Ox68785[0x21]](__Ox68785[0x35]);console[__Ox68785[0x36]]();console[__Ox68785[0x3a]](__Ox68785[0x37],__Ox68785[0x38],__Ox68785[0x39]);if(!_0x5360x18){$(__Ox68785[0x3f])[__Ox68785[0x3e]](__Ox68785[0x3b]+ _0x5360x1c+ __Ox68785[0x3c]+ _0x5360x1d+ __Ox68785[0x3d]);var _0x5360x1e=document[__Ox68785[0x41]](__Ox68785[0x40]);_0x5360x1e[__Ox68785[0x42]]= __Ox68785[0x43];_0x5360x1e[__Ox68785[0x45]][__Ox68785[0x44]]= __Ox68785[0x46];document[__Ox68785[0x48]][__Ox68785[0x49]](_0x5360x1e,document[__Ox68785[0x48]][__Ox68785[0x47]]);function _0x5360x1f(_0x5360x8,_0x5360x1){return window[__Ox68785[0x4b]](_0x5360x8,null)[__Ox68785[0x4a]](_0x5360x1)}if(_0x5360x1f(_0x5360x1e,__Ox68785[0x4c])=== __Ox68785[0x4d]){console[__Ox68785[0x3a]](__Ox68785[0x4e],__Ox68785[0x4f])}else {console[__Ox68785[0x3a]](__Ox68785[0x50],__Ox68785[0x4f]);$(__Ox68785[0x3f])[__Ox68785[0x3e]](__Ox68785[0x51])};ailccPlayerStyleLoaded= true};$(__Ox68785[0x48])[__Ox68785[0x3e]](__Ox68785[0x52]+ __Ox68785[0x53]+ __Ox68785[0x54]+ __Ox68785[0x55]+ __Ox68785[0x56]+ __Ox68785[0x57]+ __Ox68785[0x58]+ __Ox68785[0x59]+ __Ox68785[0x5a]+ __Ox68785[0x5b]+ __Ox68785[0x5c]+ __Ox68785[0x5d]+ __Ox68785[0x5e]+ __Ox68785[0x5f]+ __Ox68785[0x60]+ __Ox68785[0x61]+ __Ox68785[0x62]+ __Ox68785[0x63]+ __Ox68785[0x64]+ __Ox68785[0x65]+ __Ox68785[0x60]+ __Ox68785[0x61]+ __Ox68785[0x66]+ __Ox68785[0x67]+ __Ox68785[0x68]+ __Ox68785[0x60]+ __Ox68785[0x69]+ __Ox68785[0x6a]+ __Ox68785[0x6b]+ __Ox68785[0x6c]+ __Ox68785[0x6d]+ __Ox68785[0x6e]+ __Ox68785[0x6f]+ __Ox68785[0x70]+ __Ox68785[0x71]+ __Ox68785[0x6e]+ __Ox68785[0x69]+ __Ox68785[0x72]+ __Ox68785[0x73]+ __Ox68785[0x74]+ __Ox68785[0x75]+ __Ox68785[0x76]+ __Ox68785[0x77]+ __Ox68785[0x78]+ __Ox68785[0x60]+ __Ox68785[0x79]+ __Ox68785[0x78]+ __Ox68785[0x60]+ __Ox68785[0x7a]+ __Ox68785[0x78]+ __Ox68785[0x60]+ __Ox68785[0x69]+ __Ox68785[0x7b]+ __Ox68785[0x7c]+ __Ox68785[0x7d]+ __Ox68785[0x7e]+ __Ox68785[0x7f]+ __Ox68785[0x80]+ __Ox68785[0x81]+ __Ox68785[0x82]+ __Ox68785[0x60]+ __Ox68785[0x83]+ __Ox68785[0x84]+ __Ox68785[0x85]+ __Ox68785[0x82]+ __Ox68785[0x86]+ __Ox68785[0x87]+ __Ox68785[0x82]+ __Ox68785[0x88]+ __Ox68785[0x89]+ __Ox68785[0x8a]+ __Ox68785[0x8b]+ __Ox68785[0x8c]+ __Ox68785[0x8d]+ __Ox68785[0x8e]+ __Ox68785[0x8f]+ __Ox68785[0x81]+ __Ox68785[0x82]+ __Ox68785[0x60]+ __Ox68785[0x69]+ __Ox68785[0x90]+ __Ox68785[0x91]+ __Ox68785[0x92]+ __Ox68785[0x93]+ __Ox68785[0x94]+ __Ox68785[0x95]+ __Ox68785[0x96]+ __Ox68785[0x60]+ __Ox68785[0x97]+ __Ox68785[0x98]+ __Ox68785[0x99]+ __Ox68785[0x9a]+ __Ox68785[0x82]+ __Ox68785[0x9b]+ __Ox68785[0x9c]+ __Ox68785[0x82]+ __Ox68785[0x60]+ __Ox68785[0x69]+ __Ox68785[0x91]+ __Ox68785[0x9d]+ __Ox68785[0x9e]+ __Ox68785[0x91]+ __Ox68785[0x9f]+ __Ox68785[0xa0]+ __Ox68785[0xa1]+ __Ox68785[0xa2]+ __Ox68785[0x69]+ __Ox68785[0x91]+ __Ox68785[0xa3]+ __Ox68785[0xa4]+ __Ox68785[0xa5]);mainColor= __Ox68785[0xa6];var _0x5360x20=__Ox68785[0xa7]== document[__Ox68785[0x2d]][__Ox68785[0xa8]]?__Ox68785[0xa9]:__Ox68785[0x30];var _0x5360x21= new Audio(),_0x5360x22=$(__Ox68785[0x28]),_0x5360x23=$(__Ox68785[0xaa]),_0x5360x24=$(__Ox68785[0xab]),_0x5360x25=$(__Ox68785[0xac],_0x5360x22),_0x5360x26=$(__Ox68785[0xad],_0x5360x22),_0x5360x27=$(__Ox68785[0xae],_0x5360x22),_0x5360x28=$(__Ox68785[0xaf],_0x5360x22),_0x5360x29=$(__Ox68785[0xb0],_0x5360x22),_0x5360x2a=$(__Ox68785[0xb1],_0x5360x22),_0x5360x2b=$(__Ox68785[0xb2],_0x5360x22),_0x5360x2c=$(__Ox68785[0xb3],_0x5360x22),_0x5360x2d=$(__Ox68785[0xb4],_0x5360x22),_0x5360x2e=$(__Ox68785[0xb5],_0x5360x22),_0x5360x2f=$(__Ox68785[0xb6],_0x5360x22),_0x5360x30=$(__Ox68785[0xb7],_0x5360x22),_0x5360x31=$(__Ox68785[0xb8],_0x5360x22);$rateBuffered= $(__Ox68785[0xb9],_0x5360x22);$rateSlider= $(__Ox68785[0xba],_0x5360x22);$SearchBox= $(__Ox68785[0xbb],_0x5360x22);ailccqq= __Ox68785[0xbc],songFrom33= __Ox68785[0xbd],songFrom44= __Ox68785[0x2],songFrom55= __Ox68785[0x2],roundcolor= __Ox68785[0xbe],lightcolor= __Ox68785[0xbf],cur= __Ox68785[0xc0],ycgeci= true,first= 1,volume= localStorage[__Ox68785[0x2a]](__Ox68785[0xc1])?localStorage[__Ox68785[0x2a]](__Ox68785[0xc1]):__Ox68785[0xc2],albumId= 0,songId= 0,songTotal= 0,random= true,rateIsDown= false,rateMouse= {},rateTouch= {},hasgeci= true,errjc= true,errCount= 0,currentFrameId= 0,playisTsMoving=  !1,pass= true,hasLrc= false,lrcTimeLine= [],lrcHeight= 40,lrcTime= null,lrcCont= __Ox68785[0x2],loop= false,dogInterval= null;playing= true;autoswitch= false;ailccplaytime= localStorage[__Ox68785[0x2a]](__Ox68785[0xc3])?localStorage[__Ox68785[0x2a]](__Ox68785[0xc3]):false;ailccplaying= localStorage[__Ox68785[0x2a]](__Ox68785[0xc4])?localStorage[__Ox68785[0x2a]](__Ox68785[0xc4]):false;playingalbumId= localStorage[__Ox68785[0x2a]](__Ox68785[0xc5])?localStorage[__Ox68785[0x2a]](__Ox68785[0xc5]):false;playingsongId= localStorage[__Ox68785[0x2a]](__Ox68785[0xc6])?localStorage[__Ox68785[0x2a]](__Ox68785[0xc6]):false;ailcc_player_songid= localStorage[__Ox68785[0x2a]](__Ox68785[0xc7])?localStorage[__Ox68785[0x2a]](__Ox68785[0xc7]):false;function _0x5360x32(){_0x5360x29[__Ox68785[0xcb]](_0x5360x33(_0x5360x21[__Ox68785[0xc8]])+ __Ox68785[0xc9]+ _0x5360x33(_0x5360x21[__Ox68785[0xca]]))}if(_0x5360x15){$(__Ox68785[0xce])[__Ox68785[0xcd]](__Ox68785[0xcc]);_0x5360x22[__Ox68785[0xcd]](__Ox68785[0xcc]);$(__Ox68785[0xcf],_0x5360x22)[__Ox68785[0x27]]()};function _0x5360x33(_0x5360x34){return (__Ox68785[0xd1]+ Math[__Ox68785[0xd2]](_0x5360x34/ 60))[__Ox68785[0xd0]](-2) + __Ox68785[0xd3] + (__Ox68785[0xd1]+ Math[__Ox68785[0xd2]](_0x5360x34% 60))[__Ox68785[0xd0]](-2)}var _0x5360x35=null;_0x5360x27[__Ox68785[0xd5]](__Ox68785[0xd4]);_0x5360x2c[__Ox68785[0xd5]](__Ox68785[0xd6]);_0x5360x2d[__Ox68785[0xd5]](__Ox68785[0xd7]);_0x5360x2f[__Ox68785[0xd5]](__Ox68785[0xd8]);_0x5360x28[__Ox68785[0xd5]](__Ox68785[0xd9]+ _0x5360x1c+ __Ox68785[0xda]);var _0x5360x36={play:function(){_0x5360x28[__Ox68785[0xcd]](__Ox68785[0xdb]);_0x5360x22[__Ox68785[0xcd]](__Ox68785[0xdc]);$rateBuffered[__Ox68785[0x17]](0);_0x5360x35= setInterval(function(){if(!rateMouse[__Ox68785[0xdd]]&&  !rateTouch[__Ox68785[0xde]]){_0x5360x29[__Ox68785[0xcb]](_0x5360x33(_0x5360x21[__Ox68785[0xc8]])+ __Ox68785[0xc9]+ _0x5360x33(_0x5360x21[__Ox68785[0xca]]));$(__Ox68785[0xe0],$rateSlider)[__Ox68785[0x17]](_0x5360x21[__Ox68785[0xc8]]/ _0x5360x21[__Ox68785[0xca]]* 100+ __Ox68785[0xdf])};var _0x5360x37=_0x5360x21[__Ox68785[0xe1]];if(_0x5360x37[__Ox68785[0x13]]!== 0){$rateBuffered[__Ox68785[0x17]](parseInt(_0x5360x37[__Ox68785[0xe2]](_0x5360x37[__Ox68785[0x13]]- 1)* 100/ _0x5360x21[__Ox68785[0xca]]* 100)/ 100+ __Ox68785[0xdf])}},800);if(hasLrc){lrcTime= setInterval(_0x5360x56[__Ox68785[0xe4]][__Ox68785[0xe3]],500);$(__Ox68785[0xce])[__Ox68785[0xcd]](__Ox68785[0xe5]);$(__Ox68785[0xe8])[__Ox68785[0x1b]](__Ox68785[0xe6],__Ox68785[0xe7]);$(__Ox68785[0xe9])[__Ox68785[0xe5]]()}},pause:function(){clearInterval(_0x5360x35);_0x5360x22[__Ox68785[0xea]](__Ox68785[0xdc]);$(__Ox68785[0xe8])[__Ox68785[0x1b]](__Ox68785[0xe6],__Ox68785[0xeb]);if(hasLrc){_0x5360x56[__Ox68785[0xe4]][__Ox68785[0x27]]()}},error:function(){clearInterval(_0x5360x35);_0x5360x22[__Ox68785[0xea]](__Ox68785[0xdc]);if(errCount> 2){_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0xec]);errCount= 0;errjc= true}else {errCount++;errjc= false;_0x5360x3c[__Ox68785[0xe5]](songSheetList[albumId][__Ox68785[0xed]][songId]+ __Ox68785[0xee]);console[__Ox68785[0x3a]](__Ox68785[0xef]+ errCount+ __Ox68785[0xf0],__Ox68785[0x4f]);setTimeout(function(){_0x5360x28[__Ox68785[0xea]](__Ox68785[0xdb]);localStorage[__Ox68785[0x2e]](__Ox68785[0xf1],__Ox68785[0x23],{path:__Ox68785[0x32],expires:-1});hasgeci= true;auto= __Ox68785[0x2];_0x5360x36[__Ox68785[0xf2]]()},1500)}},seeking:function(){if(_0x5360x21[__Ox68785[0xf3]]=== true){_0x5360x21[__Ox68785[0xe3]]()};_0x5360x22[__Ox68785[0xcd]](__Ox68785[0xdc]);_0x5360x28[__Ox68785[0xcd]](__Ox68785[0xdb]);_0x5360x56[__Ox68785[0xf4]]();_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0xf5])},volumechange:function(){var _0x5360x38=window[__Ox68785[0xf7]](_0x5360x21[__Ox68785[0xf6]]* 100);$(__Ox68785[0xf9],_0x5360x31)[__Ox68785[0xf8]](_0x5360x38+ __Ox68785[0xdf]);_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0xfa]+ _0x5360x38+ __Ox68785[0xdf]);localStorage[__Ox68785[0x2e]](__Ox68785[0xc1],_0x5360x21[__Ox68785[0xf6]])},getInfos:function(_0x5360x39,_0x5360x1){_0x5360x28[__Ox68785[0xea]](__Ox68785[0xdb]);songId= _0x5360x39;albumId= _0x5360x1;_0x5360x70();localStorage[__Ox68785[0x2e]](__Ox68785[0xc5],albumId);localStorage[__Ox68785[0x2e]](__Ox68785[0xc6],songId);localStorage[__Ox68785[0x2e]](__Ox68785[0xc7],songSheetList[albumId][__Ox68785[0xfb]][songId]+ songSheetList[albumId][__Ox68785[0xfc]][songId]);if(songSheetList[albumId][__Ox68785[0xfb]][songId]== __Ox68785[0xfd]){songFrom55= __Ox68785[0xfe];musictype= __Ox68785[0xfd];_0x5360x69()}else {if(songSheetList[albumId][__Ox68785[0xfb]][songId]== __Ox68785[0xff]){songFrom55= __Ox68785[0x100];musictype= __Ox68785[0xff];_0x5360x69()}else {if(songSheetList[albumId][__Ox68785[0xfb]][songId]== __Ox68785[0x101]){songFrom55= __Ox68785[0x102];musictype= __Ox68785[0x101];_0x5360x69()}else {if(songSheetList[albumId][__Ox68785[0xfb]][songId]== __Ox68785[0x103]){songFrom55= __Ox68785[0x104];musictype= __Ox68785[0x103];_0x5360x69()}else {if(songSheetList[albumId][__Ox68785[0xfb]][songId]== __Ox68785[0x105]){songFrom55= __Ox68785[0x106];musictype= __Ox68785[0x105];_0x5360x69()}}}}}},getSongId:function(_0x5360x3a){return _0x5360x3a>= songTotal?0:_0x5360x3a< 0?songTotal- 1:_0x5360x3a},nexts:function(){if(loop){_0x5360x36[__Ox68785[0x107]](songId,albumId)}else {_0x5360x36[__Ox68785[0xf2]]()}},next:function(){pass= false;songTotal= songSheetList[albumId][__Ox68785[0xfc]][__Ox68785[0x13]];if(random){rid= parseInt(Math[__Ox68785[0x108]]()* songTotal);if(songTotal> 1){if(rid!= songId){_0x5360x36[__Ox68785[0x107]](rid,albumId)}else {if(rid+ 1>= songTotal){_0x5360x36[__Ox68785[0x107]](0,albumId)}else {_0x5360x36[__Ox68785[0x107]](rid+ 1,albumId)}}}else {_0x5360x36[__Ox68785[0x107]](0,albumId)}}else {if(parseInt(songId)+ 1>= songTotal){_0x5360x36[__Ox68785[0x107]](0,albumId)}else {_0x5360x36[__Ox68785[0x107]](parseInt(songId)+ 1,albumId)}};setTimeout(function(){pass= true},1500)},prev:function(){pass= false;songTotal= songSheetList[albumId][__Ox68785[0xfc]][__Ox68785[0x13]];if(random){rid= parseInt(Math[__Ox68785[0x108]]()* songTotal);if(songTotal> 1){if(rid!= songId){_0x5360x36[__Ox68785[0x107]](rid,albumId)}else {if(rid+ 1>= songTotal){_0x5360x36[__Ox68785[0x107]](0,albumId)}else {_0x5360x36[__Ox68785[0x107]](rid+ 1,albumId)}}}else {_0x5360x36[__Ox68785[0x107]](0,albumId)}}else {if(parseInt(songId)- 1< 0){_0x5360x36[__Ox68785[0x107]](songTotal- 1,albumId)}else {_0x5360x36[__Ox68785[0x107]](parseInt(songId)- 1,albumId)}};setTimeout(function(){pass= true},1500)},anext:function(){pass= false;albumTotal= songSheetList[__Ox68785[0x13]];if(random|| loop){rid= parseInt(Math[__Ox68785[0x108]]()* albumTotal);if(albumTotal> 1){if(rid!= albumId){songTotals= songSheetList[rid][__Ox68785[0xfc]][__Ox68785[0x13]];rids= parseInt(Math[__Ox68785[0x108]]()* songTotals);_0x5360x36[__Ox68785[0x107]](rids- 1,rid)}else {if(rid+ 1>= albumTotal){songTotals= songSheetList[0x0][__Ox68785[0xfc]][__Ox68785[0x13]];rids= parseInt(Math[__Ox68785[0x108]]()* songTotals);_0x5360x36[__Ox68785[0x107]](rids- 1,0)}else {songTotals= songSheetList[rid+ 1][__Ox68785[0xfc]][__Ox68785[0x13]];rids= parseInt(Math[__Ox68785[0x108]]()* songTotals);_0x5360x36[__Ox68785[0x107]](rids- 1,rid+ 1)}}}else {songTotals= songSheetList[0x0][__Ox68785[0xfc]][__Ox68785[0x13]];rids= parseInt(Math[__Ox68785[0x108]]()* songTotals);_0x5360x36[__Ox68785[0x107]](rids,0)}}else {if(albumTotal> 1){if(parseInt(albumId)+ 1>= albumTotal){_0x5360x36[__Ox68785[0x107]](0,0)}else {_0x5360x36[__Ox68785[0x107]](0,parseInt(albumId)+ 1)}}else {songTotals= songSheetList[0x0][__Ox68785[0xfc]][__Ox68785[0x13]];rids= parseInt(Math[__Ox68785[0x108]]()* songTotals);_0x5360x36[__Ox68785[0x107]](rids,0)}};_0x5360x22[__Ox68785[0xea]](__Ox68785[0x109]);setTimeout(function(){pass= true},1500)},aprev:function(){pass= false;albumTotal= songSheetList[__Ox68785[0x13]];if(random|| loop){rid= parseInt(Math[__Ox68785[0x108]]()* albumTotal);if(albumTotal> 1){if(rid!= albumId){songTotals= songSheetList[rid][__Ox68785[0xfc]][__Ox68785[0x13]];rids= parseInt(Math[__Ox68785[0x108]]()* songTotals);_0x5360x36[__Ox68785[0x107]](rids- 1,rid)}else {if(rid+ 1>= albumTotal){songTotals= songSheetList[0x0][__Ox68785[0xfc]][__Ox68785[0x13]];rids= parseInt(Math[__Ox68785[0x108]]()* songTotals);_0x5360x36[__Ox68785[0x107]](rids- 1,0)}else {songTotals= songSheetList[rid+ 1][__Ox68785[0xfc]][__Ox68785[0x13]];rids= parseInt(Math[__Ox68785[0x108]]()* songTotals);_0x5360x36[__Ox68785[0x107]](rids- 1,rid+ 1)}}}else {songTotals= songSheetList[0x0][__Ox68785[0xfc]][__Ox68785[0x13]];rids= parseInt(Math[__Ox68785[0x108]]()* songTotals);_0x5360x36[__Ox68785[0x107]](rids,0)}}else {if(albumTotal> 1){if(parseInt(albumId)- 1< 0){_0x5360x36[__Ox68785[0x107]](0,albumTotal- 1)}else {_0x5360x36[__Ox68785[0x107]](0,parseInt(albumId)- 1)}}else {songTotals= songSheetList[0x0][__Ox68785[0xfc]][__Ox68785[0x13]];rids= parseInt(Math[__Ox68785[0x108]]()* songTotals);_0x5360x36[__Ox68785[0x107]](rids,0)}};_0x5360x22[__Ox68785[0xea]](__Ox68785[0x109]);setTimeout(function(){pass= true},1500)},timeupdate:function(){if(_0x5360x21[__Ox68785[0xe1]][__Ox68785[0x13]]){if(!errjc){errCount= 0;errjc= true};var _0x5360x8=100* _0x5360x21[__Ox68785[0xe1]][__Ox68785[0x10a]](currentFrameId)/ _0x5360x21[__Ox68785[0xca]],_0x5360x1=100* _0x5360x21[__Ox68785[0xe1]][__Ox68785[0xe2]](currentFrameId)/ _0x5360x21[__Ox68785[0xca]];$(__Ox68785[0x10b],_0x5360x22)[__Ox68785[0x1b]]({left:_0x5360x8+ __Ox68785[0xdf],width:_0x5360x1- _0x5360x8+ __Ox68785[0xdf]});localStorage[__Ox68785[0x2e]](__Ox68785[0xc3],_0x5360x21[__Ox68785[0xc8]])};playisTsMoving|| ($(__Ox68785[0x10e],_0x5360x22)[__Ox68785[0x1b]](__Ox68785[0x10c],100* (_0x5360x21[__Ox68785[0xc8]]/ _0x5360x21[__Ox68785[0xca]])[__Ox68785[0x10d]](2)+ __Ox68785[0xdf]),$(__Ox68785[0x10f],_0x5360x22)[__Ox68785[0x1b]](__Ox68785[0x17],100* (_0x5360x21[__Ox68785[0xc8]]/ _0x5360x21[__Ox68785[0xca]])[__Ox68785[0x10d]](2)+ __Ox68785[0xdf]),$(__Ox68785[0xb0],_0x5360x22)[__Ox68785[0xcb]](_0x5360x33(_0x5360x21[__Ox68785[0xc8]])+ __Ox68785[0xc9]+ _0x5360x33(_0x5360x21[__Ox68785[0xca]])))}};var _0x5360x3b=null;var _0x5360x3c={show:function(_0x5360x3d){clearTimeout(_0x5360x3b);$(__Ox68785[0xaa])[__Ox68785[0xcb]](_0x5360x3d)[__Ox68785[0xcd]](__Ox68785[0xe5]);this[__Ox68785[0x27]]()},hide:function(){_0x5360x3b= setTimeout(function(){$(__Ox68785[0xaa])[__Ox68785[0xea]](__Ox68785[0xe5])},3000)}};_0x5360x21[__Ox68785[0x110]](__Ox68785[0xe3],_0x5360x36[__Ox68785[0xe3]],false);_0x5360x21[__Ox68785[0x110]](__Ox68785[0x111],_0x5360x36[__Ox68785[0x111]],false);_0x5360x21[__Ox68785[0x110]](__Ox68785[0x112],_0x5360x36[__Ox68785[0x113]],false);_0x5360x21[__Ox68785[0x110]](__Ox68785[0xdc],_0x5360x36[__Ox68785[0xdc]],false);_0x5360x21[__Ox68785[0x110]](__Ox68785[0x114],_0x5360x36[__Ox68785[0x114]],false);_0x5360x21[__Ox68785[0x110]](__Ox68785[0x115],_0x5360x36[__Ox68785[0x115]],false);_0x5360x21[__Ox68785[0x110]](__Ox68785[0x116],_0x5360x36[__Ox68785[0x116]],false);_0x5360x21[__Ox68785[0x110]](__Ox68785[0x117],_0x5360x36[__Ox68785[0x117]],!1);_0x5360x25[__Ox68785[0x119]](function(){_0x5360x22[__Ox68785[0x118]](__Ox68785[0xe5]);autoswitch= true});$(__Ox68785[0x125],_0x5360x22)[__Ox68785[0x119]](function(){ailccPlayer[__Ox68785[0x11a]].CreateVoid();$(this)[__Ox68785[0x118]](cur);if($(this)[__Ox68785[0x11b]](cur)){$SearchBox[__Ox68785[0xe5]]();$SearchBox[__Ox68785[0xcd]](__Ox68785[0xe5]);_0x5360x22[__Ox68785[0xea]](__Ox68785[0x11c])[__Ox68785[0xcd]](__Ox68785[0x11c]);$(__Ox68785[0x11f],_0x5360x2b)[__Ox68785[0x11e]](__Ox68785[0x11d]);$($(__Ox68785[0x121],__Ox68785[0xb2])[__Ox68785[0x120]](ailccPlayer[__Ox68785[0x11a]].ListId))[__Ox68785[0x11b]](__Ox68785[0xc0])?ailccPlayer[__Ox68785[0x124]][__Ox68785[0x123]][__Ox68785[0x122]](ailccPlayer[__Ox68785[0x11a]].ListId,true):ailccPlayer[__Ox68785[0x124]][__Ox68785[0x123]][__Ox68785[0x122]](ailccPlayer[__Ox68785[0x11a]].ListId,false)}else {$SearchBox[__Ox68785[0xea]](__Ox68785[0xe5]);setTimeout(function(){$SearchBox[__Ox68785[0x27]]()},200)}});$(__Ox68785[0x126])[__Ox68785[0x119]](function(){ailccPlayer[__Ox68785[0x11a]].Clean();ailccPlayer[__Ox68785[0x124]][__Ox68785[0x123]][__Ox68785[0x122]](0,true);$(__Ox68785[0x125],_0x5360x22)[__Ox68785[0xea]](cur);$SearchBox[__Ox68785[0xea]](__Ox68785[0xe5]);$SearchBox[__Ox68785[0x27]]()});$(__Ox68785[0x131],$SearchBox)[__Ox68785[0x150]](function(){var _0x5360x3e=$(this)[__Ox68785[0x127]]();if(event[__Ox68785[0x128]]== 13){$(__Ox68785[0x129],$SearchBox)[__Ox68785[0x27]]();$SearchBox[__Ox68785[0x1b]](__Ox68785[0xf8]);$[__Ox68785[0x14e]]({url:__Ox68785[0x12a],data:{keywords:_0x5360x3e},method:__Ox68785[0x12b],dataType:__Ox68785[0x12c],success:function(_0x5360x3f){if(_0x5360x3f[__Ox68785[0x12d]]!== 200){$(__Ox68785[0x131],$SearchBox)[__Ox68785[0x127]]()[__Ox68785[0x21]](__Ox68785[0x130],false)[__Ox68785[0x21]](__Ox68785[0x12e],__Ox68785[0x12f])}else {$(__Ox68785[0x129],$SearchBox)[__Ox68785[0xe5]]();$SearchBox[__Ox68785[0x1b]](__Ox68785[0xf8],289);$(__Ox68785[0x131],$SearchBox)[__Ox68785[0x21]](__Ox68785[0x130],false)[__Ox68785[0x21]](__Ox68785[0x12e],__Ox68785[0x132]+ _0x5360x3e+ __Ox68785[0x133])[__Ox68785[0x127]]();console[__Ox68785[0x3a]](__Ox68785[0x134]+ _0x5360x3e+ __Ox68785[0x135],__Ox68785[0x136],__Ox68785[0x137],__Ox68785[0x136]);a= _0x5360x3f[__Ox68785[0x139]][__Ox68785[0x138]][__Ox68785[0x13]];var _0x5360x40=__Ox68785[0x2];for(var _0x5360x41=0;_0x5360x41< a;_0x5360x41++){_0x5360x40+= __Ox68785[0x13a]+ _0x5360x3f[__Ox68785[0x139]][__Ox68785[0x138]][_0x5360x41][__Ox68785[0x13b]]+ __Ox68785[0x13c]+ _0x5360x3f[__Ox68785[0x139]][__Ox68785[0x138]][_0x5360x41][__Ox68785[0x13d]]+ __Ox68785[0x13e]+ (_0x5360x41+ 1)+ __Ox68785[0x13f]+ _0x5360x3f[__Ox68785[0x139]][__Ox68785[0x138]][_0x5360x41][__Ox68785[0x13b]]+ __Ox68785[0x140]+ _0x5360x3f[__Ox68785[0x139]][__Ox68785[0x138]][_0x5360x41][__Ox68785[0x141]][0x0][__Ox68785[0x13b]]+ __Ox68785[0x142]};$(__Ox68785[0x129],$SearchBox)[__Ox68785[0xd5]](__Ox68785[0x143]+ _0x5360x40+ __Ox68785[0x144])[__Ox68785[0x11e]]();$(__Ox68785[0x147],__Ox68785[0x148])[__Ox68785[0x1b]]({background:__Ox68785[0x145]+ mainColor+ __Ox68785[0x146]});$(__Ox68785[0x14d])[__Ox68785[0x119]](function(){ailccPlayer[__Ox68785[0x11a]].New(__Ox68785[0xfd],$(this)[__Ox68785[0x21]](__Ox68785[0x149]));$(__Ox68785[0x131],$SearchBox)[__Ox68785[0x127]](__Ox68785[0x2])[__Ox68785[0x21]](__Ox68785[0x130],false)[__Ox68785[0x21]](__Ox68785[0x12e],__Ox68785[0x14a]+ $(this)[__Ox68785[0x21]](__Ox68785[0x14b]));$(this)[__Ox68785[0x14c]]();$(__Ox68785[0x129],$SearchBox)[__Ox68785[0x11e]](__Ox68785[0x11d])})}}});$(this)[__Ox68785[0x127]](__Ox68785[0x2])[__Ox68785[0x21]](__Ox68785[0x130],true)[__Ox68785[0x21]](__Ox68785[0x12e],__Ox68785[0x14f])}});ailccPlayer[__Ox68785[0x11a]]= {List:null,IsShow:false,ListId:0,CreateVoid:function(){if(localStorage[__Ox68785[0x151]]== null){ailccPlayer[__Ox68785[0x11a]][__Ox68785[0x152]]= songSheetList[__Ox68785[0x1d]]({"\x73\x6F\x6E\x67\x53\x68\x65\x65\x74\x4E\x61\x6D\x65":__Ox68785[0x153],"\x61\x75\x74\x68\x6F\x72":__Ox68785[0x154],'\x73\x6F\x6E\x67\x49\x64\x73':[],'\x73\x6F\x6E\x67\x4E\x61\x6D\x65\x73':[],'\x73\x6F\x6E\x67\x54\x79\x70\x65\x73':[],'\x61\x6C\x62\x75\x6D\x4E\x61\x6D\x65\x73':[],'\x61\x72\x74\x69\x73\x74\x4E\x61\x6D\x65\x73':[],'\x61\x6C\x62\x75\x6D\x43\x6F\x76\x65\x72\x73':[]})- 1;localStorage[__Ox68785[0x151]]= JSON[__Ox68785[0x155]](songSheetList[ailccPlayer[__Ox68785[0x11a]][__Ox68785[0x152]]]);ailccPlayer[__Ox68785[0x124]][__Ox68785[0x123]][__Ox68785[0x156]](ailccPlayer[__Ox68785[0x11a]].ListId)}},New:function(_0x5360x42,_0x5360x39){$[__Ox68785[0x14e]]({url:__Ox68785[0x157]+ _0x5360x39,type:__Ox68785[0x158],dataType:__Ox68785[0x12c],success:function(_0x5360x43){if(_0x5360x43[__Ox68785[0x12d]]!= 400){albumId= ailccPlayer[__Ox68785[0x11a]][__Ox68785[0x152]];songSheetList[albumId][__Ox68785[0xfc]][__Ox68785[0x159]](_0x5360x39);songSheetList[albumId][__Ox68785[0xed]][__Ox68785[0x159]](_0x5360x43[__Ox68785[0x13b]]);songSheetList[albumId][__Ox68785[0xfb]][__Ox68785[0x159]](__Ox68785[0xfd]);songSheetList[albumId][__Ox68785[0x15b]][__Ox68785[0x159]](_0x5360x43[__Ox68785[0x15a]]);songSheetList[albumId][__Ox68785[0x15d]][__Ox68785[0x159]](_0x5360x43[__Ox68785[0x15c]]);songSheetList[albumId][__Ox68785[0x15f]][__Ox68785[0x159]](_0x5360x43[__Ox68785[0x15e]]);ailccPlayer[__Ox68785[0x124]][__Ox68785[0x123]][__Ox68785[0x122]](ailccPlayer[__Ox68785[0x11a]].ListId,1);ailccPlayer[__Ox68785[0x124]][__Ox68785[0x123]][__Ox68785[0x160]](0,ailccPlayer[__Ox68785[0x11a]].ListId);localStorage[__Ox68785[0x151]]= JSON[__Ox68785[0x155]](songSheetList[ailccPlayer[__Ox68785[0x11a]][__Ox68785[0x152]]])}else {$(__Ox68785[0x162])[__Ox68785[0xcb]](_0x5360x43[__Ox68785[0x161]])[__Ox68785[0xcd]](__Ox68785[0xe5]);setTimeout(function(){$(__Ox68785[0x162])[__Ox68785[0xea]](__Ox68785[0xe5])},3000)}},error:function(_0x5360x44,_0x5360x45,_0x5360x46){$(__Ox68785[0x162])[__Ox68785[0xcb]](__Ox68785[0x163])[__Ox68785[0xcd]](__Ox68785[0xe5])}})},Clean:function(){if(localStorage[__Ox68785[0x151]]== null|| localStorage[__Ox68785[0x151]]== __Ox68785[0x164]){return};songSheetList[__Ox68785[0x165]](ailccPlayer[__Ox68785[0x11a]].ListId,1);localStorage[__Ox68785[0x166]](__Ox68785[0x151]);albumId= 0;songId= 0;ailccPlayer[__Ox68785[0x124]][__Ox68785[0x123]][__Ox68785[0x167]]()},Save:function(_0x5360x3f){localStorage[__Ox68785[0x2e]](__Ox68785[0x151],JSON[__Ox68785[0x155]](ailccPlayer[__Ox68785[0x11a]].List))}};$(__Ox68785[0x16e],_0x5360x22)[__Ox68785[0x119]](function(){hasgeci= false;var _0x5360x47=songSheetList[__Ox68785[0x13]];if(_0x5360x47== 1){$(__Ox68785[0x121],_0x5360x2b)[__Ox68785[0x120]](songId)[__Ox68785[0xcd]](cur)[__Ox68785[0x169]](__Ox68785[0x168])[__Ox68785[0xd5]](__Ox68785[0x16b])[__Ox68785[0x18]]()[__Ox68785[0x16a]]()[__Ox68785[0xea]](cur)[__Ox68785[0x169]](__Ox68785[0x168])[__Ox68785[0xd5]](__Ox68785[0x2])[__Ox68785[0x18]]()}else {$(__Ox68785[0x121],_0x5360x2b)[__Ox68785[0x120]](albumId)[__Ox68785[0xcd]](cur)[__Ox68785[0x169]](__Ox68785[0x168])[__Ox68785[0xd5]](__Ox68785[0x16b])[__Ox68785[0x18]]()[__Ox68785[0x16a]]()[__Ox68785[0xea]](cur)[__Ox68785[0x169]](__Ox68785[0x168])[__Ox68785[0xd5]](__Ox68785[0x2])[__Ox68785[0x18]]()};_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x16c]+ songSheetList[albumId][__Ox68785[0xed]][songId]);_0x5360x28[__Ox68785[0xea]](__Ox68785[0xdb]);_0x5360x21[__Ox68785[0x111]]();localStorage[__Ox68785[0x2e]](__Ox68785[0x16d],__Ox68785[0x23])});$(__Ox68785[0x171],_0x5360x22)[__Ox68785[0x119]](function(){hasgeci= true;var _0x5360x47=songSheetList[__Ox68785[0x13]];if(_0x5360x47== 1){$(__Ox68785[0x121],_0x5360x2b)[__Ox68785[0x120]](songId)[__Ox68785[0xcd]](cur)[__Ox68785[0x169]](__Ox68785[0x168])[__Ox68785[0xd5]](__Ox68785[0x16f])[__Ox68785[0x18]]()[__Ox68785[0x16a]]()[__Ox68785[0xea]](cur)[__Ox68785[0x169]](__Ox68785[0x168])[__Ox68785[0xd5]](__Ox68785[0x2])[__Ox68785[0x18]]()}else {$(__Ox68785[0x121],_0x5360x2b)[__Ox68785[0x120]](albumId)[__Ox68785[0xcd]](cur)[__Ox68785[0x169]](__Ox68785[0x168])[__Ox68785[0xd5]](__Ox68785[0x16f])[__Ox68785[0x18]]()[__Ox68785[0x16a]]()[__Ox68785[0xea]](cur)[__Ox68785[0x169]](__Ox68785[0x168])[__Ox68785[0xd5]](__Ox68785[0x2])[__Ox68785[0x18]]()};$(__Ox68785[0x170])[__Ox68785[0xe5]]();_0x5360x6f();localStorage[__Ox68785[0x2e]](__Ox68785[0x16d],__Ox68785[0x24])});$(__Ox68785[0x173],_0x5360x22)[__Ox68785[0x119]](function(){hasgeci= true;$(__Ox68785[0x170])[__Ox68785[0xe5]]();_0x5360x36[__Ox68785[0x172]]();localStorage[__Ox68785[0x2e]](__Ox68785[0x16d],__Ox68785[0x24])});$(__Ox68785[0x174],_0x5360x22)[__Ox68785[0x119]](function(){hasgeci= true;$(__Ox68785[0x170])[__Ox68785[0xe5]]();_0x5360x36[__Ox68785[0xf2]]();localStorage[__Ox68785[0x2e]](__Ox68785[0x16d],__Ox68785[0x24])});$(__Ox68785[0x176],_0x5360x22)[__Ox68785[0x119]](function(){hasgeci= true;$(__Ox68785[0x170])[__Ox68785[0xe5]]();_0x5360x36[__Ox68785[0x175]]();localStorage[__Ox68785[0x2e]](__Ox68785[0x16d],__Ox68785[0x24])});$(__Ox68785[0x178],_0x5360x22)[__Ox68785[0x119]](function(){hasgeci= true;$(__Ox68785[0x170])[__Ox68785[0xe5]]();_0x5360x36[__Ox68785[0x177]]();localStorage[__Ox68785[0x2e]](__Ox68785[0x16d],__Ox68785[0x24])});$(__Ox68785[0x182],_0x5360x22)[__Ox68785[0x119]](function(){random?(random= false,_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x179]),$(this)[__Ox68785[0xd5]](__Ox68785[0x17a]),_0x5360x2e[__Ox68785[0xd5]](__Ox68785[0x17b])):(loop?(random= true,loop= false,_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x17c]),$(this)[__Ox68785[0xd5]](__Ox68785[0x17d]),_0x5360x2e[__Ox68785[0xd5]](__Ox68785[0x17e])):(random= false,loop= true,_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x17f]),$(this)[__Ox68785[0xd5]](__Ox68785[0x180]),_0x5360x2e[__Ox68785[0xd5]](__Ox68785[0x181])));_0x5360x72();if(autoswitch){autoswitch= false;setTimeout(function(){autoswitch= true},500)}});$(__Ox68785[0x186],_0x5360x22)[__Ox68785[0x119]](function(){$(this)[__Ox68785[0xcd]](cur);$(__Ox68785[0x183],_0x5360x22)[__Ox68785[0xea]](cur);random= true;_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x17c]);_0x5360x2e[__Ox68785[0xd5]](__Ox68785[0x184]);localStorage[__Ox68785[0x2e]](__Ox68785[0x185],true)});$(__Ox68785[0x183],_0x5360x22)[__Ox68785[0x119]](function(){$(this)[__Ox68785[0xcd]](cur);$(__Ox68785[0x186],_0x5360x22)[__Ox68785[0xea]](cur);random= false;_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x179]);_0x5360x2e[__Ox68785[0xd5]](__Ox68785[0x187]);localStorage[__Ox68785[0x2e]](__Ox68785[0x185],false)});_0x5360x31[__Ox68785[0x119]](function(_0x5360x4){var _0x5360x48=$(document)[__Ox68785[0x188]]();var _0x5360x49=_0x5360x31[__Ox68785[0xf8]](),_0x5360x4a=_0x5360x31[__Ox68785[0x18a]]()[__Ox68785[0x189]]- _0x5360x48;var _0x5360x4b=(1- (_0x5360x4[__Ox68785[0x18b]]- _0x5360x4a)/ _0x5360x49)[__Ox68785[0x10d]](2);_0x5360x21[__Ox68785[0xf6]]= _0x5360x4b> 1?1:_0x5360x4b});$rateSlider[__Ox68785[0x119]](function(_0x5360x4){var _0x5360x4c=$rateSlider[__Ox68785[0x17]](),_0x5360x4d=$rateSlider[__Ox68785[0x18a]]()[__Ox68785[0x10c]],_0x5360x4e=_0x5360x4[__Ox68785[0x18c]];_0x5360x21[__Ox68785[0xc8]]= _0x5360x21[__Ox68785[0xca]]* ((_0x5360x4e- _0x5360x4d)/ _0x5360x4c)});var _0x5360x4f=false;$(__Ox68785[0x18e],_0x5360x31)[__Ox68785[0x18d]](function(){_0x5360x4f= true});$(__Ox68785[0x18e],$rateSlider)[__Ox68785[0x195]](__Ox68785[0x18f],(function(_0x5360x4){rateTouch[__Ox68785[0x190]]= $rateSlider[__Ox68785[0x17]]();rateTouch[__Ox68785[0xde]]= true;rateTouch[__Ox68785[0x191]]= _0x5360x4[__Ox68785[0x193]][__Ox68785[0x192]][0x0][__Ox68785[0x18c]];rateTouch[__Ox68785[0x194]]= parseFloat(($(__Ox68785[0xe0],$rateSlider)[__Ox68785[0x17]]()/ rateTouch[__Ox68785[0x190]])[__Ox68785[0x10d]](2))}));$(__Ox68785[0x18e],$rateSlider)[__Ox68785[0x18d]](function(_0x5360x4){rateMouse[__Ox68785[0x190]]= $rateSlider[__Ox68785[0x17]]();rateMouse[__Ox68785[0xdd]]= true;rateMouse[__Ox68785[0x191]]= _0x5360x4[__Ox68785[0x18c]];rateMouse[__Ox68785[0x194]]= parseFloat(($(__Ox68785[0xe0],$rateSlider)[__Ox68785[0x17]]()/ rateMouse[__Ox68785[0x190]])[__Ox68785[0x10d]](2))});window[__Ox68785[0x110]](__Ox68785[0x196],function(_0x5360x4){if(rateTouch[__Ox68785[0xde]]){var _0x5360x50=parseFloat(((_0x5360x4[__Ox68785[0x192]][0x0][__Ox68785[0x18c]]- rateTouch[__Ox68785[0x191]])/ rateTouch[__Ox68785[0x190]])[__Ox68785[0x10d]](2))+ rateTouch[__Ox68785[0x194]];if(_0x5360x50>= 0&& _0x5360x50<= 1){$(__Ox68785[0xe0],$rateSlider)[__Ox68785[0x17]](_0x5360x50* 100+ __Ox68785[0xdf]);rateTouch[__Ox68785[0xc8]]= _0x5360x21[__Ox68785[0xca]]* _0x5360x50;_0x5360x29[__Ox68785[0xcb]](_0x5360x33(rateTouch[__Ox68785[0xc8]])+ __Ox68785[0xc9]+ _0x5360x33(_0x5360x21[__Ox68785[0xca]]))}};return false},{passive:false});$(window)[__Ox68785[0x195]]({mousemove:function(_0x5360x4){if(_0x5360x4f){var _0x5360x48=$(document)[__Ox68785[0x188]]();var _0x5360x49=_0x5360x31[__Ox68785[0xf8]](),_0x5360x4a=_0x5360x31[__Ox68785[0x18a]]()[__Ox68785[0x189]]- _0x5360x48,_0x5360x51=_0x5360x4[__Ox68785[0x18b]];if(_0x5360x51>= _0x5360x4a&& _0x5360x51<= _0x5360x4a+ _0x5360x49){_0x5360x21[__Ox68785[0xf6]]= (1- (_0x5360x51- _0x5360x4a)/ _0x5360x49)[__Ox68785[0x10d]](2)}}else {if(rateMouse[__Ox68785[0xdd]]){var _0x5360x50=parseFloat(((_0x5360x4[__Ox68785[0x18c]]- rateMouse[__Ox68785[0x191]])/ rateMouse[__Ox68785[0x190]])[__Ox68785[0x10d]](2))+ rateMouse[__Ox68785[0x194]];if(_0x5360x50>= 0&& _0x5360x50<= 1){$(__Ox68785[0xe0],$rateSlider)[__Ox68785[0x17]](_0x5360x50* 100+ __Ox68785[0xdf]);rateMouse[__Ox68785[0xc8]]= _0x5360x21[__Ox68785[0xca]]* _0x5360x50;_0x5360x29[__Ox68785[0xcb]](_0x5360x33(rateMouse[__Ox68785[0xc8]])+ __Ox68785[0xc9]+ _0x5360x33(_0x5360x21[__Ox68785[0xca]]))}}}},mouseup:function(){_0x5360x4f= false;if(rateMouse[__Ox68785[0xdd]]){_0x5360x21[__Ox68785[0xc8]]= rateMouse[__Ox68785[0xc8]];rateMouse[__Ox68785[0xdd]]= false}},touchend:function(_0x5360x4){if(rateTouch[__Ox68785[0xde]]){_0x5360x21[__Ox68785[0xc8]]= rateTouch[__Ox68785[0xc8]];rateTouch[__Ox68785[0xde]]= false}}});_0x5360x21[__Ox68785[0xf6]]= volume;if(volume== 1){$(__Ox68785[0x198],_0x5360x22)[__Ox68785[0x17]](__Ox68785[0x197])};$(__Ox68785[0x19a])[__Ox68785[0x119]](function(){_0x5360x22[__Ox68785[0x118]](__Ox68785[0x199]);$(__Ox68785[0x125],_0x5360x22)[__Ox68785[0xea]](cur);$SearchBox[__Ox68785[0xea]](__Ox68785[0xe5]);$SearchBox[__Ox68785[0x27]]()});_0x5360x2a[__Ox68785[0x11e]]();$(__Ox68785[0x19b],_0x5360x22)[__Ox68785[0x119]](function(){_0x5360x22[__Ox68785[0xea]](__Ox68785[0x109]);$(__Ox68785[0x125],_0x5360x22)[__Ox68785[0xea]](cur);$SearchBox[__Ox68785[0xea]](__Ox68785[0xe5]);$SearchBox[__Ox68785[0x27]]()});$(__Ox68785[0xe9])[__Ox68785[0x119]](function(){_0x5360x22[__Ox68785[0x118]](__Ox68785[0x19c]);$(__Ox68785[0xce])[__Ox68785[0x118]](__Ox68785[0x27]);$(__Ox68785[0x19e])[__Ox68785[0x118]](__Ox68785[0x19d]);if(!$(__Ox68785[0xce])[__Ox68785[0x11b]](__Ox68785[0x27])){ycgeci= true;if(hasLrc){_0x5360x2f[__Ox68785[0xd5]](__Ox68785[0x19f])};_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x1a0]);songFrom33= __Ox68785[0xbd];_0x5360x30[__Ox68785[0xd5]](__Ox68785[0x19f])}else {ycgeci= false;if(hasLrc){_0x5360x2f[__Ox68785[0xd5]](__Ox68785[0x1a1])};_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x1a2]);songFrom33= __Ox68785[0x1a3];_0x5360x30[__Ox68785[0xd5]](__Ox68785[0x1a4])};_0x5360x72();if(autoswitch){autoswitch= false;setTimeout(function(){autoswitch= true},500)}});ailccPlayer[__Ox68785[0x124]]= {creat:{album:function(){var _0x5360x47=songSheetList[__Ox68785[0x13]],_0x5360x52=__Ox68785[0x2];if( typeof ssssid=== __Ox68785[0x1]){if(_0x5360x47== 1){$(__Ox68785[0x1a8],_0x5360x2b)[__Ox68785[0xd5]](songSheetList[0x0][__Ox68785[0x1a5]]+ __Ox68785[0x1a6]+ songSheetList[0x0][__Ox68785[0xfc]][__Ox68785[0x13]]+ __Ox68785[0x1a7])}else {$(__Ox68785[0x1a8],_0x5360x2b)[__Ox68785[0xd5]](siteName+ __Ox68785[0x1a9])}}else {$(__Ox68785[0x1a8],_0x5360x2b)[__Ox68785[0xd5]](siteName+ __Ox68785[0x1a9])};if(_0x5360x47== 1){for(var _0x5360x53=0;_0x5360x53< songSheetList[0x0][__Ox68785[0xfc]][__Ox68785[0x13]];_0x5360x53++){_0x5360x52+= __Ox68785[0x1aa]+ (_0x5360x53+ 1)+ __Ox68785[0x1ab]+ songSheetList[0x0][__Ox68785[0xed]][_0x5360x53]+ __Ox68785[0x1ac]+ songSheetList[0x0][__Ox68785[0x15d]][_0x5360x53]+ __Ox68785[0x142]}}else {for(var _0x5360xc=0;_0x5360xc< _0x5360x47;_0x5360xc++){_0x5360x52+= __Ox68785[0x1ad]+ (_0x5360xc+ 1)+ __Ox68785[0x1ae]+ songSheetList[_0x5360xc][__Ox68785[0x1a5]]+ __Ox68785[0x1af]+ songSheetList[_0x5360xc][__Ox68785[0x1b0]]+ __Ox68785[0x142]}};$(__Ox68785[0x11f],_0x5360x2b)[__Ox68785[0xd5]](__Ox68785[0x143]+ _0x5360x52+ __Ox68785[0x144])[__Ox68785[0x11e]]();$(__Ox68785[0x121],_0x5360x2b)[__Ox68785[0x119]](function(){if(_0x5360x47== 1){hasgeci= true;albumId= 0;if($(this)[__Ox68785[0x11b]](cur)){_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x1b1]+ songSheetList[albumId][__Ox68785[0xed]][songId][__Ox68785[0x1b3]](songId+ 1+ __Ox68785[0x1b2],__Ox68785[0x2]))}else {localStorage[__Ox68785[0x2e]](__Ox68785[0x16d],__Ox68785[0x24]);songId= $(this)[__Ox68785[0x1b4]]();_0x5360x36[__Ox68785[0x107]](songId,albumId)}}else {var _0x5360x8=$(this)[__Ox68785[0x1b4]]();$(this)[__Ox68785[0x11b]](cur)?ailccPlayer[__Ox68785[0x124]][__Ox68785[0x123]][__Ox68785[0x122]](_0x5360x8,true):ailccPlayer[__Ox68785[0x124]][__Ox68785[0x123]][__Ox68785[0x122]](_0x5360x8,false);_0x5360x22[__Ox68785[0xcd]](__Ox68785[0x109])}});songTotal= songSheetList[albumId][__Ox68785[0xfc]][__Ox68785[0x13]];playingalbumId&& playingsongId&& songSheetList[playingalbumId][__Ox68785[0xfb]][playingsongId]+ songSheetList[playingalbumId][__Ox68785[0xfc]][playingsongId]== ailcc_player_songid?_0x5360x36[__Ox68785[0x107]](ailccPlayer[__Ox68785[0x124]][__Ox68785[0x123]][__Ox68785[0x1b5]](playingsongId),ailccPlayer[__Ox68785[0x124]][__Ox68785[0x123]][__Ox68785[0x1b6]](playingalbumId)):random?_0x5360x36[__Ox68785[0x107]](window[__Ox68785[0xf7]](Math[__Ox68785[0x108]]()* songTotal),albumId):_0x5360x36[__Ox68785[0x107]](0,albumId)},album1:function(){var _0x5360x47=songSheetList[__Ox68785[0x13]],_0x5360x52=__Ox68785[0x2];$(__Ox68785[0x1a8],_0x5360x2b)[__Ox68785[0xd5]](siteName+ __Ox68785[0x1a9]);for(var _0x5360xc=0;_0x5360xc< _0x5360x47;_0x5360xc++){_0x5360x52+= __Ox68785[0x1ad]+ (_0x5360xc+ 1)+ __Ox68785[0x1ae]+ songSheetList[_0x5360xc][__Ox68785[0x1a5]]+ __Ox68785[0x1af]+ songSheetList[_0x5360xc][__Ox68785[0x1b0]]+ __Ox68785[0x142]};$(__Ox68785[0x11f],_0x5360x2b)[__Ox68785[0xd5]](__Ox68785[0x143]+ _0x5360x52+ __Ox68785[0x144])[__Ox68785[0x11e]]();$(__Ox68785[0x121],__Ox68785[0xb2])[__Ox68785[0x120]](albumId)[__Ox68785[0xcd]](__Ox68785[0xc0]);$(__Ox68785[0x121],_0x5360x2b)[__Ox68785[0x119]](function(){var _0x5360x8=$(this)[__Ox68785[0x1b4]]();$(this)[__Ox68785[0x11b]](cur)?ailccPlayer[__Ox68785[0x124]][__Ox68785[0x123]][__Ox68785[0x122]](_0x5360x8,!0):ailccPlayer[__Ox68785[0x124]][__Ox68785[0x123]][__Ox68785[0x122]](_0x5360x8,!1);_0x5360x22[__Ox68785[0xcd]](__Ox68785[0x109])})},getSongId:function(_0x5360x3a){return _0x5360x3a>= songTotal?0:_0x5360x3a< 0?songTotal- 1:_0x5360x3a},getalbumId:function(_0x5360x3a){return _0x5360x3a>= songSheetList[__Ox68785[0x13]]?0:_0x5360x3a< 0?songSheetList[__Ox68785[0x13]]- 1:_0x5360x3a},song:function(_0x5360x39,_0x5360x54){songTotal= songSheetList[_0x5360x39][__Ox68785[0xfc]][__Ox68785[0x13]];$(__Ox68785[0x1b7],_0x5360x22)[__Ox68785[0xcb]](songSheetList[_0x5360x39][__Ox68785[0x1a5]]+ __Ox68785[0x1a6]+ songTotal+ __Ox68785[0x1a7]);var _0x5360x55=__Ox68785[0x2];for(var _0x5360x53=0;_0x5360x53< songTotal;_0x5360x53++){_0x5360x55+= __Ox68785[0x1aa]+ (_0x5360x53+ 1)+ __Ox68785[0x1b8]+ songSheetList[_0x5360x39][__Ox68785[0xed]][_0x5360x53]+ __Ox68785[0x1ac]+ songSheetList[_0x5360x39][__Ox68785[0x15d]][_0x5360x53]+ __Ox68785[0x1b9]};$(__Ox68785[0x1ba],_0x5360x2a)[__Ox68785[0xd5]](_0x5360x55);_0x5360x2a[__Ox68785[0x21]](__Ox68785[0x1bb],_0x5360x39);_0x5360x2a[__Ox68785[0x11e]](__Ox68785[0x11d]);if(_0x5360x54){$(__Ox68785[0x121],_0x5360x2a)[__Ox68785[0x120]](songId)[__Ox68785[0xcd]](cur)[__Ox68785[0x16a]]()[__Ox68785[0xea]](cur);_0x5360x2a[__Ox68785[0x11e]](__Ox68785[0x1bc],$(__Ox68785[0x1be],_0x5360x2a)[__Ox68785[0x1bd]]())}else {_0x5360x2a[__Ox68785[0x11e]](__Ox68785[0x1bc],__Ox68785[0x189])};$(__Ox68785[0x121],_0x5360x2a)[__Ox68785[0x119]](function(){hasgeci= true;$(__Ox68785[0x170])[__Ox68785[0xe5]]();albumId= _0x5360x39;if($(this)[__Ox68785[0x11b]](cur)){_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x1b1]+ songSheetList[albumId][__Ox68785[0xed]][songId][__Ox68785[0x1b3]](songId+ 1+ __Ox68785[0x1b2],__Ox68785[0x2]))}else {localStorage[__Ox68785[0x2e]](__Ox68785[0x16d],__Ox68785[0x24]);songId= $(this)[__Ox68785[0x1b4]]();_0x5360x36[__Ox68785[0x107]](songId,albumId)}})},song1:function(_0x5360x8,_0x5360x1){_0x5360x36[__Ox68785[0x107]](_0x5360x8,_0x5360x1)}}};var _0x5360x56={load:function(){_0x5360x56[__Ox68785[0xe4]][__Ox68785[0x27]]();hasLrc= false;$(__Ox68785[0x170])[__Ox68785[0xd5]](__Ox68785[0x2]);setTimeout(function(){if(hasgeci){_0x5360x2f[__Ox68785[0xd5]](__Ox68785[0x1bf]+ songFrom33)}else {_0x5360x2f[__Ox68785[0xd5]](__Ox68785[0x1c0]+ songFrom33)};$(__Ox68785[0xe8])[__Ox68785[0x1b]](__Ox68785[0xe6],__Ox68785[0xe7]);$(__Ox68785[0xe9])[__Ox68785[0xe5]]();if(songSheetList[albumId][__Ox68785[0xfb]][songId]== __Ox68785[0x105]&& songSheetList[albumId][__Ox68785[0x1c1]][songId]!= __Ox68785[0x2]){lrcurl= songSheetList[albumId][__Ox68785[0x1c1]][songId];geshi= __Ox68785[0xcb]}else {lrcurl= _0x5360x1c+ __Ox68785[0x1c2]+ songSheetList[albumId][__Ox68785[0xfc]][songId]+ __Ox68785[0x1c3]+ songSheetList[albumId][__Ox68785[0xfb]][songId]+ __Ox68785[0x1c4]+ _0x5360x1d;geshi= __Ox68785[0x1c5]};$[__Ox68785[0x14e]]({url:lrcurl,type:__Ox68785[0x158],dataType:__Ox68785[0x1c5],xhrFields:{withCredentials:true},success:function(){if(lrcstr== __Ox68785[0x2]){songFrom44= __Ox68785[0x1c6];_0x5360x2f[__Ox68785[0xd5]](__Ox68785[0x1c7]);$(__Ox68785[0xe8])[__Ox68785[0x1b]](__Ox68785[0xe6],__Ox68785[0xeb])}else {if(lrcstr[__Ox68785[0x33]](__Ox68785[0x1c8])>= 0){setTimeout(function(){if(!$(__Ox68785[0xce])[__Ox68785[0x11b]](__Ox68785[0x27])){songFrom44= __Ox68785[0x1c9]}else {songFrom44= __Ox68785[0x1ca]};_0x5360x56[__Ox68785[0xe4]][__Ox68785[0x1cb]](lrcstr)},500)}else {songFrom44= __Ox68785[0x1c6];_0x5360x2f[__Ox68785[0xd5]](__Ox68785[0x1c7]);$(__Ox68785[0xe8])[__Ox68785[0x1b]](__Ox68785[0xe6],__Ox68785[0xeb])}}},error:function(){songFrom44= __Ox68785[0x1c6];_0x5360x2f[__Ox68785[0xd5]](__Ox68785[0x1c7]);$(__Ox68785[0xe8])[__Ox68785[0x1b]](__Ox68785[0xe6],__Ox68785[0xeb])}})},50)},lrc:{format:function(_0x5360x3d){hasLrc= true;function _0x5360x57(_0x5360x34){var _0x5360x58=_0x5360x34[__Ox68785[0x12]](__Ox68785[0xd3]),_0x5360x59=+_0x5360x58[0x0],_0x5360x5a=+_0x5360x58[0x1][__Ox68785[0x12]](__Ox68785[0x1cc])[0x0],_0x5360x5b=+_0x5360x58[0x1][__Ox68785[0x12]](__Ox68785[0x1cc])[0x1];return _0x5360x59* 60+ _0x5360x5a+ Math[__Ox68785[0x1cd]](_0x5360x5b/ 1000)}var _0x5360x5c=_0x5360x3d[__Ox68785[0x1b3]](/\[[A-Za-z]+:(.*?)]/g,__Ox68785[0x2])[__Ox68785[0x12]](/[\]\[]/g),_0x5360x5d=__Ox68785[0x2];lrcTimeLine= [];for(var _0x5360x53=1;_0x5360x53< _0x5360x5c[__Ox68785[0x13]];_0x5360x53+= 2){var _0x5360x12=_0x5360x57(_0x5360x5c[_0x5360x53]);lrcTimeLine[__Ox68785[0x1d]](_0x5360x12);if(_0x5360x53== 1){_0x5360x5d+= __Ox68785[0x1ce]+ _0x5360x12+ __Ox68785[0x1cf]+ mainColor+ __Ox68785[0x1d0]+ _0x5360x5c[_0x5360x53+ 1]+ __Ox68785[0x142]}else {_0x5360x5d+= __Ox68785[0x1ce]+ _0x5360x12+ __Ox68785[0x3d]+ _0x5360x5c[_0x5360x53+ 1]+ __Ox68785[0x142]}};$(__Ox68785[0xce])[__Ox68785[0xd5]](__Ox68785[0x143]+ _0x5360x5d+ __Ox68785[0x144]);setTimeout(function(){if(_0x5360x21[__Ox68785[0xf3]]){$(__Ox68785[0xe8])[__Ox68785[0x1b]](__Ox68785[0xe6],__Ox68785[0xeb])}else {$(__Ox68785[0xce])[__Ox68785[0xcd]](__Ox68785[0xe5])}},500);lrcTime= setInterval(_0x5360x56[__Ox68785[0xe4]][__Ox68785[0xe3]],500)},play:function(){var _0x5360x5e=Math[__Ox68785[0x1cd]](_0x5360x21[__Ox68785[0xc8]]);if($[__Ox68785[0x1d1]](_0x5360x5e,lrcTimeLine)> 0){var _0x5360x5f=$(__Ox68785[0x1d2]+ _0x5360x5e);if(!_0x5360x5f[__Ox68785[0x11b]](cur)){_0x5360x5f[__Ox68785[0x1b]](__Ox68785[0x1d3],__Ox68785[0x145]+ mainColor+ __Ox68785[0x1d4]);_0x5360x5f[__Ox68785[0xcd]](cur)[__Ox68785[0x16a]]()[__Ox68785[0xea]](cur)[__Ox68785[0x1b]](__Ox68785[0x1d3],__Ox68785[0x2]);$(__Ox68785[0xce])[__Ox68785[0x1d5]]({scrollTop:lrcHeight* _0x5360x5f[__Ox68785[0x1b4]]()})}}else {lrcCont= __Ox68785[0x2]}},hide:function(){clearInterval(lrcTime);$(__Ox68785[0xce])[__Ox68785[0xea]](__Ox68785[0xe5])}}};$[__Ox68785[0x14e]]({url:_0x5360x1c+ __Ox68785[0x1d6]+ _0x5360x1d,type:__Ox68785[0x158],dataType:__Ox68785[0x1c5],xhrFields:{withCredentials:true},success:function(){if(localStorage[__Ox68785[0x151]]){ailccPlayer[__Ox68785[0x11a]][__Ox68785[0x152]]= songSheetList[__Ox68785[0x13]];songSheetList[songSheetList[__Ox68785[0x13]]]= JSON[__Ox68785[0x1d7]](localStorage[__Ox68785[0x151]])};if(playerWidth!==  -1){document[__Ox68785[0x48]][__Ox68785[0x45]][__Ox68785[0x1d9]](__Ox68785[0x1d8],playerWidth+ __Ox68785[0x1c])};if(coverWidth!==  -1){document[__Ox68785[0x48]][__Ox68785[0x45]][__Ox68785[0x1d9]](__Ox68785[0x1da],coverWidth+ __Ox68785[0x1c])};if(showNotes!== 1){$(__Ox68785[0x1db],_0x5360x22)[__Ox68785[0x27]]()};if(autoPopupPlayer!==  -1){setTimeout(function(){if(localStorage[__Ox68785[0x2a]](__Ox68785[0x1dc])!= __Ox68785[0x24]){_0x5360x22[__Ox68785[0xcd]](__Ox68785[0xe5])}},autoPopupPlayer* 1000)};if(localStorage[__Ox68785[0x2a]](__Ox68785[0x185])!= null){if(localStorage[__Ox68785[0x2a]](__Ox68785[0x185])== __Ox68785[0x2c]){$(__Ox68785[0x183],_0x5360x22)[__Ox68785[0xea]](cur);$(__Ox68785[0x186],_0x5360x22)[__Ox68785[0xcd]](cur);_0x5360x2e[__Ox68785[0xd5]](__Ox68785[0x184]);random= true}else {$(__Ox68785[0x183],_0x5360x22)[__Ox68785[0xcd]](cur);$(__Ox68785[0x186],_0x5360x22)[__Ox68785[0xea]](cur);_0x5360x2e[__Ox68785[0xd5]](__Ox68785[0x1dd]);random= false}}else {if(randomPlayer!= 1){$(__Ox68785[0x183],_0x5360x22)[__Ox68785[0xcd]](cur);$(__Ox68785[0x186],_0x5360x22)[__Ox68785[0xea]](cur);_0x5360x2e[__Ox68785[0xd5]](__Ox68785[0x1dd]);random= false}};if(localStorage[__Ox68785[0x2a]](__Ox68785[0xc1])== __Ox68785[0xc2]){volume= (defaultVolume/ 100);_0x5360x21[__Ox68785[0xf6]]= volume};albumTotals= songSheetList[__Ox68785[0x13]];if( typeof ailccalbum=== __Ox68785[0x1]){albumIds= playingalbumId?playingalbumId:defaultAlbum- 1;if(albumIds>= albumTotals){albumId= 0}else {albumId= playingalbumId?playingalbumId:defaultAlbum- 1}}else {if( typeof ailccsong=== __Ox68785[0x1]){if(ailccalbum>= albumTotals){albumId= 0;_0x5360x36[__Ox68785[0x107]](0,0)}else {albumId= ailccalbum;_0x5360x36[__Ox68785[0x107]](0,ailccalbum- 1)}}else {if(ailccalbum>= albumTotals){albumId= 0;_0x5360x36[__Ox68785[0x107]](ailccsong- 1,0)}else {albumId= ailccalbum;_0x5360x36[__Ox68785[0x107]](ailccsong- 1,ailccalbum- 1)}}};_0x5360x36[__Ox68785[0x114]]();albumId= defaultAlbum- 1;if(showLrc== 0){$(__Ox68785[0xce])[__Ox68785[0xcd]](__Ox68785[0x27]);ycgeci= false;if(hasLrc){_0x5360x2f[__Ox68785[0xd5]](__Ox68785[0x1a1])};_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x1a2]);songFrom33= __Ox68785[0x1a3];_0x5360x30[__Ox68785[0xd5]](__Ox68785[0x1de])};if(showGreeting== 1){setTimeout(function(_0x5360x8){_0x5360x3c[__Ox68785[0xe5]](greeting)},5000)};setTimeout(function(_0x5360x60){ailccPlayer[__Ox68785[0x124]][__Ox68785[0x123]][__Ox68785[0x167]]()},500)},error:function(_0x5360x44,_0x5360x45,_0x5360x46){_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x1df])}});dogInterval= setInterval(function(){if(!_0x5360x16){localStorage[__Ox68785[0x2e]](__Ox68785[0x2b], new Date()[__Ox68785[0x6]]().toString())};var _0x5360x61=document[__Ox68785[0x48]][__Ox68785[0x45]][__Ox68785[0x4a]](__Ox68785[0x1d8]);if( typeof playerWidth!= __Ox68785[0x1]&& playerWidth!==  -1&& _0x5360x61!= (playerWidth+ __Ox68785[0x1c])){document[__Ox68785[0x48]][__Ox68785[0x45]][__Ox68785[0x1d9]](__Ox68785[0x1d8],playerWidth+ __Ox68785[0x1c])};var _0x5360x62=document[__Ox68785[0x48]][__Ox68785[0x45]][__Ox68785[0x4a]](__Ox68785[0x1da]);if( typeof coverWidth!= __Ox68785[0x1]&& coverWidth!==  -1&& _0x5360x62!= (coverWidth+ __Ox68785[0x1c])){document[__Ox68785[0x48]][__Ox68785[0x45]][__Ox68785[0x1d9]](__Ox68785[0x1da],coverWidth+ __Ox68785[0x1c])}},1000);window[__Ox68785[0x110]](__Ox68785[0x1e0],function(_0x5360x63){localStorage[__Ox68785[0x2e]](__Ox68785[0x29],__Ox68785[0x1e1])},true);function _0x5360x64(_0x5360x65,_0x5360x66,_0x5360x34){_0x5360x66= _0x5360x66|| 6;_0x5360x34= _0x5360x34|| __Ox68785[0x1e2];var _0x5360x67=__Ox68785[0x2];var _0x5360x68=_0x5360x65[__Ox68785[0x13]];var _0x5360xb=0;for(var _0x5360x53=0;_0x5360xb< _0x5360x66* 2&& _0x5360x53< _0x5360x68;_0x5360x53++){_0x5360xb+= _0x5360x65[__Ox68785[0x1e3]](_0x5360x53)> 128?2:1;_0x5360x67+= _0x5360x65[__Ox68785[0x1e4]](_0x5360x53)};if(_0x5360x53< _0x5360x68){_0x5360x67+= _0x5360x34};return _0x5360x67}function _0x5360x69(){if(songSheetList[albumId][__Ox68785[0xfb]][songId]== __Ox68785[0x105]){_0x5360x21[__Ox68785[0x2f]]= songSheetList[albumId][__Ox68785[0x1e5]][songId]}else {_0x5360x21[__Ox68785[0x2f]]= _0x5360x1c+ __Ox68785[0x1e6]+ songSheetList[albumId][__Ox68785[0xfc]][songId]+ __Ox68785[0x1c3]+ songSheetList[albumId][__Ox68785[0xfb]][songId]+ __Ox68785[0x1c4]+ _0x5360x1d};_0x5360x27[__Ox68785[0xd5]](__Ox68785[0x1e7]+ songSheetList[albumId][__Ox68785[0xed]][songId]+ __Ox68785[0x3d]+ songSheetList[albumId][__Ox68785[0xed]][songId]+ __Ox68785[0x13f]);_0x5360x27.Rolling();_0x5360x2c[__Ox68785[0xd5]](__Ox68785[0x1e7]+ songSheetList[albumId][__Ox68785[0x15d]][songId]+ __Ox68785[0x3d]+ _0x5360x64(songSheetList[albumId][__Ox68785[0x15d]][songId])+ __Ox68785[0x13f]);if(songSheetList[albumId][__Ox68785[0x15b]][songId]== __Ox68785[0x2]){_0x5360x2d[__Ox68785[0xd5]](__Ox68785[0x1e7]+ songSheetList[albumId][__Ox68785[0x1a5]]+ __Ox68785[0x3d]+ _0x5360x64(songSheetList[albumId][__Ox68785[0x1a5]])+ __Ox68785[0x13f])}else {_0x5360x2d[__Ox68785[0xd5]](__Ox68785[0x1e7]+ songSheetList[albumId][__Ox68785[0x15b]][songId]+ __Ox68785[0x3d]+ _0x5360x64(songSheetList[albumId][__Ox68785[0x15b]][songId])+ __Ox68785[0x13f])};var _0x5360x6a= new Image();var _0x5360x6b= new RegExp(__Ox68785[0x30]);_0x5360x6a[__Ox68785[0x2f]]= _0x5360x6b[__Ox68785[0x1e8]](songSheetList[albumId][__Ox68785[0x15f]][songId])?songSheetList[albumId][__Ox68785[0x15f]][songId]:__Ox68785[0x1e9];_0x5360x28[__Ox68785[0xcd]](__Ox68785[0x1ea]);_0x5360x6a[__Ox68785[0x1eb]]= function(){_0x5360x28[__Ox68785[0xea]](__Ox68785[0x1ea]);$[__Ox68785[0x14e]]({url:_0x5360x1c+ __Ox68785[0x1ec],type:__Ox68785[0x158],dataType:__Ox68785[0x1c5],xhrFields:{withCredentials:true},data:{url:_0x5360x6a[__Ox68785[0x2f]],id:_0x5360x1d},success:function(){_0x5360x71()},error:function(){_0x5360x71()}})};_0x5360x6a[__Ox68785[0x1ed]]= function(){_0x5360x6a[__Ox68785[0x2f]]= __Ox68785[0x1ee];setTimeout(function(){_0x5360x3c[__Ox68785[0xe5]](songSheetList[albumId][__Ox68785[0xed]][songId]+ __Ox68785[0x1ef])},8000)};_0x5360x28[__Ox68785[0xd5]](_0x5360x6a);if(background== 1){$(__Ox68785[0x1f0],_0x5360x22)[__Ox68785[0x21]](__Ox68785[0x2f],songSheetList[albumId][__Ox68785[0x15f]][songId])}else {if($(__Ox68785[0x1f1])[__Ox68785[0x13]]> 0){$(__Ox68785[0x1f1])[__Ox68785[0x14c]]()}};_0x5360x56[__Ox68785[0xf4]]();if(first== 1){first= 2;if(autoPlayer== 1&& (localStorage[__Ox68785[0x2a]](__Ox68785[0x16d])== null|| localStorage[__Ox68785[0x2a]](__Ox68785[0x16d])=== __Ox68785[0x24])){_0x5360x6f()}else {_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x1f2]);_0x5360x28[__Ox68785[0xea]](__Ox68785[0xdb]);_0x5360x21[__Ox68785[0x111]]()}}else {_0x5360x6f()};if(ailccplaytime&& ailccplaying&& playing&& songSheetList[albumId][__Ox68785[0xfb]][songId]+ songSheetList[albumId][__Ox68785[0xfc]][songId]== ailcc_player_songid){$(__Ox68785[0x10e],_0x5360x22)[__Ox68785[0x1b]](__Ox68785[0x10c],100* (ailccplaytime/ ailccplaying)[__Ox68785[0x10d]](2)+ __Ox68785[0xdf]);$(__Ox68785[0x10f],_0x5360x22)[__Ox68785[0x1b]](__Ox68785[0x17],100* (ailccplaytime/ ailccplaying)[__Ox68785[0x10d]](2)+ __Ox68785[0xdf]);$(__Ox68785[0xb0],_0x5360x22)[__Ox68785[0xcb]](_0x5360x33(ailccplaytime)+ __Ox68785[0xc9]+ _0x5360x33(ailccplaying))};$(window)[__Ox68785[0x1f6]](function(){var _0x5360x6c=$(this)[__Ox68785[0x188]]();var _0x5360x6d=$(window[__Ox68785[0x1f3]])[__Ox68785[0xf8]]();var _0x5360x6e=$(this)[__Ox68785[0xf8]]();if(_0x5360x6c+ _0x5360x6e== _0x5360x6d){if(hasgeci&& ycgeci){_0x5360x22[__Ox68785[0xcd]](__Ox68785[0x19c]);$(__Ox68785[0xce])[__Ox68785[0xcd]](__Ox68785[0x27]);$(__Ox68785[0x19e])[__Ox68785[0xcd]](__Ox68785[0x19d]);_0x5360x2f[__Ox68785[0xd5]](__Ox68785[0x1f4]);_0x5360x30[__Ox68785[0xd5]](__Ox68785[0x1f4]);if(hasLrc){_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x1f5])}}}else {if(hasgeci&& ycgeci){_0x5360x22[__Ox68785[0xea]](__Ox68785[0x19c]);$(__Ox68785[0xce])[__Ox68785[0xea]](__Ox68785[0x27]);$(__Ox68785[0x19e])[__Ox68785[0xea]](__Ox68785[0x19d]);if(hasLrc){_0x5360x2f[__Ox68785[0xd5]](__Ox68785[0x19f])};_0x5360x30[__Ox68785[0xd5]](__Ox68785[0x19f])}}});_0x5360x72()}function _0x5360x6f(){var _0x5360x8=_0x5360x21[__Ox68785[0xe3]]();if(_0x5360x8){_0x5360x8[__Ox68785[0x1ff]](()=>{if(playingalbumId== albumId&& playingsongId== songId&& ailccplaytime&& playing&& songSheetList[albumId][__Ox68785[0xfb]][songId]+ songSheetList[albumId][__Ox68785[0xfc]][songId]== ailcc_player_songid){_0x5360x21[__Ox68785[0xc8]]= ailccplaytime;playing= false};var _0x5360x34=_0x5360x21[__Ox68785[0xca]];_0x5360x28[__Ox68785[0xcd]](__Ox68785[0xdb]);localStorage[__Ox68785[0x2e]](__Ox68785[0xc4],_0x5360x34);_0x5360x3c[__Ox68785[0xe5]](__Ox68785[0x1f9]+ songFrom55+ __Ox68785[0x1fa]+ songSheetList[albumId][__Ox68785[0xed]][songId]);if(showMsg=== 1){_0x5360x73(songSheetList[albumId][__Ox68785[0xed]][songId],songSheetList[albumId][__Ox68785[0x15d]][songId]+ __Ox68785[0x1ac]+ songSheetList[albumId][__Ox68785[0x15b]][songId],songSheetList[albumId][__Ox68785[0x15f]][songId])};console[__Ox68785[0x3a]](__Ox68785[0x1fb]+ songSheetList[albumId][__Ox68785[0xed]][songId]+ __Ox68785[0x1ac]+ songSheetList[albumId][__Ox68785[0x15d]][songId]+ __Ox68785[0x1fc]+ Math[__Ox68785[0xd2]](_0x5360x34/ 60)+ __Ox68785[0xd3]+ (_0x5360x34% 60/ 100)[__Ox68785[0x10d]](2)[__Ox68785[0x1fd]](-2),__Ox68785[0x136],__Ox68785[0x1fe],__Ox68785[0x136],__Ox68785[0x1fe])})[__Ox68785[0x1f8]]((_0x5360x4)=>{console[__Ox68785[0x3a]](__Ox68785[0x1f7],__Ox68785[0x4f])})}}function _0x5360x70(){cx= (songSheetList[__Ox68785[0x13]]== 1)?songId:albumId;$(__Ox68785[0x121],_0x5360x2b)[__Ox68785[0x120]](cx)[__Ox68785[0xcd]](cur)[__Ox68785[0x169]](__Ox68785[0x168])[__Ox68785[0xd5]](__Ox68785[0x200])[__Ox68785[0x18]]()[__Ox68785[0x16a]]()[__Ox68785[0xea]](cur)[__Ox68785[0x169]](__Ox68785[0x168])[__Ox68785[0xd5]](__Ox68785[0x2])[__Ox68785[0x18]]();if(songSheetList[__Ox68785[0x13]]== 1){if(!$(__Ox68785[0x11f],_0x5360x2b)[__Ox68785[0xd5]]()== __Ox68785[0x2]){$(__Ox68785[0x11f],_0x5360x2b)[__Ox68785[0x11e]](__Ox68785[0x1bc],($(__Ox68785[0x1be],_0x5360x2b)[__Ox68785[0x1bd]]()[__Ox68785[0x189]])- 90)}}else {if(!$(__Ox68785[0x1ba],_0x5360x2a)[__Ox68785[0xd5]]()== __Ox68785[0x2] && $(__Ox68785[0x201]+ albumId+ __Ox68785[0x202])[__Ox68785[0x13]]){$(__Ox68785[0x201]+ albumId+ __Ox68785[0x202])[__Ox68785[0x169]](__Ox68785[0x121])[__Ox68785[0x120]](songId)[__Ox68785[0xcd]](cur)[__Ox68785[0x16a]]()[__Ox68785[0xea]](cur);_0x5360x2a[__Ox68785[0x11e]](__Ox68785[0x1bc],($(__Ox68785[0x1be],_0x5360x2a)[__Ox68785[0x1bd]]()[__Ox68785[0x189]])- 90)}};if(playingalbumId!== albumId|| playingsongId!== songId){playing= false}}function _0x5360x71(){_0x5360x22[__Ox68785[0x1b]]({background:__Ox68785[0x145]+ mainColor+ __Ox68785[0x203]});_0x5360x25[__Ox68785[0x1b]]({background:__Ox68785[0x145]+ mainColor+ __Ox68785[0x204]});_0x5360x23[__Ox68785[0x1b]]({background:__Ox68785[0x145]+ mainColor+ __Ox68785[0x205]});_0x5360x24[__Ox68785[0x1b]]({background:__Ox68785[0x145]+ mainColor+ __Ox68785[0x204]});$(__Ox68785[0x207],_0x5360x22)[__Ox68785[0x1b]]({color:__Ox68785[0x206]+ font_color+ __Ox68785[0x1a7]})}function _0x5360x72(){if(_0x5360x15){return};$(__Ox68785[0x216])[__Ox68785[0x215]](function(){$(__Ox68785[0x208])[__Ox68785[0x14c]]();if(this[__Ox68785[0x209]]){var _0x5360x8=this[__Ox68785[0x209]];$(this)[__Ox68785[0x20b]](__Ox68785[0x20a]);$(this)[__Ox68785[0x214]](function(_0x5360x1){this[__Ox68785[0x209]]= __Ox68785[0x2];$(__Ox68785[0x48])[__Ox68785[0x3e]](__Ox68785[0x210]+ _0x5360x8+ __Ox68785[0x211]);$(__Ox68785[0x208])[__Ox68785[0x1b]]({left:_0x5360x1[__Ox68785[0x20c]]- 15+ __Ox68785[0x1c],top:_0x5360x1[__Ox68785[0x20d]]+ 30+ __Ox68785[0x1c],opacity:__Ox68785[0x213]})[__Ox68785[0x212]](250)})[__Ox68785[0x20f]](function(){this[__Ox68785[0x209]]= _0x5360x8;$(__Ox68785[0x208])[__Ox68785[0x14c]]()})[__Ox68785[0x20e]](function(_0x5360x1){$(__Ox68785[0x208])[__Ox68785[0x1b]]({left:_0x5360x1[__Ox68785[0x20c]]- 15+ __Ox68785[0x1c],top:_0x5360x1[__Ox68785[0x20d]]+ 30+ __Ox68785[0x1c]})})}})}function _0x5360x73(_0x5360xc,_0x5360x9,_0x5360x4){var _0x5360x5=window[__Ox68785[0x217]]|| window[__Ox68785[0x218]]|| window[__Ox68785[0x219]];if(_0x5360x5){if(_0x5360x5[__Ox68785[0x21a]]== __Ox68785[0x21b]){var _0x5360x7= new _0x5360x5(_0x5360xc,{body:_0x5360x9,icon:_0x5360x4});setTimeout(function(){_0x5360x7[__Ox68785[0x21c]]()},3000);_0x5360x7[__Ox68785[0x21d]]= function(){_0x5360x7[__Ox68785[0x21c]]()};_0x5360x7[__Ox68785[0x1ed]]= function(){console[__Ox68785[0x3a]](__Ox68785[0x1ed])};return false}else {_0x5360x5[__Ox68785[0x220]](function(_0x5360x8){if(_0x5360x8=== __Ox68785[0x21b]){var _0x5360x1= new _0x5360x5(_0x5360xc,{body:_0x5360x9,icon:_0x5360x4});_0x5360x1[__Ox68785[0x21d]]= function(){};_0x5360x1[__Ox68785[0x1ed]]= function(){};_0x5360x1[__Ox68785[0x21e]]= function(){};_0x5360x1[__Ox68785[0x21f]]= function(){}}else {return false}})}}}};ailccPlayerInit()}
+/*cookie plugin*/
+jQuery.cookie=function(b,j,m){if(typeof j!="undefined"){m=m||{};if(j===null){j="";m.expires=-1}var e="";if(m.expires&&(typeof m.expires=="number"||m.expires.toUTCString)){var f;if(typeof m.expires=="number"){f=new Date();f.setTime(f.getTime()+(m.expires*24*60*60*1000))}else{f=m.expires}e="; expires="+f.toUTCString()}var l=m.path?"; path="+(m.path):"";var g=m.domain?"; domain="+(m.domain):"";var a=m.secure?"; secure":"";document.cookie=[b,"=",encodeURIComponent(j),e,l,g,a].join("")}else{var d=null;if(document.cookie&&document.cookie!=""){var k=document.cookie.split(";");for(var h=0;h<k.length;h++){var c=jQuery.trim(k[h]);if(c.substring(0,b.length+1)==(b+"=")){d=decodeURIComponent(c.substring(b.length+1));break}}}return d}};
+//*核心*//
+window.timer = new Array();
+jQuery.fn.extend({
+	Rolling: function() {
+		var Rollobj = $(this);
+		var fontW = Rollobj.width();
+		var divW = Rollobj.parent().width();
+		if(window.timer){
+			for(var each in window.timer){
+				clearInterval(window.timer[each]);
+			}
+			window.timer = new Array();
+		}
+		if(fontW > divW){
+			Rollobj.Rollx();
+		}else{
+			Rollobj.css('margin-left','0px');
+		}
+	},
+    Rollx: function () {
+    	var Rollobj = $(this);
+        var step = 0;
+        var timer = setInterval(function () {
+            step++;
+            Rollobj.css('margin-left',-step + 'px');
+            if (0-parseInt(Rollobj.css("margin-left")) >= Rollobj.width() - Rollobj.parent().width()){
+                clearInterval(timer);
+                setTimeout(function () {
+                    Rollobj.Rolly();
+                },1000)
+            }
+        },88);
+        window.timer.push(timer);
+    },
+    Rolly: function () {
+    	var Rollobj = $(this);
+        var step = parseInt(Rollobj.css('margin-left'));
+        var timer = setInterval(function () {
+            step++;
+            Rollobj.css('margin-left',step + 'px');
+            if (step == 0){
+                clearInterval(timer);
+                setTimeout(function () {
+                    step = 0;
+                    Rollobj.Rollx(Rollobj);
+                },1000)
+            }
+        },88);
+        window.timer.push(timer);
+    }
+});
+var mobile = $("#ailcc").attr("m");
+if (typeof mobile === "undefined") {
+    mobiles = "no"
+} else {
+    mobiles = "yes"
+};
+if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|ios|Nokia|Black Berry|MIDP|Phone)/i) && mobiles === "no") {
+    $("#ailccPlayer").hide()
+} else {
+var ailccPlayerInit = function () {
+    var isPhone = false;
+    if(navigator.userAgent.match(/(iPhone|iPod|Android|ios|Nokia|Black Berry|MIDP|Phone)/i)){
+        isPhone = true
+    }
+
+    var ailcc_player_IsTest = typeof ailccPlayerTest !== "undefined" && ailccPlayerTest;
+    var testKey = typeof ailccPlayerTestKey !== "undefined" ? ailccPlayerTestKey : null;
+    var styleLoaded = typeof ailccPlayerStyleLoaded !== "undefined" && ailccPlayerStyleLoaded;
+    if(!ailcc_player_IsTest){
+        var ailcc_player_IsLoad = localStorage.getItem("ailcc_player_IsLoad");
+        var ailcc_player_Feed = localStorage.getItem("ailcc_player_Feed");
+        ailcc_player_IsLoad = typeof ailcc_player_IsLoad === "undefined" ? false : ailcc_player_IsLoad === "true";
+        ailcc_player_IsLoad = ailcc_player_IsLoad && typeof ailcc_player_Feed !== "undefined" && new Date().getTime() - parseInt(ailcc_player_Feed) < 2000;
+        //禁止iframe嵌套 || 是否已加载
+        if (top.location !== self.location || ailcc_player_IsLoad) {
+            return
+        }
+        localStorage.setItem("ailcc_player_IsLoad", "true");
+    }
+    if(ailcc_player_IsTest && testKey == null){
+        return;
+    }
+
+    var jsUrl = $("#ailcc").attr("src");
+    var webURL = jsUrl.startsWith("http") ? jsUrl.substring(0,jsUrl.indexOf("/",8)) : window.location.origin;
+    var keyId = ailcc_player_IsTest ? testKey : $("#ailcc").attr("key");
+    console.clear();
+    console.log("%c%c沛霖主页 Html5音乐播放器 控制面板地址：https://music.ailcc.com/admin ", "line-height:28px;", "line-height:14px;padding:4px;background:#222;color:#fff;font-size:14px;margin-right:15px");
+    
+
+    if(!styleLoaded){
+        $("head").append('<link rel="stylesheet" type="text/css" href="' + webURL + '/player/css/player.css?id='+keyId+'">');
+        var span = document.createElement("span");
+        span.className = "fa";
+        span.style.display = "none";
+        document.body.insertBefore(span, document.body.firstChild);
+
+        function css(a, b) {
+            return window.getComputedStyle(a, null).getPropertyValue(b)
+        }
+        if (css(span, "font-family") === "FontAwesome") {
+            console.log("%c站内存在FontAwesome，从站内加载！", "text-shadow: 3px 1px 1px grey");
+        } else {
+            console.log("%c站内未找到FontAwesome，从播放器加载！", "text-shadow: 3px 1px 1px grey");
+            $("head").append("<link href=\"https://libs.baidu.com/fontawesome/4.2.0/css/font-awesome.css\" rel=\"stylesheet\" type=\"text/css\">")
+        };
+        ailccPlayerStyleLoaded = true;
+    }
+    $("body").append('<div id="ailccPlayer">\n' +
+    '    <div class="player">\n' +
+    '        <canvas class="blur-img" width="365" height="155" id="canvas">您的浏览器不支持canvas，请更换高级版的浏览器！</canvas>\n' +
+    '        <div class="blur-img">\n' +
+    '            <img src="#" class="blur" style="top: 0; display: inline;"></div>\n' +
+    '        <div class="infos">\n' +
+    '            <div class="songstyle">\n' +
+    '                <span>\n' +
+    '                    <i class="fa fa-music"></i>\n' +
+    '                    <div class="songx"><span class="song"></span></div>\n' +
+    '                </span>\n' +
+    '                <span style="float: right;">\n' +
+    '                    <i class="fa fa-clock-o"></i>\n' +
+    '                    <span class="time">00:00 / 00:00</span></span>\n' +
+    '            </div>\n' +
+    '            <div class="artiststyle">\n' +
+    '                <i class="fa fa-user"></i>\n' +
+    '                <span class="artist"></span>\n' +
+    '                <span class="qhms moshi" title="循环模式">\n' +
+    '                    <i class="loop fa fa-random current"></i></span>\n' +
+    '            </div>\n' +
+    '            <div class="artiststyle">\n' +
+    '                <i class="fa fa-folder"></i>\n' +
+    '                <span class="artist1"></span>\n' +
+    '                <span class="switch-ksclrc geci" title="歌词模式"></span>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="control">\n' +
+    '            <span style="float:left">\n' +
+    '                <i class="aprev fa fa-fast-backward" title="上一专辑"></i>\n' +
+    '                <i class="prev fa fa-backward" title="上一首"></i>\n' +
+    '            </span>\n' +
+    '            <span style="float:right">\n' +
+    '                <i class="next fa fa-forward" title="下一首"></i>\n' +
+    '                <i class="anext fa fa-fast-forward" title="下一专辑"></i>\n' +
+    '            </span>\n' +
+    '        </div>\n' +
+    '        <div class="status">\n' +
+    '            <b>\n' +
+    '                <i class="play fa fa-play" title="播放"></i>\n' +
+    '                <i class="pause fa fa-pause" title="暂停"></i>\n' +
+    '            </b>\n' +
+    '            <div id="div1" class="note">\n' +
+    '                <i class="fa fa-music" aria-hidden="true"></i>\n' +
+    '            </div>\n' +
+    '            <div id="div2" class="note">\n' +
+    '                <i class="fa fa-music" aria-hidden="true"></i>\n' +
+    '            </div>\n' +
+    '            <div id="div3" class="note">\n' +
+    '                <i class="fa fa-music" aria-hidden="true"></i>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="musicbottom">\n' +
+    '           <div class="switch-down" style="display:none">\n' +
+    '               <a class="down">\n' +
+    '                   <i class="fa fa-cloud-download" title="歌曲下载"></i>\n' +
+    '               </a>\n' +
+    '           </div>\n' +
+    '            <div class="rate">\n' +
+    '                <div class="progress">\n' +
+    '                    <div class="rate-buffered"></div>' +
+    '                    <div class="rate-on" style="width: 0;">\n' +
+    '                        <div class="drag"></div>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <div class="icons">\n' +
+    '                <div class="switch-playlist">\n' +
+    '                    <i class="fa fa-bars" title="播放列表"></i>\n' +
+    '                </div>\n' +
+    '                <div class="switch-search">\n' +
+    '                    <i class="fa fa-search search" title="搜索"></i>\n' +
+    '                </div>\n' +
+    '                <div class="new-volume">\n' +
+    '                    <i class="volumeup fa fa-volume-up" title="音量"></i>\n' +
+    '                    <div class="volume-controls" style="">\n' +
+    '                        <div class="slider" data-direction="vertical">\n' +
+    '                            <div class="progress2" style="height: 66%;">\n' +
+    '                                <div class="drag" id="volume-drag"></div>\n' +
+    '                            </div>\n' +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="cover"></div>\n' +
+    '    </div>\n' +
+    '    <div class="playlist">\n' +
+    '        <div class="playlist-bd">\n' +
+    '            <div class="album-list">\n' +
+    '                <div class="musicheader"></div>\n' +
+    '                <div class="list"></div>\n' +
+    '            </div>\n' +
+    '            <div class="song-list">\n' +
+    '                <div class="musicheader">\n' +
+    '                    <i class="fa fa-angle-right"></i>\n' +
+    '                    <span></span>\n' +
+    '                </div>\n' +
+    '                <div class="list">\n' +
+    '                    <ul></ul>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '    <div class="switch-player">\n' +
+    '        <i class="fa fa-angle-right" style="margin-top: 20px;"></i>\n' +
+    '    </div>\n' +
+    '    <div class="searchbox">\n' +
+    '        <input type="text" placeholder="输入歌手+歌曲名并回车..."><i title="清空列表" class="delsearchlist fa fa-trash"></i>\n' +
+    '        <div class="searchlistbox">\n' +
+    '            <ul></ul>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '</div>\n' +
+    '<div id="ailccTips"></div>\n' +
+    '<div id="ailccLrc"></div>');
+
+    // 全局主色
+    mainColor = '0,0,0';
+    var protocol = 'https:' == document.location.protocol ? 'https' : 'http';
+    var audio = new Audio(),
+    $player = $('#ailccPlayer'),
+    $tips = $('#ailccTips'),
+    $lk = $('#ailccKsc,#ailccLrc'),
+    $switchPlayer = $('.switch-player', $player),
+    $btns = $('.status', $player),
+    $songName = $('.song', $player),
+    $cover = $('.cover', $player),
+    $songTime = $('.time', $player),
+    $songList = $('.song-list .list', $player),
+    $albumList = $('.album-list', $player),
+    $songFrom = $('.player .artist', $player),
+    $songFrom1 = $('.player .artist1', $player),
+    $songFrom2 = $('.player .moshi', $player),
+    $songFrom3 = $('.player .geci', $player),
+    $songFrom4 = $('.player .switch-ksclrc', $player),
+    $volumeSlider = $('.volume-controls .slider', $player);
+    $rateBuffered = $('.musicbottom .rate-buffered', $player);
+    $rateSlider = $('.rate .progress', $player);
+    $SearchBox = $('.searchbox', $player);
+    ailccqq = "66257875",
+    songFrom33 = '开启',
+    songFrom44 = '',
+    songFrom55 = '',
+    roundcolor = '#6c6971',
+    lightcolor = '#81c300',
+    cur = 'current',
+    ycgeci = true,
+    first = 1,
+    volume = localStorage.getItem('ailcc_player_volume') ? localStorage.getItem('ailcc_player_volume') : '0.666',
+    albumId = 0,
+    songId = 0,
+    songTotal = 0,
+    random = true,
+    rateIsDown = false,
+    rateMouse = {},
+    rateTouch = {},
+    hasgeci = true,
+    errjc = true,
+    errCount = 0,
+    currentFrameId = 0, 
+    playisTsMoving = !1, 
+    pass = true,
+    hasLrc = false,
+    lrcTimeLine = [],
+    lrcHeight = 40,
+    lrcTime = null,
+    lrcCont = '',
+    loop = false,
+    dogInterval = null;
+    playing = true;
+    autoswitch = false;
+    ailccplaytime = localStorage.getItem("ailcc_player_time") ? localStorage.getItem("ailcc_player_time") : false;
+    ailccplaying = localStorage.getItem("ailcc_player_times") ? localStorage.getItem("ailcc_player_times") : false;
+    playingalbumId = localStorage.getItem("ailcc_player_album") ? localStorage.getItem("ailcc_player_album") : false;
+    playingsongId = localStorage.getItem("ailcc_player_song") ? localStorage.getItem("ailcc_player_song") : false;
+    ailcc_player_songid = localStorage.getItem("ailcc_player_songid") ? localStorage.getItem("ailcc_player_songid") : false;
+        
+    function ailccCicle() {
+        $songTime.text(formatSecond(audio.currentTime) + " / " + formatSecond(audio.duration))
+    }
+    if(isPhone){$('#ailccLrc').addClass('phone');$player.addClass('phone');$(".new-volume",$player).hide();}
+
+    function formatSecond(t) {
+        return ('00' + Math.floor(t / 60)).substr(-2) + ':' + ('00' + Math.floor(t % 60)).substr(-2)
+    }
+    var cicleTime = null;
+    $songName.html('<a style="color:#f00">正在加载播放</a>');
+    $songFrom.html('<a style="color:#f00">Ailcc.Com</a>');
+    $songFrom1.html('<a href="https://ailcc.com" target="_blank" style="color:#f00">沛霖主页</a>');
+    $songFrom3.html('<i class="fa fa-times-circle"></i> 欢迎光临');
+    $cover.html('<img src=\"' + webURL + '/player/css/plzy.png\">');
+    var ailccMedia = {
+        play: function () {
+            $cover.addClass('coverplay');
+            $player.addClass('playing');
+            $rateBuffered.width(0);
+            // 播放进度更新秒表
+            cicleTime = setInterval(function(){
+                if(!rateMouse.isDown && !rateTouch.isTouchDown){
+                    $songTime.text(formatSecond(audio.currentTime) + ' / ' + formatSecond(audio.duration));
+                    $(".rate-on",$rateSlider).width(audio.currentTime / audio.duration * 100+"%");
+                }
+                // 以下为删除 播放暂停按钮中绿色进度条
+                // if (audio.currentTime < audio.duration / 2) {
+                //     $btns.css('background-image', 'linear-gradient(90deg, ' + roundcolor + ' 50%, transparent 50%, transparent), linear-gradient(' + (90 + (270 - 90) / (audio.duration / 2) * audio.currentTime) + 'deg, ' + lightcolor + ' 50%, ' + roundcolor + ' 50%, ' + roundcolor + ')')
+                // } else {
+                //     $btns.css('background-image', 'linear-gradient(' + (90 + (270 - 90) / (audio.duration / 2) * audio.currentTime) + 'deg, ' + lightcolor + ' 50%, transparent 50%, transparent), linear-gradient(270deg, ' + lightcolor + ' 50%, ' + roundcolor + ' 50%, ' + roundcolor + ')')
+                // }
+                var timeRanges = audio.buffered;
+                // 获取已缓存的时间  timeRanges.end(timeRanges.length - 1)
+
+                // 计算百分比 展示进度
+                if(timeRanges.length !== 0){
+                    $rateBuffered.width(parseInt(timeRanges.end(timeRanges.length - 1) * 100 / audio.duration * 100) / 100 + '%')
+                }
+            }, 800);
+            if (hasLrc) {
+                lrcTime = setInterval(ailccLrc.lrc.play, 500);
+                $('#ailccLrc').addClass('show');
+                $('.switch-down').css('right', '65px');
+                $('.switch-ksclrc').show()
+            }
+        },
+        pause: function () {
+            clearInterval(cicleTime);
+            $player.removeClass('playing');
+            //$('.switch-ksclrc').hide();
+            $('.switch-down').css('right', '35px');
+            if (hasLrc) {
+                ailccLrc.lrc.hide()
+            }
+        },
+        error: function() {
+            clearInterval(cicleTime);
+            $player.removeClass("playing");
+                if (errCount > 2) {
+                    ailccTips.show("连续播放失败超过3次！已停止播放！");
+                    errCount = 0;
+                    errjc = true
+                } else {
+                    errCount++;
+                    errjc = false;
+                    ailccTips.show(songSheetList[albumId].songNames[songId] + " - 资源获取失败！尝试获取下一首...");
+                    console.log('%c播放失败 '+ errCount + '次!', 'text-shadow: 3px 1px 1px grey');
+                    setTimeout(function() {
+                        $cover.removeClass("coverplay");
+                        localStorage.setItem("ailcc_player", "no", {
+                            path: "/",
+                            expires: -1
+                        });
+                        hasgeci = true;
+                        auto = "";
+                        ailccMedia.next()
+                    }, 1500)
+                }
+            },
+        seeking: function () {
+            if (audio.paused === true) {
+                audio.play()
+            };
+            $player.addClass("playing");
+            $cover.addClass("coverplay");
+            ailccLrc.load();
+            ailccTips.show("歌曲缓冲中...")
+        },
+        volumechange: function () {
+            var vol = window.parseInt(audio.volume * 100);
+            $('.progress2', $volumeSlider).height(vol + '%');
+            ailccTips.show('音量：' + vol + '%');
+            localStorage.setItem("ailcc_player_volume", audio.volume);
+        },
+        getInfos: function (id, b) {
+            $cover.removeClass('coverplay');
+            songId = id;
+            albumId = b;
+            allmusic();
+            localStorage.setItem("ailcc_player_album", albumId);
+            localStorage.setItem("ailcc_player_song", songId);
+            localStorage.setItem("ailcc_player_songid", songSheetList[albumId].songTypes[songId] + songSheetList[albumId].songIds[songId]);
+            if (songSheetList[albumId].songTypes[songId] == "wy") {
+                songFrom55 = "网易音乐";
+                musictype = "wy";
+                netmusic()
+                } else {
+                    if (songSheetList[albumId].songTypes[songId] == "kg") {
+                        songFrom55 = "酷狗音乐";
+                        musictype = "kg";
+                        netmusic()
+                    } else {
+                        if (songSheetList[albumId].songTypes[songId] == "qq") {
+                            songFrom55 = "QQ音乐";
+                            musictype = "qq";
+                            netmusic()
+                        } else {
+                            if (songSheetList[albumId].songTypes[songId] == "mg") {
+                                songFrom55 = "咪咕音乐";
+                                musictype = "mg";
+                                netmusic()
+                            } else {
+                                if (songSheetList[albumId].songTypes[songId] == "local") {
+                                    songFrom55 = "本地音乐";
+                                    musictype = "local";
+                                    netmusic()
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            getSongId: function (n) {
+                return n >= songTotal ? 0 : n < 0 ? songTotal - 1 : n
+            },
+            nexts: function() {
+                if (loop) {
+                    ailccMedia.getInfos(songId, albumId)
+                } else {
+                    ailccMedia.next()
+                }
+            },
+            next: function() {
+                pass = false;
+                    songTotal = songSheetList[albumId].songIds.length;
+                    if (random) {
+                        rid = parseInt(Math.random() * songTotal);
+                        if (songTotal > 1) {
+                            if (rid != songId) {
+                                ailccMedia.getInfos(rid, albumId)
+                            } else {
+                                if (rid + 1 >= songTotal) {
+                                    ailccMedia.getInfos(0, albumId)
+                                } else {
+                                    ailccMedia.getInfos(rid + 1, albumId)
+                                }
+                            }
+                        } else {
+                            ailccMedia.getInfos(0, albumId)
+                        }
+                    } else {
+                        if (parseInt(songId) + 1 >= songTotal) {
+                                ailccMedia.getInfos(0, albumId)
+                            } else {
+                                ailccMedia.getInfos(parseInt(songId) + 1, albumId)
+                            }
+                    };
+                    setTimeout(function() {
+                        pass = true
+                    }, 1500)
+                },
+                prev: function() {
+                    pass = false;
+                    songTotal = songSheetList[albumId].songIds.length;
+                    if (random) {
+                        rid = parseInt(Math.random() * songTotal);
+                        if (songTotal > 1) {
+                            if (rid != songId) {
+                                    ailccMedia.getInfos(rid, albumId)
+                            } else {
+                                if (rid + 1 >= songTotal) {
+                                    ailccMedia.getInfos(0, albumId)
+                                } else {
+                                    ailccMedia.getInfos(rid + 1, albumId)
+                                }
+                            }
+                        } else {
+                            ailccMedia.getInfos(0, albumId)
+                        }
+                    } else {
+                        if (parseInt(songId) - 1 < 0) {
+                                ailccMedia.getInfos(songTotal - 1, albumId)
+                            } else {
+                                ailccMedia.getInfos(parseInt(songId) - 1, albumId)
+                            }
+                    };
+                    setTimeout(function() {
+                        pass = true
+                    }, 1500)
+                },
+                anext: function() {
+                    pass = false;
+                    albumTotal = songSheetList.length;
+                    if (random || loop) {
+                        rid = parseInt(Math.random() * albumTotal);
+                        if (albumTotal > 1) {
+                            if (rid != albumId) {
+                                songTotals = songSheetList[rid].songIds.length;
+                                rids = parseInt(Math.random() * songTotals);
+                                ailccMedia.getInfos(rids - 1, rid)
+                            } else {
+                                if (rid + 1 >= albumTotal) {
+                                    songTotals = songSheetList[0].songIds.length;
+                                    rids = parseInt(Math.random() * songTotals);
+                                    ailccMedia.getInfos(rids - 1, 0)
+                                } else {
+                                    songTotals = songSheetList[rid + 1].songIds.length;
+                                    rids = parseInt(Math.random() * songTotals);
+                                    ailccMedia.getInfos(rids - 1, rid + 1)
+                                }
+                            }
+                        } else {
+                            songTotals = songSheetList[0].songIds.length;
+                            rids = parseInt(Math.random() * songTotals);
+                            ailccMedia.getInfos(rids, 0)
+                        }
+                    } else {
+                        if (albumTotal > 1) {
+                            if (parseInt(albumId) + 1 >= albumTotal) {
+                                ailccMedia.getInfos(0, 0)
+                            } else {
+                                ailccMedia.getInfos(0, parseInt(albumId) + 1)
+                            }
+                        } else {
+                            songTotals = songSheetList[0].songIds.length;
+                            rids = parseInt(Math.random() * songTotals);
+                            ailccMedia.getInfos(rids, 0)
+                        }
+                    };
+                    $player.removeClass("showSongList");
+                    setTimeout(function() {
+                        pass = true
+                    }, 1500)
+                },
+                aprev: function() {
+                    pass = false;
+                    albumTotal = songSheetList.length;
+                    if (random || loop) {
+                        rid = parseInt(Math.random() * albumTotal);
+                        if (albumTotal > 1) {
+                            if (rid != albumId) {
+                                songTotals = songSheetList[rid].songIds.length;
+                                rids = parseInt(Math.random() * songTotals);
+                                ailccMedia.getInfos(rids - 1, rid)
+                            } else {
+                                if (rid + 1 >= albumTotal) {
+                                    songTotals = songSheetList[0].songIds.length;
+                                    rids = parseInt(Math.random() * songTotals);
+                                    ailccMedia.getInfos(rids - 1, 0)
+                                } else {
+                                    songTotals = songSheetList[rid + 1].songIds.length;
+                                    rids = parseInt(Math.random() * songTotals);
+                                    ailccMedia.getInfos(rids - 1, rid + 1)
+                                }
+                            }
+                        } else {
+                            songTotals = songSheetList[0].songIds.length;
+                            rids = parseInt(Math.random() * songTotals);
+                            ailccMedia.getInfos(rids, 0)
+                        }
+                    } else {
+                        if (albumTotal > 1) {
+                            if (parseInt(albumId) - 1 < 0) {
+                                ailccMedia.getInfos(0, albumTotal - 1)
+                            } else {
+                                ailccMedia.getInfos(0, parseInt(albumId) - 1)
+                            }
+                        } else {
+                            songTotals = songSheetList[0].songIds.length;
+                            rids = parseInt(Math.random() * songTotals);
+                            ailccMedia.getInfos(rids, 0)
+                        }
+                    };
+                    $player.removeClass("showSongList");
+                    setTimeout(function() {
+                        pass = true
+                    }, 1500)
+                },
+                timeupdate: function() {
+                    if (audio.buffered.length) {
+                        if (!errjc) {
+                            errCount = 0;
+                            errjc = true
+                        };
+                        var a = 100 * audio.buffered.start(currentFrameId) / audio.duration,
+                            b = 100 * audio.buffered.end(currentFrameId) / audio.duration;
+                        $(".playprogress .progressbg .progressbg2", $player).css({
+                            left: a + "%",
+                            width: b - a + "%"						});
+                            localStorage.setItem("ailcc_player_time", audio.currentTime)
+                    };
+                playisTsMoving || ($(".playprogress .progressbg .ts", $player).css("left", 100 * (audio.currentTime / audio.duration).toFixed(2) + "%"), $(".playprogress .progressbg .progressbg1", $player).css("width", 100 * (audio.currentTime / audio.duration).toFixed(2) + "%"), $(".time", $player).text(formatSecond(audio.currentTime) + " / " + formatSecond(audio.duration)))
+				}
+    };
+    var ailccTipsTime = null;
+    var ailccTips = {
+        show: function (cont) {
+            clearTimeout(ailccTipsTime);
+            $('#ailccTips').text(cont).addClass('show');
+            this.hide()
+        },
+        hide: function () {
+            ailccTipsTime = setTimeout(function () {
+                $('#ailccTips').removeClass('show');
+            }, 3000)
+        }
+    };
+    //给audio添加监听事件  执行相应的函数
+    audio.addEventListener('play', ailccMedia.play, false);
+    audio.addEventListener('pause', ailccMedia.pause, false);
+    audio.addEventListener('ended', ailccMedia.nexts, false);
+    audio.addEventListener('playing', ailccMedia.playing, false);
+    audio.addEventListener('volumechange', ailccMedia.volumechange, false);
+    audio.addEventListener('error', ailccMedia.error, false);
+    audio.addEventListener('seeking', ailccMedia.seeking, false);
+    audio.addEventListener("timeupdate", ailccMedia.timeupdate, !1);
+    
+    //侧边按钮点击事件
+    $switchPlayer.click(function() {
+		$player.toggleClass("show");
+		autoswitch = true
+	});
+	
+	//搜索按钮点击事件
+    $('.search', $player).click(function() {
+    	ailccPlayer.SearchList.CreateVoid();
+    	$(this).toggleClass(cur);
+    	if ($(this).hasClass(cur)) {
+    		$SearchBox.show();
+    		$SearchBox.addClass('show');
+    		$player.removeClass('showAlbumList showSongList').addClass('showAlbumList showSongList');
+    		$('.list', $albumList).mCustomScrollbar('update');
+    		$($("li", '.album-list').eq(ailccPlayer.SearchList.ListId)).hasClass('current') ? ailccPlayer.playList.creat.song(ailccPlayer.SearchList.ListId, true) : ailccPlayer.playList.creat.song(ailccPlayer.SearchList.ListId, false);
+    	} else {
+    		$SearchBox.removeClass('show');
+    		setTimeout(function() {
+    			$SearchBox.hide()
+    		}, 200)
+    	}
+    });
+    $('.delsearchlist').click(function() {
+    	ailccPlayer.SearchList.Clean();
+    	ailccPlayer.playList.creat.song(0, true);
+    	$('.search', $player).removeClass(cur);
+		$SearchBox.removeClass('show');
+    	$SearchBox.hide();
+    });
+    $('input', $SearchBox).keyup(function() {
+    	var keywords = $(this).val();
+    	if (event.keyCode == 13) {
+    		$('.searchlistbox', $SearchBox).hide();
+    		$SearchBox.css('height', 0);
+    		$.ajax({
+    			url: webURL + '/api/index/search',
+    			data: {
+    				keywords: keywords
+    			},
+    			method: 'get',
+    			dataType: 'jsonp',
+    			success: function(data) {
+    				if (data.code !== 1) {
+    					$('input', $SearchBox).val().attr('disabled', false).attr('placeholder', '未找到歌曲...')
+    				} else {
+    					$('.searchlistbox', $SearchBox).show();
+    					$SearchBox.css('height', 289);
+    					$('input', $SearchBox).attr('disabled', false).attr('placeholder', '搜索'  + keywords +  '的结果').val();
+    					a = data.result.length;
+    					var searchlist = '';
+    					for (var i = 0; i < a; i++) {
+    					    searchlist += '<li title=' + data.result[i].singer +  '-'  + data.result[i].songname + ' SongName=' + data.result[i].songname + ' SongId=' + data.result[i].songid + ' Source=' + data.result[i].type + '><span class="index">' + (i + 1) + '</span>' + data.result[i].singer +  '-'  + data.result[i].songname + '</li>'
+    					};
+    					$('.searchlistbox', $SearchBox).html('<ul>' + searchlist + '</ul>').mCustomScrollbar();
+    					$('#ailccPlayer .searchlistbox ul','#ailccPlayer .searchlistbox .mCSB_draggerContainer').css({
+    						background: 'rgba(' + mainColor + ', .8)'
+    					});
+    					$('.searchlistbox li').click(function() {
+    						ailccPlayer.SearchList.New($(this).attr('Source'), $(this).attr('SongId'));
+    						$('input', $SearchBox).val('').attr('disabled', false).attr('placeholder', '正在播放'  + $(this).attr('SongName'));
+    						$(this).remove();
+    						$('.searchlistbox', $SearchBox).mCustomScrollbar('update')
+    					});
+    				}
+    			}
+    		});
+    		$(this).val('').attr('disabled', true).attr('placeholder', 'Loading...');
+    	}
+    });
+    ailccPlayer.SearchList = {
+    	List: null,
+    	IsShow: false,
+    	ListId: 0,
+    	CreateVoid: function() {
+    	    if(localStorage.ailcc_searchlist == null){
+    			ailccPlayer.SearchList.ListId = songSheetList.push({
+        			"songSheetName": '我搜索的歌曲',
+        			"author": 'Me',
+                    'songIds':[],
+                    'songNames':[],
+                    'songTypes':[],
+                    'albumNames':[],
+                    'artistNames':[],
+                    'albumCovers':[],
+    			}) - 1;
+    			localStorage.ailcc_searchlist = JSON.stringify(songSheetList[ailccPlayer.SearchList.ListId]);
+    			ailccPlayer.playList.creat.album1(ailccPlayer.SearchList.ListId);
+    	    }
+    	},
+    	New: function(type,id) {
+        	$.ajax({
+        		url: webURL + '/api/index/search',
+        		type: 'GET',
+    			data: {
+    				type: type,
+    				id  : id,
+    				action : 'song'
+    			},
+        		dataType: 'jsonp',
+        		success: function(data) {
+        		    if(data.code != 400){
+                    	albumId = ailccPlayer.SearchList.ListId;
+                    	songSheetList[albumId].songIds.unshift(id);
+                    	songSheetList[albumId].songNames.unshift(data.result.songname);
+                    	songSheetList[albumId].songTypes.unshift(data.result.type);
+                    	songSheetList[albumId].albumNames.unshift(songSheetList[ailccPlayer.SearchList.ListId].songSheetName);
+                    	songSheetList[albumId].artistNames.unshift(data.result.singer);
+                    	songSheetList[albumId].albumCovers.unshift(data.result.pic);
+        				ailccPlayer.playList.creat.song(ailccPlayer.SearchList.ListId, 1);
+        				ailccPlayer.playList.creat.song1(0,ailccPlayer.SearchList.ListId);
+        				localStorage.ailcc_searchlist = JSON.stringify(songSheetList[ailccPlayer.SearchList.ListId]);
+        		    }else{
+        		        $('#Tips').text(data.info).addClass('show');
+            		        setTimeout(function () {
+                            $('#Tips').removeClass('show');
+                        }, 3000)
+        		    }
+        
+        		},
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $('#Tips').text('歌曲列表获取失败').addClass('show');
+                }
+        	})
+    	},
+    	Clean: function() {
+    		if (localStorage.ailcc_searchlist == null||localStorage.ailcc_searchlist == '[]') {
+    			return
+    		};
+            songSheetList.splice(ailccPlayer.SearchList.ListId,1)
+    		localStorage.removeItem('ailcc_searchlist');
+    		albumId = 0;
+    		songId = 0;
+    // 		$SearchBox.hide()
+    		ailccPlayer.playList.creat.album();
+    	},
+    	Save: function(searchId) {
+    		localStorage.setItem('ailcc_searchlist', JSON.stringify(ailccPlayer.SearchList.List))
+    	}
+    };
+    //音乐暂停事件
+    $('.pause', $player).click(function () {
+        hasgeci = false;
+        var albumTotal = songSheetList.length;
+            if (albumTotal == 1) {
+                $("li", $albumList).eq(songId).addClass(cur).find(".artist").html("暂停播放 > ").parent().siblings().removeClass(cur).find(".artist").html("").parent()
+            } else {
+                $("li", $albumList).eq(albumId).addClass(cur).find(".artist").html("暂停播放 > ").parent().siblings().removeClass(cur).find(".artist").html("").parent()
+            };
+        ailccTips.show('暂停播放 - ' + songSheetList[albumId].songNames[songId]);
+        $cover.removeClass('coverplay');
+        audio.pause();
+        localStorage.setItem("ailcc_player_auto", "no")
+    });
+    //音乐播放事件
+    $('.play', $player).click(function () {
+        hasgeci = true;
+        var albumTotal = songSheetList.length;
+            if (albumTotal == 1) {
+                $("li", $albumList).eq(songId).addClass(cur).find(".artist").html("当前播放 > ").parent().siblings().removeClass(cur).find(".artist").html("").parent()
+            } else {
+                $("li", $albumList).eq(albumId).addClass(cur).find(".artist").html("当前播放 > ").parent().siblings().removeClass(cur).find(".artist").html("").parent()
+            };
+        $('#ailccLrc,#ailccKsc').show();
+        startPlay();
+        localStorage.setItem("ailcc_player_auto", "yes")
+    });
+    //上一首事件
+    $('.prev', $player).click(function () {
+        hasgeci = true;
+        $('#ailccLrc,#ailccKsc').show();
+        ailccMedia.prev();
+        localStorage.setItem("ailcc_player_auto", "yes");
+    });
+    //下一首事件
+    $('.next', $player).click(function () {
+        hasgeci = true;
+        $('#ailccLrc,#ailccKsc').show();
+        ailccMedia.next();
+        localStorage.setItem("ailcc_player_auto", "yes");
+    });
+    //上一专辑事件
+    $('.aprev', $player).click(function () {
+        hasgeci = true;
+        $('#ailccLrc,#ailccKsc').show();
+        ailccMedia.aprev();
+        localStorage.setItem("ailcc_player_auto", "yes");
+    });
+    //下一专辑事件
+    $('.anext', $player).click(function () {
+        hasgeci = true;
+        $('#ailccLrc,#ailccKsc').show();
+        ailccMedia.anext();
+        localStorage.setItem("ailcc_player_auto", "yes");
+    });
+    $(".qhms", $player).click(function() {
+        random ? (random = false, ailccTips.show("专辑循环"), $(this).html("<i class = \"random fa fa-retweet\" title=\"专辑循环\"></i>"), $songFrom2.html("<i class=\"fa fa-retweet current\"></i> 专辑循环")) : (loop ? (random = true, loop = false, ailccTips.show("随机播放"), $(this).html("<i class = \"random fa fa-random\" title=\"随机播放\"></i>"), $songFrom2.html("<i class=\"fa fa-random current\"></i> 随机播放")) : (random = false, loop = true, ailccTips.show("单曲循环"), $(this).html("<i class = \"random fa fa-refresh\" title=\"单曲循环\"></i>"), $songFrom2.html("<i class=\"fa fa-refresh current\"></i> 单曲循环")));
+        musicTooltip();
+            if (autoswitch) {
+                autoswitch = false;
+                setTimeout(function() {
+                    autoswitch = true
+                }, 500)
+            }
+        });
+    //随机播放按钮事件
+    $('.random', $player).click(function () {
+        $(this).addClass(cur);
+        $('.loop', $player).removeClass(cur);
+        random = true;
+        ailccTips.show('随机播放');
+        $songFrom2.html('<i class="random fa fa-random"></i> 随机播放')
+        localStorage.setItem("random_play", true)
+    });
+    //专辑循环按钮事件
+    $('.loop', $player).click(function () {
+        $(this).addClass(cur);
+        $('.random', $player).removeClass(cur);
+        random = false;
+        ailccTips.show('专辑循环');
+        $songFrom2.html('<i class="loop fa fa-retweet current"></i> 专辑循环')
+        localStorage.setItem("random_play", false)
+    });
+    //音量组件拖动事件
+    $volumeSlider.click(function (e) {
+        var documentTop = $(document).scrollTop();
+        var progressHeight = $volumeSlider.height(),
+            progressOffsetTop = $volumeSlider.offset().top - documentTop;
+        var calcVolume = (1 - (e.clientY - progressOffsetTop) / progressHeight).toFixed(2);
+        audio.volume = calcVolume > 1 ? 1 : calcVolume;
+    });
+    $rateSlider.click(function (e) {
+        var progressWidth = $rateSlider.width(),
+            progressOffsetLeft = $rateSlider.offset().left,
+            eClientX = e.clientX;
+
+        audio.currentTime = audio.duration * ((eClientX - progressOffsetLeft) / progressWidth)
+    });
+    var isDown = false;
+    $('.drag', $volumeSlider).mousedown(function () {
+        isDown = true;
+    });
+
+    $('.drag', $rateSlider).on("touchstart",(function (e) {
+        rateTouch.progressWidth = $rateSlider.width();
+        rateTouch.isTouchDown = true;
+        rateTouch.startX = e.originalEvent.touches[0].clientX;
+        rateTouch.rateOnWidth = parseFloat(($(".rate-on",$rateSlider).width() / rateTouch.progressWidth).toFixed(2));
+    }));
+
+    $('.drag', $rateSlider).mousedown(function (e) {
+        rateMouse.progressWidth = $rateSlider.width();
+        rateMouse.isDown = true;
+        rateMouse.startX = e.clientX;
+        rateMouse.rateOnWidth = parseFloat(($(".rate-on",$rateSlider).width() / rateMouse.progressWidth).toFixed(2));
+    });
+
+    window.addEventListener("touchmove",function(e){
+        if(rateTouch.isTouchDown){
+            var rate = parseFloat(((e.touches[0].clientX - rateTouch.startX) / rateTouch.progressWidth)
+                .toFixed(2))+rateTouch.rateOnWidth;
+            if(rate >= 0 && rate <= 1){
+                $(".rate-on",$rateSlider).width(rate * 100 + '%');
+                rateTouch.currentTime = audio.duration * rate;
+                $songTime.text(formatSecond(rateTouch.currentTime) + ' / ' + formatSecond(audio.duration));
+            }
+        }
+        return false;
+    }, { passive: false });
+
+    $(window).on({
+        mousemove: function (e) {
+            if (isDown) {
+                var documentTop = $(document).scrollTop();
+                var progressHeight = $volumeSlider.height(),
+                    progressOffsetTop = $volumeSlider.offset().top - documentTop,
+                    eClientY = e.clientY;
+                if(eClientY >= progressOffsetTop && eClientY <= progressOffsetTop + progressHeight){
+                    audio.volume = (1 - (eClientY - progressOffsetTop) / progressHeight).toFixed(2);
+                }
+            }else if(rateMouse.isDown){
+                var rate = parseFloat(((e.clientX - rateMouse.startX) / rateMouse.progressWidth)
+                    .toFixed(2))+rateMouse.rateOnWidth;
+                if(rate >= 0 && rate <= 1){
+                    $(".rate-on",$rateSlider).width(rate * 100 + '%');
+                    rateMouse.currentTime = audio.duration * rate;
+                    $songTime.text(formatSecond(rateMouse.currentTime) + ' / ' + formatSecond(audio.duration));
+                }
+            }
+        },
+        mouseup: function () {
+            isDown = false;
+            if(rateMouse.isDown){
+                audio.currentTime = rateMouse.currentTime;
+                rateMouse.isDown = false;
+            }
+        },
+        touchend:function (e) {
+            if(rateTouch.isTouchDown){
+                audio.currentTime = rateTouch.currentTime;
+                rateTouch.isTouchDown = false;
+            }
+        }
+    });
+    //设置默认音量
+    audio.volume = volume;
+    if (volume == 1) {
+        $('.volume-on', $player).width('100%');
+    }
+    //播放列表按钮点击事件
+    $('.switch-playlist').click(function () {
+        $player.toggleClass('showAlbumList');
+		$('.search', $player).removeClass(cur);
+		$SearchBox.removeClass('show');
+    	$SearchBox.hide()
+    });
+    //返回专辑列表事件
+    $songList.mCustomScrollbar();
+    $('.song-list .musicheader,.song-list .fa-angle-right', $player).click(function () {
+        $player.removeClass('showSongList');
+		$('.search', $player).removeClass(cur);
+		$SearchBox.removeClass('show');
+    	$SearchBox.hide()
+    });
+    //打开关闭歌词显示
+    $('.switch-ksclrc').click(function () {
+        $player.toggleClass('ksclrc');
+        $('#ailccLrc').toggleClass('hide');
+        $('#ailccKsc').toggleClass('hidePlayer');
+        if (!$('#ailccLrc').hasClass('hide')) {
+            ycgeci = true;
+            if (hasLrc) {
+                $songFrom3.html('<i class="fa fa-check-circle"></i> 歌词开启')
+            }
+            ailccTips.show('歌词显示已开启');
+            songFrom33 = '开启';
+            $songFrom4.html('<i class="fa fa-check-circle"></i> 歌词开启');
+        } else {
+            ycgeci = false;
+            if (hasLrc) {
+                $songFrom3.html('<i class="fa fa-times-circle"></i> 歌词关闭');
+            }
+            ailccTips.show('歌词显示已关闭');
+            songFrom33 = '关闭';
+            $songFrom4.html('<i class="fa fa-check-circle"></i> 歌词关闭')
+        }
+        musicTooltip();
+        if (autoswitch) {
+            autoswitch = false;
+            setTimeout(function() {
+                autoswitch = true
+            }, 500)
+        }
+    });
+    ailccPlayer.playList = {
+        creat: {
+            album: function () {
+                var albumTotal = songSheetList.length,
+                    albumList = '';
+                if (typeof ssssid === "undefined") {
+                    if (albumTotal == 1) {
+                        $(".musicheader", $albumList).html(songSheetList[0].songSheetName + "(" + songSheetList[0].songIds.length + ")")
+                    } else {
+                        $(".musicheader", $albumList).html(siteName + " - 专辑列表")
+                    }
+                } else {
+                    $(".musicheader", $albumList).html(siteName + " - 专辑列表")
+                };
+                if (albumTotal == 1) {
+                    for (var i = 0; i < songSheetList[0].songIds.length; i++) {
+                        albumList += "<li><span class=\"index\">" + (i + 1) + "</span><span class=\"artist\"></span>" + songSheetList[0].songNames[i] + " - " + songSheetList[0].artistNames[i] + "</li>"
+                    }
+                } else {
+                    for (var c = 0; c < albumTotal; c++) {
+                        albumList += "<li><i class=\"fa fa-angle-right\"></i><span class=\"index\">" + (c + 1) + "</span><span class=\"artist\"></span>《" + songSheetList[c].songSheetName + "》 - " + songSheetList[c].author + "</li>"
+                    }
+                };
+                $('.list', $albumList).html('<ul>' + albumList + '</ul>').mCustomScrollbar();
+				$("li", $albumList).click(function() {
+                    if (albumTotal == 1) {
+                        hasgeci = true;
+                        albumId = 0;
+                        if ($(this).hasClass(cur)) {
+                            ailccTips.show("正在播放 - " + songSheetList[albumId].songNames[songId].replace(songId + 1 + "#", ""))
+                        } else {
+                            localStorage.setItem("ailcc_player_auto", "yes");
+                            songId = $(this).index();
+                            ailccMedia.getInfos(songId, albumId)
+                        }
+                    } else {
+                        var a = $(this).index();
+                        $(this).hasClass(cur) ? ailccPlayer.playList.creat.song(a, true) : ailccPlayer.playList.creat.song(a, false);
+                        $player.addClass("showSongList")
+                    }
+                });
+                songTotal = songSheetList[albumId].songIds.length;
+                playingalbumId && playingsongId && songSheetList[playingalbumId].songTypes[playingsongId] + songSheetList[playingalbumId].songIds[playingsongId] == ailcc_player_songid ? ailccMedia.getInfos(ailccPlayer.playList.creat.getSongId(playingsongId), ailccPlayer.playList.creat.getalbumId(playingalbumId)) : random ? ailccMedia.getInfos(window.parseInt(Math.random() * songTotal), albumId) : ailccMedia.getInfos(0, albumId)
+            },
+			album1: function() {
+                var albumTotal = songSheetList.length,
+                    albumList = '';
+				$('.musicheader', $albumList).html(siteName + ' - 专辑列表');
+				for (var c = 0; c < albumTotal; c++) albumList += "<li><i class=\"fa fa-angle-right\"></i><span class=\"index\">" + (c + 1) + "</span><span class=\"artist\"></span>《" + songSheetList[c].songSheetName + "》 - " + songSheetList[c].author + "</li>"
+				$(".list", $albumList).html("<ul>" + albumList + "</ul>").mCustomScrollbar();
+				$("li", '.album-list').eq(albumId).addClass('current');
+				$("li", $albumList).click(function() {
+					var a = $(this).index();
+					$(this).hasClass(cur) ? ailccPlayer.playList.creat.song(a, !0) : ailccPlayer.playList.creat.song(a, !1);
+					$player.addClass("showSongList")
+				});
+			},
+            getSongId: function(n) {
+                return n >= songTotal ? 0 : n < 0 ? songTotal - 1 : n
+            },
+            getalbumId: function(n) {
+                return n >= songSheetList.length ? 0 : n < 0 ? songSheetList.length - 1 : n
+            },
+            song: function (id, isThisAlbum) {
+                songTotal = songSheetList[id].songIds.length;
+                $(".song-list .musicheader span", $player).text(songSheetList[id].songSheetName + "(" + songTotal + ")");
+                var songList = '';
+                for (var i = 0; i < songTotal; i++) {
+                    songList += '<li><span class="index">' + (i + 1) + '</span><span class="artist">' + songSheetList[id].songNames[i] + ' - ' + songSheetList[id].artistNames[i] + '</span></li>'
+                }
+                $('ul', $songList).html(songList);
+                $songList.attr("data-album", id);
+                $songList.mCustomScrollbar('update');
+                if (isThisAlbum) {
+                    $("li", $songList).eq(songId).addClass(cur).siblings().removeClass(cur);
+                    $songList.mCustomScrollbar("scrollTo", $("li.current", $songList).position()/*.top - 120*/);
+                } else {
+                    $songList.mCustomScrollbar("scrollTo", "top");
+                }
+                $('li', $songList).click(function () {
+                    hasgeci = true;
+                    $('#ailccLrc,#ailccKsc').show();
+                    albumId = id;
+                    if ($(this).hasClass(cur)) {
+                        ailccTips.show('正在播放 - ' + songSheetList[albumId].songNames[songId].replace(songId + 1 + '#', ''))
+                    } else {
+                        localStorage.setItem("ailcc_player_auto", "yes");
+                        songId = $(this).index();
+                        ailccMedia.getInfos(songId, albumId);
+                    }
+                })
+            },
+            song1: function (a,b) {
+                ailccMedia.getInfos(a,b);
+            }
+        }
+    };
+    var ailccLrc = {
+        load: function () {
+            ailccLrc.lrc.hide();
+            hasLrc = false;
+            $('#ailccLrc,#ailccKsc').html('');
+            setTimeout(function () {
+                if (hasgeci) {
+                    $songFrom3.html('<i class="fa fa-check-circle"></i> 歌词' + songFrom33)
+                } else {
+                    $songFrom3.html('<i class="fa fa-times-circle"></i> 歌词' + songFrom33)
+                }
+                $('.switch-down').css('right', '65px');
+                $('.switch-ksclrc').show();
+                if(songSheetList[albumId].songTypes[songId] == "local" && songSheetList[albumId].lyric[songId] != ''){
+                    lrcurl = songSheetList[albumId].lyric[songId];
+                    geshi = 'text';
+                }else{
+                    lrcurl = webURL + "/api/musicLyric?songId=" + songSheetList[albumId].songIds[songId] + "&type=" + songSheetList[albumId].songTypes[songId] + '&id='+keyId;
+                    geshi = 'script';
+                }
+                $.ajax({
+                    url: lrcurl,
+                    type: 'GET',
+                    dataType: 'script',
+                    xhrFields:{withCredentials: true},
+                    success: function () {
+                        if (lrcstr == '') {
+                            songFrom44 = ' - 暂无歌词!';
+                            $songFrom3.html('<i class="fa fa-times-circle"></i> 暂无歌词');
+                            //$('.switch-ksclrc').hide();
+                            $('.switch-down').css('right', '35px');
+                        } else {
+                            if (lrcstr.indexOf('[00') >= 0) {
+                                setTimeout(function () {
+                                    if (!$('#ailccLrc').hasClass('hide')) {
+                                        songFrom44 = ' - 歌词获取成功!'
+                                    } else {
+                                        songFrom44 = ' - 歌词已关闭！'
+                                    }
+                                ailccLrc.lrc.format(lrcstr)
+                                },
+                                500)
+                            } else {
+                                songFrom44 = ' - 暂无歌词!';
+                                $songFrom3.html('<i class="fa fa-times-circle"></i> 暂无歌词');
+                                //$('.switch-ksclrc').hide();
+                                $('.switch-down').css('right', '35px');
+                            }
+                        }
+                    },
+                    error: function () {
+                        songFrom44 = ' - 暂无歌词!';
+                        $songFrom3.html('<i class="fa fa-times-circle"></i> 暂无歌词');
+                        //$('.switch-ksclrc').hide();
+                        $('.switch-down').css('right', '35px');
+                    }
+                })
+            }, 50)
+        },
+        lrc: {
+            format: function (cont) {
+                hasLrc = true;
+                function formatTime(t) {
+                    var sp = t.split(':'),
+                        min = +sp[0],
+                        sec = +sp[1].split('.')[0],
+                        ksec = +sp[1].split('.')[1];
+                    return min * 60 + sec + Math.round(ksec / 1000)
+                }
+                var lrcCont = cont.replace(/\[[A-Za-z]+:(.*?)]/g, '').split(/[\]\[]/g),
+                    lrcLine = '';
+                lrcTimeLine = [];
+                for (var i = 1; i < lrcCont.length; i += 2) {
+                    var timer = formatTime(lrcCont[i]);
+                    lrcTimeLine.push(timer);
+                    if (i == 1) {
+                        lrcLine += '<li class="ailccLrc' + timer + ' current" style="color:rgba(' + mainColor + ',1)">' + lrcCont[i + 1] + '</li>'
+                    } else {
+                        lrcLine += '<li class="ailccLrc' + timer + '">' + lrcCont[i + 1] + '</li>'
+                    }
+                }
+                $('#ailccLrc').html('<ul>' + lrcLine + '</ul>');
+                setTimeout(function () {
+                    if (audio.paused) {
+                        //$('.switch-ksclrc').hide();
+                        $('.switch-down').css('right', '35px');
+                    } else {
+                        $('#ailccLrc').addClass('show')
+                    }
+                },
+                500);
+                lrcTime = setInterval(ailccLrc.lrc.play, 500)
+            },
+            play: function () {
+                var timeNow = Math.round(audio.currentTime);
+                if ($.inArray(timeNow, lrcTimeLine) > 0) {
+                    var $lineNow = $('.ailccLrc' + timeNow);
+                    if (!$lineNow.hasClass(cur)) {
+                        $lineNow.css('color','rgba(' + mainColor + ',1)');
+                        $lineNow.addClass(cur).siblings().removeClass(cur).css('color','');
+                        $('#ailccLrc').animate({
+                            scrollTop: lrcHeight * $lineNow.index()
+                        });
+                    }
+                } else {
+                    lrcCont = ''
+                }
+            },
+            hide: function () {
+                clearInterval(lrcTime);
+                $('#ailccLrc').removeClass('show')
+            }
+        }
+    };
+    //获取歌单列表数据
+    $.ajax({
+        url: webURL + '/api/info?id=' + keyId,
+        type: 'GET',
+        dataType: 'script',
+        xhrFields:{withCredentials: true},
+        success: function () {
+    		if(localStorage.ailcc_searchlist){
+    		    ailccPlayer.SearchList.ListId = songSheetList.length;
+    		    songSheetList[songSheetList.length] = JSON.parse(localStorage.ailcc_searchlist);
+    		}
+            if(playerWidth !== -1){ //播放器宽度
+                document.body.style.setProperty('--player-width', playerWidth + 'px');
+            }
+            if(coverWidth !== -1){ //专辑图片宽度
+                document.body.style.setProperty('--cover-width', coverWidth + 'px');
+            }
+            if(showNotes !== 1){ //飘动音符
+                $(".status .note",$player).hide()
+            }
+            if(showDown !== 1){
+                $(".switch-down").remove();
+            }
+            if(showSearch !== 1){
+                $(".switch-search").remove();
+                $('.switch-down').css('right', '0px');
+                $("#ailccPlayer .player .musicbottom .rate").css('padding-right','10px');
+            }
+            if(autoPopupPlayer !== -1){ //播放器弹出时间
+                setTimeout(function () {
+                    if (localStorage.getItem("ailcc_player_switch") != "yes") {
+                    $player.addClass('show')
+                    }
+                },autoPopupPlayer * 1000)
+            }
+            if (localStorage.getItem("random_play") != null) {
+                if (localStorage.getItem("random_play") == "true") {
+                    $('.loop', $player).removeClass(cur);
+                    $('.random', $player).addClass(cur);
+                    $songFrom2.html('<i class="random fa fa-random"></i> 随机播放');
+                    random = true;
+                } else {
+                    $('.loop', $player).addClass(cur);
+                    $('.random', $player).removeClass(cur);
+                    $songFrom2.html('<i class="loop fa fa-retweet"></i> 专辑循环');
+                    random = false;
+                }
+            } else {
+                if (randomPlayer != 1) { //随机播放
+                    $('.loop', $player).addClass(cur);
+                    $('.random', $player).removeClass(cur);
+                    $songFrom2.html('<i class="loop fa fa-retweet"></i> 专辑循环');
+                    random = false;
+                }
+            }
+            if (localStorage.getItem("ailcc_player_volume") == '0.666') {
+                volume = (defaultVolume / 100);
+                audio.volume = volume;
+            }
+            albumTotals = songSheetList.length;
+                if (typeof ailccalbum === "undefined") {
+                    albumIds = playingalbumId ? playingalbumId : defaultAlbum - 1;
+                    if (albumIds >= albumTotals) {
+                        albumId = 0
+                    } else {
+                        albumId = playingalbumId ? playingalbumId : defaultAlbum - 1
+                    }
+                } else {
+                    if (typeof ailccsong === "undefined") {
+                        if (ailccalbum >= albumTotals) {
+                            albumId = 0;
+                            ailccMedia.getInfos(0, 0)
+                        } else {
+                            albumId = ailccalbum;
+                            ailccMedia.getInfos(0, ailccalbum - 1)
+                        }
+                    } else {
+                        if (ailccalbum >= albumTotals) {
+                            albumId = 0;
+                            ailccMedia.getInfos(ailccsong - 1, 0)
+                        } else {
+                            albumId = ailccalbum;
+                            ailccMedia.getInfos(ailccsong - 1, ailccalbum - 1)
+                        }
+                    }
+                };
+            // 防止百分百音量无触发事件
+            ailccMedia.volumechange();
+            albumId = defaultAlbum - 1;
+            if (showLrc == 0) {
+                $('#ailccLrc').addClass('hide');
+                ycgeci = false;
+                if (hasLrc) {
+                    $songFrom3.html('<i class="fa fa-times-circle"></i> 歌词关闭');
+                }
+                ailccTips.show('歌词显示已关闭');
+                songFrom33 = '关闭';
+                $songFrom4.html('<i class="fa fa-toggle-off" title="打开歌词"></i>')
+            }
+            if (showGreeting == 1) {
+                setTimeout(function(a) {
+                    ailccTips.show(greeting);
+                }, 5000)
+            }
+            setTimeout(function (args) {
+                ailccPlayer.playList.creat.album()
+            }, 500)
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            ailccTips.show('歌曲列表获取失败!')
+        }
+    });
+
+    dogInterval = setInterval(function(){
+        if(!ailcc_player_IsTest){
+            localStorage.setItem("ailcc_player_Feed", new Date().getTime().toString());
+        }
+        // 检查css变量
+        var currPlayerWidth = document.body.style.getPropertyValue('--player-width');
+        if(typeof playerWidth != "undefined" && playerWidth !== -1 && currPlayerWidth != (playerWidth + 'px')){
+            document.body.style.setProperty('--player-width', playerWidth + 'px');
+        }
+        var currCoverWidth = document.body.style.getPropertyValue('--cover-width');
+        if(typeof coverWidth != "undefined" && coverWidth !== -1  && currCoverWidth != (coverWidth + 'px')){
+            document.body.style.setProperty('--cover-width', coverWidth + 'px');
+        }
+    },1000);
+    // 浏览器关闭事件监听器
+    window.addEventListener('beforeunload', function(event){
+        localStorage.setItem("ailcc_player_IsLoad", "false");
+    }, true);
+
+    function LimitStr(str, num, t) {
+        num = num || 6;
+        t = t || '...';
+        var re = '';
+        var leg = str.length;
+        var h = 0;
+        for (var i = 0; h < num * 2 && i < leg; i++) {
+            h += str.charCodeAt(i) > 128 ? 2 : 1;
+            re += str.charAt(i)
+        }
+        if (i < leg) re += t;
+        return re
+    }
+    function netmusic() {
+        if (songSheetList[albumId].songTypes[songId] == "local") {
+            audio.src = songSheetList[albumId].locations[songId]
+        } else {
+            audio.src = webURL + "/api/musicUrl?songId=" + songSheetList[albumId].songIds[songId]+"&type="+songSheetList[albumId].songTypes[songId] + '&id='+keyId;
+            $('.switch-down').show();
+        	$('.switch-down').html('<a class="down" style="border-bottom: dotted 0px;"><i class="fa fa-cloud-download" title="从' + songFrom55 + '下载：' + songSheetList[albumId].songNames[songId] + ' - ' + songSheetList[albumId].artistNames[songId] + '"></i></a>');
+        	$('.down').click(function () {
+            	window.open(audio.src, 'newwindow')
+        	});
+        };
+        //lrcurl = songSheetList[albumId].lyrics[songId];
+        $songName.html('<span title="' + songSheetList[albumId].songNames[songId] + '">' + songSheetList[albumId].songNames[songId] + '</span>');
+        // $songName.text(songSheetList[albumId].songNames[songId]);
+        $songName.Rolling();
+        $songFrom.html('<span title="' + songSheetList[albumId].artistNames[songId] + '">' + LimitStr(songSheetList[albumId].artistNames[songId]) + '</span>');
+        if(songSheetList[albumId].albumNames[songId] == ''){
+            $songFrom1.html('<span title="' + songSheetList[albumId].songSheetName + '">' + LimitStr(songSheetList[albumId].songSheetName) + '</span>');
+        }else{
+            $songFrom1.html('<span title="' + songSheetList[albumId].albumNames[songId] + '">' + LimitStr(songSheetList[albumId].albumNames[songId]) + '</span>');
+        }
+        var coverImg = new Image();
+        var sear = new RegExp('http');
+        coverImg.src = sear.test(songSheetList[albumId].albumCovers[songId]) ? songSheetList[albumId].albumCovers[songId] : 'https://music.ailcc.com/player/css/plzy.png';
+        
+        $cover.addClass('changing');
+        coverImg.onload = function () {
+            $cover.removeClass('changing');
+            $.ajax({
+                url: webURL + '/api/mainColor',
+                type: 'GET',
+                dataType: 'script',
+                xhrFields:{withCredentials: true},
+                data: {
+                    url: coverImg.src,
+                    id: keyId
+                },
+                success: function () {
+                    playerColor()
+                },
+                error: function () {
+                    playerColor()
+                }
+            })
+        };
+        coverImg.onerror = function () {
+            coverImg.src = '/player/css/plzy.png';
+            setTimeout(function () {
+                ailccTips.show(songSheetList[albumId].songNames[songId] + ' - 专辑图片获取失败！')
+            },
+            8000)
+        };
+        $cover.html(coverImg);
+        if (background == 1) {
+            $('.blur-img .blur', $player).attr("src", songSheetList[albumId].albumCovers[songId]); //虚化背景
+        } else {
+            if ($(".blur-img").length > 0) {
+                $(".blur-img").remove();
+            }
+        }
+        ailccLrc.load(); //加载歌词
+        if (first == 1) {
+            first = 2;
+            if (autoPlayer == 1 && (localStorage.getItem("ailcc_player_auto") == null || localStorage.getItem("ailcc_player_auto") === "yes")) {
+                startPlay()
+            } else {
+                ailccTips.show('播放器自动暂停');
+                $cover.removeClass('coverplay');
+                audio.pause();
+            }
+        } else {
+            startPlay()
+        };
+        if (ailccplaytime && ailccplaying && playing && songSheetList[albumId].songTypes[songId] + songSheetList[albumId].songIds[songId] == ailcc_player_songid) {
+            $(".playprogress .progressbg .ts", $player).css("left", 100 * (ailccplaytime / ailccplaying).toFixed(2) + "%");
+            $(".playprogress .progressbg .progressbg1", $player).css("width", 100 * (ailccplaytime / ailccplaying).toFixed(2) + "%");
+            $(".time", $player).text(formatSecond(ailccplaytime) + " / " + formatSecond(ailccplaying))
+        };
+        $(window).scroll(function () {
+            var scrollTop = $(this).scrollTop();
+            var scrollHeight = $(window.document).height();
+            var windowHeight = $(this).height();
+            if (scrollTop + windowHeight == scrollHeight) {
+                if (hasgeci && ycgeci) {
+                    $player.addClass('ksclrc');
+                    $('#ailccLrc').addClass('hide');
+                    $('#ailccKsc').addClass('hidePlayer');
+                    $songFrom3.html('<i class="fa fa-times-circle"></i> 歌词隐藏');
+                    $songFrom4.html('<i class="fa fa-times-circle"></i> 歌词隐藏');
+                    if (hasLrc) {
+                        ailccTips.show('歌词自动隐藏')
+                    }
+                }
+            } else {
+                if (hasgeci && ycgeci) {
+                    $player.removeClass('ksclrc');
+                    $('#ailccLrc').removeClass('hide');
+                    $('#ailccKsc').removeClass('hidePlayer');
+                    if (hasLrc) {
+                        $songFrom3.html('<i class="fa fa-check-circle"></i> 歌词开启')
+                    }
+                    $songFrom4.html('<i class="fa fa-check-circle"></i> 歌词开启')
+                }
+            }
+        });
+        musicTooltip();
+    }
+    function startPlay() {
+        var a = audio.play();
+        if (a) {
+            a.then(() => {
+                if (playingalbumId == albumId && playingsongId == songId && ailccplaytime && playing && songSheetList[albumId].songTypes[songId] + songSheetList[albumId].songIds[songId] == ailcc_player_songid) {
+                    audio.currentTime = ailccplaytime;
+                    playing = false
+                };
+            var t = audio.duration;
+            $cover.addClass("coverplay");
+            localStorage.setItem("ailcc_player_times", t);
+            ailccTips.show("开始从" + songFrom55 + "播放 - " + songSheetList[albumId].songNames[songId]);
+            if (showMsg === 1) { //桌面通知
+                showMsgNotification(songSheetList[albumId].songNames[songId], songSheetList[albumId].artistNames[songId] + " - " + songSheetList[albumId].albumNames[songId], songSheetList[albumId].albumCovers[songId])
+            };
+                console.log('%c当前播放：%c'+ songSheetList[albumId].songNames[songId] +' - ' + songSheetList[albumId].artistNames[songId] + '   %c时长：%c'+ Math.floor(t / 60) + ':'+ (t % 60 / 100).toFixed(2).slice(-2), 'color:orange', 'color:red;font-weight:bold', 'color:orange', 'color:red;font-weight:bold');
+            }).catch((e) => {
+            	console.log("%c浏览器限制音频自动播放，需要点击播放！", "text-shadow: 3px 1px 1px grey");
+            })
+        }
+    }
+   function allmusic() {
+        cx = (songSheetList.length == 1)?songId:albumId;
+        $("li", $albumList).eq(cx).addClass(cur).find(".artist").html("当前播放&nbsp;>&nbsp;").parent().siblings().removeClass(cur).find(".artist").html("").parent();
+        if (songSheetList.length == 1) {
+            if (!$(".list", $albumList).html() == "") {
+                $(".list", $albumList).mCustomScrollbar("scrollTo", ($("li.current", $albumList).position().top) - 90)
+            }
+        } else {
+            if (!$("ul", $songList).html() == "" && $("[data-album=" + albumId + "]").length) {
+                $("[data-album=" + albumId + "]").find("li").eq(songId).addClass(cur).siblings().removeClass(cur);
+                $songList.mCustomScrollbar("scrollTo", ($("li.current", $songList).position().top) - 90)
+            }
+        }
+        if (playingalbumId !== albumId || playingsongId !== songId) {
+		playing = false
+	}
+    }
+    function playerColor() {
+        $player.css({
+            background: 'rgba(' + mainColor + ',.8)'
+        });
+        $switchPlayer.css({
+            background: 'rgba(' + mainColor + ',.3)'
+        });
+        $tips.css({
+            background: 'rgba(' + mainColor + ',.6)'
+        });
+        $lk.css({
+            background: 'rgba(' + mainColor + ',.3)'
+        });
+        $(".infos,.control,.status .note", $player).css({
+            color: 'rgb(' + font_color + ')'
+        });
+    }
+    function musicTooltip() {
+        if (isPhone){return;}
+        $('#ailccPlayer span,#ailccPlayer i').each(function () {
+            $('#tooltip').remove();
+            if (this.title) {
+                var a = this.title;
+                $(this).unbind("mouseover mouseout");
+                $(this).mouseover(function (b) {
+                    this.title = '';
+                    $('body').append('<div id="tooltip">' + a + '</div>');
+                    $('#tooltip').css({
+                        left: b.pageX - 15 + 'px',
+                        top: b.pageY + 30 + 'px',
+                        opacity: '0.8'
+                    }).fadeIn(250)
+                }).mouseout(function () {
+                    this.title = a;
+                    $('#tooltip').remove()
+                }).mousemove(function (b) {
+                    $('#tooltip').css({
+                        left: b.pageX - 15 + 'px',
+                        top: b.pageY + 30 + 'px'
+                    });
+                });
+            }
+        });
+    }
+    function showMsgNotification(c, d, e) {
+    var f = window.Notification || window.mozNotification || window.webkitNotification;
+    if (f) {
+        if (f.permission == "granted") {
+            var g = new f(c, {
+                body: d,
+                icon: e
+            });
+            setTimeout(function() {
+                g.close()
+            }, 3000);
+            g.onclick = function() {
+                g.close()
+            };
+            g.onerror = function() {
+                console.log("onerror")
+            };
+                return false
+		} else {
+			f.requestPermission(function(a) {
+                if (a === "granted") {
+                    var b = new f(c, {
+                        body: d,
+                        icon: e
+                    });
+                    b.onclick = function() {};
+                    b.onerror = function() {};
+                    b.onshow = function() {};
+                    b.onclose = function() {}
+                } else {
+                    return false
+                }
+            })
+        }
+    }
+}
+}
+ailccPlayerInit();
+};
