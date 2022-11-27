@@ -47,6 +47,61 @@ function query($name,$author,$type = ['tencent','kuwo','migu','netease','kugou']
     }
     return $songs;
 }
+
+function is_url($url){
+    $r = "/http[s]?:\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&\+\%]*/is";
+    if(preg_match($r,$url)){
+        return true;
+        echo '正确的url地址';
+    }else{
+        return false;
+        echo '不是合法的url地址';
+    }
+}
+
+function files($url){
+	header('Content-Type: audio/mpeg');
+    @ob_end_clean();
+    @readfile($url);
+    @flush(); 
+    @ob_flush();
+}
+function radio_urls($name,$author,$dt,$type = ['kuwo','tencent','migu','netease','kugou']){
+    $songs = [];
+    $mp3_url = false;
+    foreach ($type as $t) {
+        $api = new Meting($t);
+        $new = $api->format(true)->search($name.$author)[0];
+        if(is_array($new['artist_name'])){
+            $new['artist_name'] = implode(',', $new['artist_name']);
+        }
+        if($t == 'kuwo'){
+            
+            $res = file_get_contents('http://antiserver.kuwo.cn/anti.s?response=url&rid=MUSIC_'.$new['song_id'].'&format=mp3&type=convert_url');
+            // die($new['duration']);
+            if(is_url($res)){
+            // if(is_url($res) && ($dt == $new['duration'] || $new['artist_name'] == $author)){
+                $songs['url'] = $res;
+                $songs['source'] = $t;
+                break;
+            }
+            continue;
+        }
+        if($dt == $new['duration'] || $new['artist_name'] == $author){
+            $mp3_url = $api->format(true)->url($new['song_id'])['url'];
+            if($t == 'migu'){
+                $mp3_url = str_replace('http://tyst.migu.cn/', 'https://mg.maeo.cn/', $new['location']);
+            }
+            if(isset($mp3_url)){
+                $songs['url'] = $mp3_url;
+                // $songs['duration'] = $new['duration'];
+                $songs['source'] = $t;
+                break;
+            }
+        }
+    }
+    return $songs;
+}
 function httpcode($url){
     $ch = curl_init();
     $timeout = 3;
