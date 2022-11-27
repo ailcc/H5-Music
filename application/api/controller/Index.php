@@ -76,6 +76,8 @@ class Index extends Controller
         $result .= "playerColors = '".$player->player_color."',";
         $result .= "coverWidth = ".$player->cover_width.",";
         $result .= "showNotes = ".$player->show_notes.",";
+        $result .= "showDown = ".$player->show_down.",";
+        $result .= "showSearch = ".$player->show_search.",";
         $result .= "autoPopupPlayer = ".$player->auto_popup_player.";";
         // 获取播放器歌单
         $playerSongSheets = $playerModel->songSheets($id);
@@ -83,11 +85,11 @@ class Index extends Controller
         $songSheetList = [];
         foreach ($playerSongSheets as $key => $item){
             $songSheetModel = new SongSheet($item);
-            if(empty($player->error)){
+            // if(empty($player->error)){
                 $songs = $songSheetModel->songs()->order('taxis asc')->select();
-            }else{
-                $songs = $songSheetModel->songs()->where('location','<>', '-1')->order('taxis asc')->select();
-            }
+            // }else{
+            //     $songs = $songSheetModel->songs()->where('location','<>', '-1')->order('taxis asc')->select();
+            // }
             $songIds = [];$songNames = [];$songTypes = [];$albumNames = [];
             $artistNames = [];$albumCovers = [];$locations = [];$lyric = [];
             foreach ($songs->toArray() as $key2 => $item2){
@@ -140,6 +142,7 @@ class Index extends Controller
         $url = Cache::connect(['path'  =>  '../runtime/'.$user_IDSs.'/musicUrl'])->get('music'.$type.$songId);
         if(!$url){
             $songs = model('admin/Song')->findMusicInfo($type,$songId,'url');
+            $type = $songs['source'] == '' ? $type : $songs['source'];
             if(empty($songs['url'])){
                 $res['loc'] = -1;
             }else{
@@ -149,6 +152,9 @@ class Index extends Controller
                     $res['loc'] = 1;
             }
             Db::table('song')->where('type',$type)->where('song_id',$songId)->update(['location' => $res['loc']]);
+    	    if($type=='kw'||$type=='kuwo'){
+    	        return files($url);
+            }
         }
         
         return redirect($url);
@@ -222,7 +228,7 @@ class Index extends Controller
         $script = "var lrcstr =''";
         if(!$cache){
             $songs = model('admin/Song')->findMusicInfo($type,$songId,'lrc');
-            $songs = json_decode($songs,true);
+            // $songs = json_decode($songs,true);
             if ($songs['lyric'] != '' && count($songs['lyric']) > 0) {
                 $lryic = str_replace("\r\n",'',$songs['lyric']);
                 $lryic = str_replace("\n",'',$lryic);
@@ -233,6 +239,63 @@ class Index extends Controller
             Cache::connect(['path'  =>  '../runtime/'.$user_IDSs.'/musicLyric'])->set('musicLyric'.$type.$songId,$script);
         }
         return response($cache ? $cache : $script);
+    }
+    
+    /**
+     * 搜索歌曲
+     */
+    public function search($keywords='',$type=null,$action='',$id=''){
+        $songs = [];
+        $songs['code'] = 0;
+        if($action == 'song'){
+            switch ($type) {
+                case 'kg':
+                    $api = new Meting('kugou');
+                    break;
+                case 'qq':
+                    $api = new Meting('tencent');
+                    break;
+                case 'wy':default:
+                    $api = new Meting('netease');
+                    break;
+            }
+            $song = $api->format(true)->song($id)[0];
+            if(is_null($song))return jsonp($songs);
+            $songs['code'] = 1;
+            $songs['result'] = [
+                'songid' => $song['song_id'],
+                'singer' => $song['artist_name'],
+                'songname' => $song['name'],
+                'type' => $type,
+                'pic' => $song['album_cover']
+            ];
+            return jsonp($songs);
+        }else{
+            if(empty($type) && $keywords != ''){
+                $sort = ['kugou','tencent','netease'];
+                $json = new Meting($a);
+                $con = $json->format(true)->search($keywords);
+ 
+                $cons=[];
+                foreach ($sort as $a) {
+                    $json = new Meting($a);
+                    $con = $json->format(true)->search($keywords,['limit'=>5]);
+                    $cons = array_merge($cons,$con);
+                }
+                foreach ($cons as $k=>$v) {
+                    $song[] = [
+                        'songid' => $v['song_id'],
+                        'songname' => $v['name'],
+                        'singer' => $v['artist_name'],
+                        'pic' => $v['album_cover'],
+                        'type' => $v['type'],
+                        ];
+                }
+                $songs['result'] = $song;
+            }
+        }
+        if(count($songs['result'])>=1)$songs['code'] = 1;
+        return jsonp($songs);
     }
     
     /**
@@ -260,7 +323,9 @@ class Index extends Controller
                 coverWidth = -1,
                 playerWidth = -1,
                 showNotes = 1,
-                showMsg = 1;
+                showMsg = 1,
+                showSearch = 1,
+                showDown = 1;
                 var songSheetList = [{"songSheetName":"'.$auth['songSheetName'].'","author":"\u672a\u6388\u6743","songIds":["error"],"songNames":["'.$auth['songNames'].'"],"songTypes":["local"],"albumNames":["'.$auth['albumNames'].'"],"artistNames":["'.$auth['artistNames'].'"],"albumCovers":["'.$auth['albumCovers'].'"],"locations":["'.$auth['locations'].'"],"lyric":["'.$auth['lyric'].'"]}]';
 
         if ($type =='info' || empty($_COOKIE)) {
@@ -312,9 +377,7 @@ class Index extends Controller
 
         $ailcc_player_token = isset($_COOKIE['ailcc_player_token'])?$_COOKIE['ailcc_player_token']:false;
         $ailcc_player_playerid = isset($_COOKIE['ailcc_player_playerid'])?$_COOKIE['ailcc_player_playerid']:'';
-        if($auth['default'] == $ailcc_player_playerid){
-            return true;
-        }
+        if($auth['default'] == $ailcc_player_playerid) return true;
         $user = model('admin/Player')->where('id',$ailcc_player_playerid)->find();
         $user_id = model("admin/User")->where('id',$user['user_id'])->find();
         if($user_id['token'] !== $ailcc_player_token || (!$referer && $auth['empty'])){
@@ -332,18 +395,18 @@ class Index extends Controller
         }
     }
 
-    public function reset_cookie(){
-        $con = file_get_contents('https://music.yaode.xyz/api/cookie?token=fd482d0eaba0a423309a83173c998c57', false);
-        $con = json_decode($con,true);
-        $cookie = $con['tencent']['value'];
-        $ck  = 'pgv_pvi=22038528; pgv_si=s3156287488; pgv_pvid=5535248600; yplayer_open=1; ts_last=y.qq.com/portal/player.html; ts_uid=4847550686; yq_index=0; qqmusic_fromtag=66; player_exist=1; '.$cookie;
-        $a = Db::table('options')->where('code','ailcc_qq_cookie')->update(['value' => $ck]);
-        if($a || $ck){
-            return $ck;
-        }else{
-            return $con;
-        }
-    }
+    // public function reset_cookie(){
+    //     $con = file_get_contents('https://music.ya1ode.xyz/api/cookie?token=fd482d0eaba0a423309a83173c998c57', false);
+    //     $con = json_decode($con,true);
+    //     $cookie = $con['tencent']['value'];
+    //     $ck  = 'pgv_pvi=22038528; pgv_si=s3156287488; pgv_pvid=5535248600; yplayer_open=1; ts_last=y.qq.com/portal/player.html; ts_uid=4847550686; yq_index=0; qqmusic_fromtag=66; player_exist=1; '.$cookie;
+    //     $a = Db::table('options')->where('code','ailcc_qq_cookie')->update(['value' => $ck]);
+    //     if($a || $ck){
+    //         return $ck;
+    //     }else{
+    //         return $con;
+    //     }
+    // }
     
     public function css(){
         header("Content-Type:text/css; charset=utf-8");
