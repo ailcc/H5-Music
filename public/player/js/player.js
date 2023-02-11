@@ -122,7 +122,7 @@ var ailccPlayerInit = function () {
             console.log("%c站内存在FontAwesome，从站内加载！", "text-shadow: 3px 1px 1px grey");
         } else {
             console.log("%c站内未找到FontAwesome，从播放器加载！", "text-shadow: 3px 1px 1px grey");
-            $("head").append("<link href=\"https://libs.baidu.com/fontawesome/4.2.0/css/font-awesome.css\" rel=\"stylesheet\" type=\"text/css\">")
+            $("head").append("<link href=\"https://lib.baomitu.com/font-awesome/4.2.0/css/font-awesome.css\" rel=\"stylesheet\" type=\"text/css\">")
         };
         ailccPlayerStyleLoaded = true;
     }
